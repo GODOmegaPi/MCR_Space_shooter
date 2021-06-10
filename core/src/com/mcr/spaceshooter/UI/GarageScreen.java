@@ -2,14 +2,13 @@ package com.mcr.spaceshooter.UI;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
 import com.badlogic.gdx.scenes.scene2d.Stage;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mcr.spaceshooter.ScreenManager;
@@ -22,6 +21,7 @@ public class GarageScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         skin = new Skin(Gdx.files.internal("skin/craftacular-ui.json"));
+
     }
 
     @Override
@@ -30,6 +30,9 @@ public class GarageScreen implements Screen {
         Table table = new Table();
         table.setFillParent(true);
         stage.addActor(table);
+
+        Label titleLabel = new Label("Garage", skin);
+        titleLabel.setFontScale(1);
 
         TextButton playButton = new TextButton("Jouer", skin);
         playButton.addListener(new ClickListener(){
@@ -48,6 +51,9 @@ public class GarageScreen implements Screen {
             }
         });
 
+
+        table.row();
+        table.add(titleLabel).colspan(2).center();
         table.row();
         table.add(playButton).width(300).colspan(2);
         table.row();
@@ -58,18 +64,20 @@ public class GarageScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 1, 1, 1); //%color value (1 = 100%)
-        //Gdx.gl.glClear();
-        stage.act();
-        stage.draw();
 
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        // tell our stage to do actions and draw itself
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.draw();
 
 
     }
 
     @Override
     public void resize(int width, int height) {
-
+        stage.getViewport().update(width, height, true);
     }
 
     @Override
