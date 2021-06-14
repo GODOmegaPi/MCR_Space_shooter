@@ -1,7 +1,9 @@
 package com.mcr.spaceshooter;
 
+import com.badlogic.gdx.Application;
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -15,6 +17,9 @@ public class SpaceShooter extends Game {
 	
 	@Override
 	public void create () {
+		// TODO à enlever
+		Gdx.app.setLogLevel(Application.LOG_DEBUG);
+
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
 		s = new GarageScreen();
