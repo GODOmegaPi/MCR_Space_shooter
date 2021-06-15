@@ -1,68 +1,96 @@
 package com.mcr.spaceshooter.UI;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.scenes.scene2d.Actor;
+import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
 import com.badlogic.gdx.scenes.scene2d.ui.ImageButton;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.badlogic.gdx.utils.Logger;
 import com.mcr.spaceshooter.Entity.Equipements.Equipment;
-import com.mcr.spaceshooter.ScreenManager;
 import com.sun.tools.javac.util.Pair;
-import org.w3c.dom.Text;
-
-import java.util.Iterator;
 import java.util.List;
-import java.util.ListIterator;
 
-public class ConfigRow {
+public class ConfigRow extends Group {
     // TODO voir ce qui peut etre static  eg: btnTex restera toujours le même (comme defaultEuiqpementTex)
     private Table table;
     private Image imgEquipement;
     private ImageButton leftArrowBtn;
     private ImageButton rightArrowBtn;
     private Texture btnTex;
+    private int currentElementIdx;
     private List<Pair<Equipment, Texture>> equipments;
-    private ListIterator currentPosition;
-    private Pair<Equipment, Texture> currentEquipement;
-    private static Texture defaultEquipementTex = new Texture(Gdx.files.internal("noEquipement.jpg"));
+    private Skin skin;
+    private TextButton equipBtn;
+    private TextButton unequipBtn;
+    private Boolean isEquiped = false;
 
-    public ConfigRow(Table table, List<Pair<Equipment, Texture>> equipments) {
 
+
+    public ConfigRow( List<Pair<Equipment, Texture>> equipments, Skin skin) {
+        // On le set l'index de l'élément courant à une valeur impossible car au commencement
+        // Aucun élément n'est sélectionné
+        this.currentElementIdx = 0;
         this.equipments = equipments;
-        this.table = table;
+        //this.table = table;
+        this.skin = skin;
+        this.table = new Table();
+        table.setFillParent(true);
+        addActor(table);
         this.init();
     }
-    private void changeEquipment(Pair<Equipment, Texture> equipement){
-        imgEquipement.setDrawable(new TextureRegionDrawable(equipement.snd));
+
+    private void changeEquipment(Pair<Equipment, Texture> equipement) {
+        imgEquipement.setDrawable(new SpriteDrawable(new Sprite(equipement.snd)));
     }
 
 
     private void init() {
+        equipBtn = new TextButton("Equiper", skin);
+        equipBtn.addListener(new ClickListener(){
+            @Override
+            public void clicked(InputEvent event, float x, float y) {
+
+                // TODO UTILISER LE BUILDER
+
+                if(isEquiped){
+                    isEquiped = false;
+                    equipBtn.setText("Equiper");
+                    leftArrowBtn.setDisabled(false);
+                    rightArrowBtn.setDisabled(false);
+                }else{
+                    isEquiped = true;
+                    equipBtn.setText("Desequiper");
+                    leftArrowBtn.setDisabled(true);
+                    rightArrowBtn.setDisabled(true);
+
+                }
+            }
+        });
+
+
+
         btnTex = new Texture(Gdx.files.internal("leftArrow.png"));
         leftArrowBtn = new ImageButton(new TextureRegionDrawable(new TextureRegion(btnTex)));
         leftArrowBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // Si la position courrante n'a pas encore été setté (autrement dit, au avant tout click sur les boutons, on affiche l'image par défaut (/))
-                // ou si il n'y a pas de prochain élement on retourne au début
-                if (currentPosition == null || !currentPosition.hasPrevious()) {
+                if(leftArrowBtn.isDisabled()) return; // TODO vraiment nécessaire ?: Il faut vraiement faire ça soit même ? -_-'
+                if (--currentElementIdx < 0) {
                     // On sette l'itérateur comment étant le dernières élements.
-                    currentPosition = equipments.listIterator(equipments.size());
-                    Gdx.app.debug(this.getClass().getName(),"null iterator ou n'a pas de prochain élement");
+                    currentElementIdx = equipments.size() - 1;
                 }
-                Pair<Equipment, Texture> old = currentEquipement;
-                currentEquipement = (Pair<Equipment, Texture>) currentPosition.previous();
-                if(currentEquipement == old){
-                    currentEquipement = (Pair<Equipment, Texture>) currentPosition.previous();
-                }
-                // TODO voir s'il y a mieux que caster.
-                changeEquipment(currentEquipement);
+                Gdx.app.debug(this.getClass().getName(), String.format("is disabled : %b", leftArrowBtn.isDisabled()));
+                changeEquipment(equipments.get(currentElementIdx));
+
 
             }
         });
@@ -70,22 +98,13 @@ public class ConfigRow {
         rightArrowBtn.addListener(new ClickListener() {
             @Override
 
-            // TODO Utiliser autre chose que les itérateurs car trop chiant...
             public void clicked(InputEvent event, float x, float y) {
-                // Si la position courrante n'a pas encore été setté (autrement dit, au avant tout click sur les boutons, on affiche l'image par défaut (/))
-                // ou si il n'y a pas de prochain élement on retourne au début
-                if (currentPosition == null || !currentPosition.hasNext()) {
-                    // On sette l'itérateur comment étant le dernières élements.
-                    currentPosition = equipments.listIterator();
-                    Gdx.app.debug(this.getClass().getName(),"null iterator ou n'a pas de prochain élement");
+             if(rightArrowBtn.isDisabled()) return; // TODO vraiment nécessaire ? : Il faut vraiement faire ça soit même ? -_-'
+                if (++currentElementIdx >= equipments.size()) {
+                    currentElementIdx = 0;
                 }
-                Pair<Equipment, Texture> old = currentEquipement;
-                currentEquipement = (Pair<Equipment, Texture>) currentPosition.next();
-                if(currentEquipement == old){
-                    currentEquipement = (Pair<Equipment, Texture>) currentPosition.next();
-                }
-                // TODO voir s'il y a mieux que caster.
-                changeEquipment(currentEquipement);
+                Gdx.app.debug(this.getClass().getName(), String.format("index : %d", currentElementIdx));
+                changeEquipment(equipments.get(currentElementIdx));
 
 
             }
@@ -94,11 +113,19 @@ public class ConfigRow {
         rightArrowBtn.setOrigin(20, 20);
         rightArrowBtn.setTransform(true);
         rightArrowBtn.rotateBy(180);
-        imgEquipement = new Image(defaultEquipementTex);
+        imgEquipement = new Image();
+        changeEquipment(equipments.get(currentElementIdx));
+        table.add(leftArrowBtn).width(40).height(40).uniform();
+        table.add(imgEquipement).width(100).height(100).colspan(1);
+        table.add(rightArrowBtn).width(40).height(40).colspan(1);
+        table.row();
+        table.add(equipBtn).width(250).height(40).colspan(3).center();
+        table.row();
 
-        table.add(leftArrowBtn).width(40).height(40);
-        table.add(imgEquipement).width(100).height(100);
-        table.add(rightArrowBtn).width(40).height(40);
+        table.add(unequipBtn).width(250).height(40).colspan(3).center();
+
+
+
     }
 
 }
