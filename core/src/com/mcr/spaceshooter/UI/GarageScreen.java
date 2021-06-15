@@ -24,15 +24,12 @@ import com.mcr.spaceshooter.Entity.Equipements.Weapon;
 import com.mcr.spaceshooter.ScreenManager;
 import com.sun.tools.javac.util.Pair;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 public class GarageScreen implements Screen {
     private Stage stage;
     private Skin skin;
-    private Texture fuselage1Tex ;
-    private Texture fuselage2Tex;
     private List<Pair<Equipment, Texture>> fuselagesList;
     private List<Pair<Equipment, Texture>> weaponsList;
     private List<Pair<Equipment, Texture>> shieldsList;
@@ -43,18 +40,16 @@ public class GarageScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         skin = new Skin(Gdx.files.internal("skin/craftacular-ui.json"));
-        fuselage1Tex = new Texture(Gdx.files.internal("badlogic.jpg"));
-        fuselage2Tex = new Texture(Gdx.files.internal("game.png"));
 
         // TODO voir comment opti new LinkedList<>([p1,p2,p3])
         fuselagesList = new LinkedList<>();
-        Pair p1 = new Pair<>(new Fuselage(10, 10), new Texture(Gdx.files.internal("badlogic.jpg")));
-        Pair p2 = new Pair<>(new Fuselage(10, 10), new Texture(Gdx.files.internal("game.png")));
-        Pair p3 = new Pair<>(new Fuselage(10, 10), new Texture(Gdx.files.internal("noEquipement.jpg")));
+        Pair p1 = new Pair<>(new Fuselage(10, 10), new Texture(Gdx.files.internal("ss_1.png")));
+        Pair p2 = new Pair<>(new Fuselage(10, 10), new Texture(Gdx.files.internal("ss_2.png")));
+        Pair p3 = new Pair<>(new Fuselage(10, 10), new Texture(Gdx.files.internal("ss_3.png")));
 
         fuselagesList.add(p1);
-        fuselagesList.add(p2);
         fuselagesList.add(p3);
+        fuselagesList.add(p2);
 
         weaponsList = new LinkedList<>();
         Pair pa = new Pair<>(new Weapon(10, 10), new Texture(Gdx.files.internal("badlogic.jpg")));
@@ -73,11 +68,6 @@ public class GarageScreen implements Screen {
         shieldsList.add(px);
         shieldsList.add(py);
 
-    }
-
-    @Override
-    public void show() {
-        Gdx.input.setInputProcessor(stage);
         Table table = new Table();
         table.setFillParent(true);
         stage.addActor(table);
@@ -116,20 +106,23 @@ public class GarageScreen implements Screen {
         table.row();
         table.add(quitButton).width(300).colspan(2);
 
+    }
+
+    @Override
+    public void show() {
+        Gdx.input.setInputProcessor(stage);
+
 
     }
 
     @Override
     public void render(float delta) {
-
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
 
         // tell our stage to do actions and draw itself
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
-
-
     }
 
     @Override
@@ -154,6 +147,7 @@ public class GarageScreen implements Screen {
 
     @Override
     public void dispose() {
+
         stage.dispose();
     }
 }
