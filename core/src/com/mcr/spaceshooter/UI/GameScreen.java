@@ -18,10 +18,16 @@ public class GameScreen implements Screen {
     private Stage stage;
     private Skin skin;
 
+    private SpaceRenderer renderer;
+
     public GameScreen(){
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         skin = new Skin(Gdx.files.internal("skin/craftacular-ui.json"));
+
+        renderer = new SpaceRenderer(stage.getBatch());
+
+
     }
 
     @Override
@@ -52,13 +58,13 @@ public class GameScreen implements Screen {
         stage.act();
         stage.draw();
 
-
+        renderer.renderBackground();
 
     }
 
     @Override
     public void resize(int width, int height) {
-
+        renderer.setSize(width, height);
     }
 
     @Override
