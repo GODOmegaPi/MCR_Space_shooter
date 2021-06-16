@@ -1,6 +1,6 @@
-package equipment;
+package com.mcr.spaceshooter.Entity.Equipments;
 
-abstract public class Equipement {
+abstract public class Equipment {
     private int hp;
     private int credit;
 
@@ -16,7 +16,7 @@ abstract public class Equipement {
         return credit;
     }
 
-    public Equipement(int hp, int credit){
+    public Equipment(int hp, int credit){
         this.hp = hp;
         this.credit = credit;
     }

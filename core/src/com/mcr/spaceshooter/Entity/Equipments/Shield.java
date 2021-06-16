@@ -1,4 +1,4 @@
-package com.mcr.spaceshooter.Entity.Equipements;
+package com.mcr.spaceshooter.Entity.Equipments;
 
 public class Shield extends Equipment {
     public Shield(int hp, int credit) {

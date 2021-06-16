@@ -15,7 +15,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.mcr.spaceshooter.Entity.Equipements.Equipment;
+import com.mcr.spaceshooter.Entity.Equipments.Equipment;
 import com.sun.tools.javac.util.Pair;
 
 import java.util.List;

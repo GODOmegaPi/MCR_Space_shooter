@@ -1,10 +1,11 @@
-package builder;
+package com.mcr.spaceshooter.Builder;
 
-import equipment.Fuselage;
-import equipment.Shield;
-import equipment.Weapon;
+import com.mcr.spaceshooter.Entity.Spaceship;
+import com.mcr.spaceshooter.Entity.Equipments.Fuselage;
+import com.mcr.spaceshooter.Entity.Equipments.Shield;
+import com.mcr.spaceshooter.Entity.Equipments.Weapon;
 
-public class PlayableShipBuilder implements ShipBuilder{
+public class PlayableShipBuilder implements ShipBuilder {
     private int currentHp;
     private Fuselage fuselage;
     private Weapon weapon;
@@ -43,8 +44,8 @@ public class PlayableShipBuilder implements ShipBuilder{
     }
 
     @Override
-    public Ship build() {
-        Ship ship = new Ship(this);
+    public Spaceship build() {
+        Spaceship ship = new Spaceship(this);
         //validateShip(ship);
         return ship;
     }
@@ -65,7 +66,7 @@ public class PlayableShipBuilder implements ShipBuilder{
         return shield;
     }
 
-    private void validateShip(Ship ship) throws Exception {
+    private void validateShip(Spaceship ship) throws Exception {
         if (ship.getFuselage() == null || ship.getWeapon() == null){
             throw new Exception("Le vaisseau n'est pas construit correctement !");
         }

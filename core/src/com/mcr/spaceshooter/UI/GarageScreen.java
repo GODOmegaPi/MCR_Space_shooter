@@ -13,10 +13,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mcr.spaceshooter.Entity.Equipements.Equipment;
-import com.mcr.spaceshooter.Entity.Equipements.Fuselage;
-import com.mcr.spaceshooter.Entity.Equipements.Shield;
-import com.mcr.spaceshooter.Entity.Equipements.Weapon;
+
+import com.mcr.spaceshooter.Entity.Equipments.Equipment;
+import com.mcr.spaceshooter.Entity.Equipments.Fuselage;
+import com.mcr.spaceshooter.Entity.Equipments.Shield;
+import com.mcr.spaceshooter.Entity.Equipments.Weapon;
 import com.mcr.spaceshooter.ScreenManager;
 import com.mcr.spaceshooter.SpaceShooter;
 import com.sun.tools.javac.util.Pair;
@@ -47,9 +48,9 @@ public class GarageScreen implements Screen {
         fuselagesList.add(p2);
 
         weaponsList = new LinkedList<>();
-        Pair pa = new Pair<>(new Weapon(10, 10), new Texture(Gdx.files.internal("badlogic.jpg")));
-        Pair pb = new Pair<>(new Weapon(10, 10), new Texture(Gdx.files.internal("game.png")));
-        Pair pc = new Pair<>(new Weapon(10, 10), new Texture(Gdx.files.internal("noEquipement.jpg")));
+        Pair pa = new Pair<>(new Weapon(10, 10,1), new Texture(Gdx.files.internal("badlogic.jpg")));
+        Pair pb = new Pair<>(new Weapon(10, 10,1), new Texture(Gdx.files.internal("game.png")));
+        Pair pc = new Pair<>(new Weapon(10, 10,2), new Texture(Gdx.files.internal("noEquipement.jpg")));
         weaponsList.add(pc);
         weaponsList.add(pb);
         weaponsList.add(pa);
@@ -93,9 +94,9 @@ public class GarageScreen implements Screen {
         table.row();
         table.add(new EquipementSelector( fuselagesList, skin)).height(200).colspan(3).center();
         table.row();
-        table.add(new EquipementSelector( fuselagesList, skin)).height(200).colspan(3).center();
+        table.add(new EquipementSelector( weaponsList, skin)).height(200).colspan(3).center();
         table.row();
-        table.add(new EquipementSelector( fuselagesList, skin)).height(200).colspan(3).center();
+        table.add(new EquipementSelector( shieldsList, skin)).height(200).colspan(3).center();
         table.row();
         table.add(playButton).width(300).colspan(3);
         table.row();
