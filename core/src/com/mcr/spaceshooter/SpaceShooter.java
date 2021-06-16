@@ -8,6 +8,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.mcr.spaceshooter.UI.GameScreen;
 import com.mcr.spaceshooter.UI.GarageScreen;
 
 public class SpaceShooter extends Game {
@@ -22,7 +23,7 @@ public class SpaceShooter extends Game {
 
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
-		s = new GarageScreen();
+		s = new GameScreen();
 		ScreenManager.getInstance().setGame(this);
 		ScreenManager.getInstance().setScreen(s);
 	}
