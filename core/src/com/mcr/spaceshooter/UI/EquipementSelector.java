@@ -17,25 +17,24 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mcr.spaceshooter.Entity.Equipements.Equipment;
 import com.sun.tools.javac.util.Pair;
+
 import java.util.List;
 
-public class ConfigRow extends Group {
+public class EquipementSelector extends Group {
     // TODO voir ce qui peut etre static  eg: btnTex restera toujours le même (comme defaultEuiqpementTex)
     private Table table;
     private Image imgEquipement;
     private ImageButton leftArrowBtn;
     private ImageButton rightArrowBtn;
-    private Texture btnTex;
+    private Texture btnTex; //
     private int currentElementIdx;
     private List<Pair<Equipment, Texture>> equipments;
     private Skin skin;
     private TextButton equipBtn;
-    private TextButton unequipBtn;
     private Boolean isEquiped = false;
 
 
-
-    public ConfigRow( List<Pair<Equipment, Texture>> equipments, Skin skin) {
+    public EquipementSelector(List<Pair<Equipment, Texture>> equipments, Skin skin) {
         // On le set l'index de l'élément courant à une valeur impossible car au commencement
         // Aucun élément n'est sélectionné
         this.currentElementIdx = 0;
@@ -55,27 +54,24 @@ public class ConfigRow extends Group {
 
     private void init() {
         equipBtn = new TextButton("Equiper", skin);
-        equipBtn.addListener(new ClickListener(){
+        equipBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
 
                 // TODO UTILISER LE BUILDER
-
-                if(isEquiped){
+                if (isEquiped) {
                     isEquiped = false;
                     equipBtn.setText("Equiper");
                     leftArrowBtn.setDisabled(false);
                     rightArrowBtn.setDisabled(false);
-                }else{
+                } else {
                     isEquiped = true;
                     equipBtn.setText("Desequiper");
                     leftArrowBtn.setDisabled(true);
                     rightArrowBtn.setDisabled(true);
-
                 }
             }
         });
-
 
 
         btnTex = new Texture(Gdx.files.internal("leftArrow.png"));
@@ -83,15 +79,14 @@ public class ConfigRow extends Group {
         leftArrowBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(leftArrowBtn.isDisabled()) return; // TODO vraiment nécessaire ?: Il faut vraiement faire ça soit même ? -_-'
+                if (leftArrowBtn.isDisabled())
+                    return; // TODO vraiment nécessaire ?: Il faut vraiement faire ça soit même ? -_-'
                 if (--currentElementIdx < 0) {
                     // On sette l'itérateur comment étant le dernières élements.
                     currentElementIdx = equipments.size() - 1;
                 }
                 Gdx.app.debug(this.getClass().getName(), String.format("is disabled : %b", leftArrowBtn.isDisabled()));
                 changeEquipment(equipments.get(currentElementIdx));
-
-
             }
         });
         rightArrowBtn = new ImageButton(new TextureRegionDrawable(new TextureRegion(btnTex)));
@@ -99,13 +94,13 @@ public class ConfigRow extends Group {
             @Override
 
             public void clicked(InputEvent event, float x, float y) {
-             if(rightArrowBtn.isDisabled()) return; // TODO vraiment nécessaire ? : Il faut vraiement faire ça soit même ? -_-'
+                if (rightArrowBtn.isDisabled())
+                    return; // TODO vraiment nécessaire ? : Il faut vraiement faire ça soit même ? -_-'
                 if (++currentElementIdx >= equipments.size()) {
                     currentElementIdx = 0;
                 }
                 Gdx.app.debug(this.getClass().getName(), String.format("index : %d", currentElementIdx));
                 changeEquipment(equipments.get(currentElementIdx));
-
 
             }
         });
@@ -121,11 +116,6 @@ public class ConfigRow extends Group {
         table.row();
         table.add(equipBtn).width(250).height(40).colspan(3).center();
         table.row();
-
-        table.add(unequipBtn).width(250).height(40).colspan(3).center();
-
-
-
     }
 
 }

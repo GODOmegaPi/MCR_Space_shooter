@@ -1,5 +1,6 @@
 package com.mcr.spaceshooter.UI;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
@@ -17,6 +18,7 @@ import com.mcr.spaceshooter.Entity.Equipements.Fuselage;
 import com.mcr.spaceshooter.Entity.Equipements.Shield;
 import com.mcr.spaceshooter.Entity.Equipements.Weapon;
 import com.mcr.spaceshooter.ScreenManager;
+import com.mcr.spaceshooter.SpaceShooter;
 import com.sun.tools.javac.util.Pair;
 
 import java.util.LinkedList;
@@ -29,8 +31,6 @@ public class GarageScreen implements Screen {
     private List<Pair<Equipment, Texture>> weaponsList;
     private List<Pair<Equipment, Texture>> shieldsList;
 
-
-
     public GarageScreen(){
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
@@ -39,7 +39,7 @@ public class GarageScreen implements Screen {
         // TODO voir comment opti new LinkedList<>([p1,p2,p3])
         fuselagesList = new LinkedList<>();
         Pair p1 = new Pair<>(new Fuselage(10, 10), new Texture(Gdx.files.internal("ss_1.png")));
-        Pair p2 = new Pair<>(new Fuselage(10, 10), new Texture(Gdx.files.internal("ss_2.png")));
+        Pair p2 = new Pair<>(new Fuselage(651, 25), new Texture(Gdx.files.internal("ss_2.png")));
         Pair p3 = new Pair<>(new Fuselage(10, 10), new Texture(Gdx.files.internal("ss_3.png")));
 
         fuselagesList.add(p1);
@@ -64,6 +64,7 @@ public class GarageScreen implements Screen {
         shieldsList.add(py);
 
         Table table = new Table();
+
         table.setFillParent(true);
         stage.addActor(table);
 
@@ -73,6 +74,7 @@ public class GarageScreen implements Screen {
         playButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                // TODO si le builder est ok, récupérer ship
                 Screen screen = new GameScreen();
                 ScreenManager.getInstance().setScreen(screen);
             }
@@ -89,11 +91,11 @@ public class GarageScreen implements Screen {
 
         table.add(titleLabel).colspan(3);
         table.row();
-        table.add(new ConfigRow( fuselagesList, skin)).height(200).colspan(3).center();
+        table.add(new EquipementSelector( fuselagesList, skin)).height(200).colspan(3).center();
         table.row();
-        table.add(new ConfigRow( fuselagesList, skin)).height(200).colspan(3).center();
+        table.add(new EquipementSelector( fuselagesList, skin)).height(200).colspan(3).center();
         table.row();
-        table.add(new ConfigRow( fuselagesList, skin)).height(200).colspan(3).center();
+        table.add(new EquipementSelector( fuselagesList, skin)).height(200).colspan(3).center();
         table.row();
         table.add(playButton).width(300).colspan(3);
         table.row();
@@ -103,9 +105,8 @@ public class GarageScreen implements Screen {
 
     @Override
     public void show() {
+
         Gdx.input.setInputProcessor(stage);
-
-
     }
 
     @Override

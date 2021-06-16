@@ -8,12 +8,14 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.mcr.spaceshooter.Entity.Spaceship;
 import com.mcr.spaceshooter.UI.GarageScreen;
 
 public class SpaceShooter extends Game {
 	SpriteBatch batch;
 	Texture img;
 	Screen s;
+	Spaceship ship;
 	
 	@Override
 	public void create () {
