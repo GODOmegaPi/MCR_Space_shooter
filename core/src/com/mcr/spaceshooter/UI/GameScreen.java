@@ -66,8 +66,14 @@ public class GameScreen implements Screen {
         //stage.act();
         //stage.draw();
 
+        renderer.update();
+        renderer.draw(spriteBatch);
+
+        /*
         renderer.renderBackground(spriteBatch);
         renderer.drawSpaceship(spriteBatch);
+
+         */
 
     }
 

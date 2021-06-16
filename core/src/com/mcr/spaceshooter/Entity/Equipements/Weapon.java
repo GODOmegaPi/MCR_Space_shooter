@@ -1,6 +1,8 @@
 package com.mcr.spaceshooter.Entity.Equipements;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -17,21 +19,31 @@ public class Weapon extends Equipment {
 
     }
 
-    public void shoot(int x, int y) {
-        bullets.add(new Bullet(x, y, this.attackSpeeder));
+    public void shoot(float x, float y) {
+        bullets.add(new Bullet(x, y, Bullet.SIZE, this.attackSpeeder));
     }
 
+    public boolean isColliding(Rectangle rect) {
+        boolean colliding = false;
+        for(Bullet bullet : bullets) {
+            colliding = !colliding ? bullet.isColliding(rect) : colliding;
+        }
+        return colliding;
+    }
+    
+
     public void render(SpriteBatch spriteBatch) {
+        //TODO: Lamda probablement plus intelligent à faire
+
         bullets = bullets.stream()
-                .filter(b -> b.isOutOfBound())
+                .filter(b -> !b.isOutOfBound())
+                .filter(b-> b.isAlive())
                 .collect(Collectors.toList());
+
 
         for(Bullet bullet : bullets){
             bullet.render(spriteBatch);
-            if(bullet.isOutOfBound()) {
-                bullets.remove(bullet);
-                
+
             }
-        }
     }
 }

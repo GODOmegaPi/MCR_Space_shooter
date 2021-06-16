@@ -5,6 +5,9 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.Rectangle;
+import com.mcr.spaceshooter.Entity.Asteroid;
 import com.mcr.spaceshooter.Entity.Space;
 import com.mcr.spaceshooter.Entity.Spaceship;
 
@@ -42,7 +45,12 @@ public class SpaceRenderer {
 
     }
 
-    public void drawSpaceship(SpriteBatch spriteBatch){
-        space.getSpaceship().render(spriteBatch);
+    public void update() {
+        space.update();
+    }
+
+    public void draw(SpriteBatch spriteBatch) {
+        renderBackground(spriteBatch);
+        space.render(spriteBatch);
     }
 }
