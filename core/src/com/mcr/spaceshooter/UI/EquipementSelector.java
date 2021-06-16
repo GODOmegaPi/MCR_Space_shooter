@@ -15,10 +15,13 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
+import com.mcr.spaceshooter.Builder.ShipBuilderException;
 import com.mcr.spaceshooter.Entity.Equipments.Equipment;
 import com.sun.tools.javac.util.Pair;
 
 import java.util.List;
+import java.util.function.Consumer;
+
 
 public class EquipementSelector extends Group {
     // TODO voir ce qui peut etre static  eg: btnTex restera toujours le même (comme defaultEuiqpementTex)
@@ -32,9 +35,11 @@ public class EquipementSelector extends Group {
     private Skin skin;
     private TextButton equipBtn;
     private Boolean isEquiped = false;
+    Consumer<Equipment> buildSetter;
+    Runnable buildCleaner;
 
 
-    public EquipementSelector(List<Pair<Equipment, Texture>> equipments, Skin skin) {
+    public EquipementSelector(List<Pair<Equipment, Texture>> equipments, Skin skin, Consumer<Equipment> buildSetter, Runnable buildCleaner) {
         // On le set l'index de l'élément courant à une valeur impossible car au commencement
         // Aucun élément n'est sélectionné
         this.currentElementIdx = 0;
@@ -45,6 +50,8 @@ public class EquipementSelector extends Group {
         table.setFillParent(true);
         addActor(table);
         this.init();
+        this.buildSetter = buildSetter;
+        this.buildCleaner = buildCleaner;
     }
 
     private void changeEquipment(Pair<Equipment, Texture> equipement) {
@@ -57,19 +64,30 @@ public class EquipementSelector extends Group {
         equipBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
+                try{
+                    // TODO UTILISER LE BUILDER
+                    if (isEquiped) {
+                        Gdx.app.debug(this.getClass().getName(), "PAR ici"  );
+                        buildCleaner.run();
+                        isEquiped = false;
+                        equipBtn.setText("Equiper");
+                        leftArrowBtn.setDisabled(false);
+                        rightArrowBtn.setDisabled(false);
+                        Gdx.app.debug(this.getClass().getName(), "PAR ici en bas"  );
+                    } else {
+                        Gdx.app.debug(this.getClass().getName(), "PAR LA"  );
+                        buildSetter.accept(equipments.get(currentElementIdx).fst);
 
-                // TODO UTILISER LE BUILDER
-                if (isEquiped) {
-                    isEquiped = false;
-                    equipBtn.setText("Equiper");
-                    leftArrowBtn.setDisabled(false);
-                    rightArrowBtn.setDisabled(false);
-                } else {
-                    isEquiped = true;
-                    equipBtn.setText("Desequiper");
-                    leftArrowBtn.setDisabled(true);
-                    rightArrowBtn.setDisabled(true);
+                        isEquiped = true;
+                        equipBtn.setText("Desequiper");
+                        leftArrowBtn.setDisabled(true);
+                        rightArrowBtn.setDisabled(true);
+                        Gdx.app.debug(this.getClass().getName(), "PAR La en bas"  );
+                    }
+                }catch(ShipBuilderException sbe){
+                    Gdx.app.debug(this.getClass().getName(), "Erreur de construction: " + sbe.getMessage()  );
                 }
+
             }
         });
 

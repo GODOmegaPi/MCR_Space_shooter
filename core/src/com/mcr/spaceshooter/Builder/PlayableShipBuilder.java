@@ -4,14 +4,17 @@ import com.mcr.spaceshooter.Entity.Spaceship;
 import com.mcr.spaceshooter.Entity.Equipments.Fuselage;
 import com.mcr.spaceshooter.Entity.Equipments.Shield;
 import com.mcr.spaceshooter.Entity.Equipments.Weapon;
+import com.mcr.spaceshooter.Utils.Constants;
 
 public class PlayableShipBuilder implements ShipBuilder {
     private int currentHp;
+    private int totalCost;
     private Fuselage fuselage;
     private Weapon weapon;
     private Shield shield;
 
-    public PlayableShipBuilder(){} // TODO : Avoir un name comme param ?
+    public PlayableShipBuilder() {
+    } // TODO : Avoir un name comme param ?
 
     @Override
     public void reset() {
@@ -22,32 +25,67 @@ public class PlayableShipBuilder implements ShipBuilder {
         shield = null;
     }
 
-    @Override
-    public ShipBuilder fuselage(int hp, int credit) {
-        this.fuselage = new Fuselage(hp, credit);
+    public ShipBuilder setFuselage(Fuselage fuselage) throws ShipBuilderException {
+        this.fuselage = fuselage;
+        this.totalCost += fuselage.getPrice();
         return this;
     }
 
     @Override
-    public ShipBuilder shield(int hp, int credit) {
-        this.shield = new Shield(hp, credit);
-        return this;
-    }
-
-    @Override
-    public ShipBuilder weapon(int hp, int credit, int damage) {
-        if (fuselage == null){
-            //throw new Exception("Fuselage nécessaire avant l'ajout d'une arme !");
+    public ShipBuilder setShield(Shield shield) throws ShipBuilderException {
+        if (fuselage == null) {
+            throw new ShipBuilderException("Fuselage nécessaire avant l'ajout d'un bouclier !");
         }
-        this.weapon = new Weapon(hp, credit, damage);
+        this.shield = shield;
+        this.totalCost += shield.getPrice();
+        return this;
+    }
+
+    @Override
+    public ShipBuilder setWeapon(Weapon weapon) throws ShipBuilderException {
+        if (fuselage == null) {
+            throw new ShipBuilderException("Fuselage nécessaire avant l'ajout d'une arme !");
+        }
+        this.weapon = weapon;
+        this.totalCost += weapon.getPrice();
+        return this;
+    }
+
+    @Override
+    public ShipBuilder clearFuselage() throws ShipBuilderException {
+        if (shield != null) {
+            throw new ShipBuilderException("Déséquiper le bouclier avant !");
+        } else if (weapon != null) {
+            throw new ShipBuilderException("Déséquiper l'arme avant !");
+        }
+        fuselage = null;
+        return this;
+    }
+
+    @Override
+    public ShipBuilder clearShield() throws ShipBuilderException {
+        shield = null;
+        return this;
+    }
+
+    @Override
+    public ShipBuilder clearWeapon() throws ShipBuilderException {
+        weapon = null;
         return this;
     }
 
     @Override
     public Spaceship build() {
         Spaceship ship = new Spaceship(this);
-        //validateShip(ship);
+        if (!isValidShip(ship)) {
+            throw new ShipBuilderException("Construction invalide !");
+        }
         return ship;
+    }
+
+    @Override
+    public int getTotalCost() {
+        return totalCost;
     }
 
     public int getCurrentHp() {
@@ -66,26 +104,7 @@ public class PlayableShipBuilder implements ShipBuilder {
         return shield;
     }
 
-    private void validateShip(Spaceship ship) throws Exception {
-        if (ship.getFuselage() == null || ship.getWeapon() == null){
-            throw new Exception("Le vaisseau n'est pas construit correctement !");
-        }
+    private boolean isValidShip(Spaceship ship) throws ShipBuilderException {
+        return ship.getFuselage() != null && ship.getWeapon() != null && getTotalCost() <= Constants.MAX_COST;
     }
-
-    /*
-    @Override
-    public void setFuselage() {
-
-    }
-
-    @Override
-    public void setShield() {
-
-    }
-
-    @Override
-    public void setWeapon() {
-
-    }
-     */
 }

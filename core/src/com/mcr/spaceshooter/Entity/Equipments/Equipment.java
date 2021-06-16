@@ -2,7 +2,7 @@ package com.mcr.spaceshooter.Entity.Equipments;
 
 abstract public class Equipment {
     private int hp;
-    private int credit;
+    private int price;
 
     public void setHp(int hp) {
         this.hp = hp;
@@ -12,12 +12,12 @@ abstract public class Equipment {
         return hp;
     }
 
-    public int getCredit() {
-        return credit;
+    public int getPrice() {
+        return price;
     }
 
-    public Equipment(int hp, int credit){
+    public Equipment(int hp, int price){
         this.hp = hp;
-        this.credit = credit;
+        this.price = price;
     }
 }
