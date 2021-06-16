@@ -14,8 +14,6 @@ public class SpaceRenderer {
 
     private int width;
     private int height;
-    private float ppuX;	// pixels per unit on the X axis
-    private float ppuY;	// pixels per unit on the Y axi
 
 
     private Texture backgroundTexture;
@@ -41,6 +39,7 @@ public class SpaceRenderer {
 
     public void setSize (int w, int h) {
         //TODO. Pour l'instant on s'en fout des resizes.
+
     }
 
     public void drawSpaceship(SpriteBatch spriteBatch){

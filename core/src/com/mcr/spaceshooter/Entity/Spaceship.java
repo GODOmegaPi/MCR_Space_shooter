@@ -9,12 +9,11 @@ import com.mcr.spaceshooter.Entity.Equipements.Weapon;
 
 public class Spaceship {
     //TODO: MON TROU DU CUL EN FORME DE VECTEUR
-    int x, y;
-    int speed;
-    Texture texture;
-    Weapon weapon;
-    Shield shield;
-
+    private int x, y;
+    private int speed;
+    private Texture texture;
+    private Weapon weapon;
+    private Shield shield;
 
     public Spaceship(int x, int y, int speed) {
          this.x = x;
@@ -31,7 +30,7 @@ public class Spaceship {
     }
 
     public void shoot() {
-        System.out.println("piou piou!!!");
+        weapon.shoot(x, y);
     }
 
     public void render(SpriteBatch spriteBatch) {
@@ -54,6 +53,8 @@ public class Spaceship {
         spriteBatch.begin();
         spriteBatch.draw(texture, x, y, 80, 80);
         spriteBatch.end();
+
+        weapon.render(spriteBatch);
     }
 
     public int getX() {
