@@ -1,9 +1,6 @@
 package com.mcr.spaceshooter.Entity;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mcr.spaceshooter.Entity.Equipements.Bullet;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -11,27 +8,38 @@ import java.util.stream.Collectors;
 
 public class Space {
 
+    /**
+     * TODO: Nombre croissant d'asteroids.
+     */
+
     private Spaceship spaceship;
     private List<Asteroid> asteroids;
-    private static int N_ASTEROIDS;
+    private static int N_ASTEROIDS = 20;
+
+    private int score;
 
     public Space() {
            spaceship = new Spaceship(50, 50, 5);
            asteroids = new LinkedList<>();
-           generateAsteroids(10);
+           generateAsteroids(N_ASTEROIDS / 2);
+           score = 0;
     }
 
     public Spaceship getSpaceship() {
         return spaceship;
     }
 
+    public int getScore() {
+        return score;
+    }
+
     public void update() {
         for(Asteroid asteroid: asteroids) {
             if(spaceship.isColliding(asteroid.getBounds())){
                 asteroid.hit();
+                ++score;
             }
         }
-
     }
 
     private void generateAsteroids(int number) {
@@ -48,12 +56,10 @@ public class Space {
                 .filter(a -> !a.isHit())
                 .collect(Collectors.toList());
 
-        generateAsteroids(20);
+        generateAsteroids(N_ASTEROIDS);
 
         for(Asteroid asteroid : asteroids){
             asteroid.render(spriteBatch);
-
         }
     }
-
 }

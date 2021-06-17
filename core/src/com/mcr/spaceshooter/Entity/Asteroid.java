@@ -16,6 +16,8 @@ public class Asteroid {
     private boolean hit;
     private Rectangle bounds;
 
+    public static int DAMAGE = 10;
+
     public Asteroid() {
         size = Rand.generateRandom(50, 75);
         speed = Rand.generateRandom(2, 5);
@@ -30,7 +32,6 @@ public class Asteroid {
     }
 
     public void render(SpriteBatch spriteBatch) {
-
         bounds.setY(bounds.getY() - speed);
         spriteBatch.begin();
         spriteBatch.draw(texture, bounds.getX(), bounds.getY(), size, size);

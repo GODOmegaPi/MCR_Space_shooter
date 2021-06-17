@@ -1,7 +1,5 @@
 package com.mcr.spaceshooter.Entity.Equipements;
 
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-
 /**
  * TODO faire une sous classe pour les equipement défensif vs offensif
  * TODO: pas con lol
@@ -17,7 +15,13 @@ abstract public class Equipment {
     public int getCredit() {
         return credit;
     }
+
     public int getHp(){
         return hp;
+    }
+
+    public void setHp(int hp) {
+        // Pas de point de vie négative.
+        this.hp = Math.max(hp, 0);
     }
 }

@@ -15,7 +15,10 @@ public class Spaceship {
     private Texture texture;
     private Weapon weapon;
     private Shield shield;
+    private int HP;
+
     private static final int SIZE = 50;
+    private static final int MAX_HP = 100;
 
     public Spaceship(int x, int y, int speed) {
          bounds = new Rectangle(x, y, SIZE, SIZE);
@@ -23,19 +26,31 @@ public class Spaceship {
          texture = new Texture(Gdx.files.internal("ss_4.png"));
          weapon = new Weapon(50, 50);
          shield = new Shield(50, 50);
+         HP = MAX_HP;
     }
 
     public boolean isColliding(Rectangle rect) {
-        boolean hit;
-        if(Intersector.overlaps(bounds, rect)) {
-            //alive = false;
-            hit = true;
+        boolean hitBySpaceship = false;
+        if(Intersector.overlaps(bounds, rect)){
+            hit(Asteroid.DAMAGE);
+            hitBySpaceship = true;
         }
-        return weapon.isColliding(rect);
+        return weapon.isColliding(rect) || hitBySpaceship;
     }
 
     public void shoot() {
         weapon.shoot(getX(), getY());
+    }
+
+    public void hit(int damage){
+        int shieldPV = shield.getHp();
+        shieldPV -= damage;
+
+        if(shieldPV < 0){
+            HP += shieldPV;
+        }
+
+        shield.setHp(shieldPV);
     }
 
     public void render(SpriteBatch spriteBatch) {
@@ -68,5 +83,13 @@ public class Spaceship {
 
     public float getY() {
         return bounds.getY();
+    }
+
+    public int getHP() {
+        return HP;
+    }
+
+    public Shield getShield() {
+        return shield;
     }
 }
