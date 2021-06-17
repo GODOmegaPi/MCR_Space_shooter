@@ -16,6 +16,18 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mcr.spaceshooter.Entity.Space;
 import com.mcr.spaceshooter.ScreenManager;
+import com.badlogic.gdx.audio.Music;
+import com.badlogic.gdx.Audio;
+
+
+/**
+ *
+ * TODO:
+ * - Game over
+ * - Espace torique (à voir)
+ * - Astéroïdes déplacement en diagonale
+ * - Vitesse de tir à placer variable dans Weapon shootingSpeed
+ */
 
 public class GameScreen implements Screen {
     private Stage stage;
@@ -23,11 +35,14 @@ public class GameScreen implements Screen {
     private Skin skin;
     private Space space;
     private SpaceRenderer renderer;
+    private Music music;
 
     public GameScreen(){
         //stage = new Stage(new ScreenViewport());
 
         skin = new Skin(Gdx.files.internal("skin/craftacular-ui.json"));
+        music = Gdx.audio.newMusic(Gdx.files.internal("sounds/ambiance.mp3"));
+        music.setLooping(true);
         space = new Space();
         spriteBatch = new SpriteBatch();
 
@@ -55,7 +70,7 @@ public class GameScreen implements Screen {
         table.row();
         table.add(quitButton).width(300).colspan(2);
          */
-
+    music.play();
 
     }
 
@@ -67,6 +82,10 @@ public class GameScreen implements Screen {
         //stage.draw();
 
         renderer.update();
+        if(space.isGameOver()) {
+            ScreenManager.getInstance().setScreen(new GameOverScreen(space.getScore()));
+            return;
+        }
         renderer.draw(spriteBatch);
 
         /*
@@ -100,5 +119,6 @@ public class GameScreen implements Screen {
     @Override
     public void dispose() {
         stage.dispose();
+        music.dispose();
     }
 }

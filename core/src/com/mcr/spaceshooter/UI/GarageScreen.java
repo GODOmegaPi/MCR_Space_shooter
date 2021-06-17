@@ -39,6 +39,7 @@ public class GarageScreen implements Screen {
 
         // TODO voir comment opti new LinkedList<>([p1,p2,p3])
         // TODO clean code
+        // TODO: ajouter aide commandes
         fuselagesList = new LinkedList<>();
         for (int i = 1; i <= 16; i++) {
             Pair p = new Pair<>(new Fuselage(10, 10), new Texture(Gdx.files.internal("ships/cockpits/ship (" + i + ").png")));

@@ -62,4 +62,9 @@ public class Space {
             asteroid.render(spriteBatch);
         }
     }
+
+    public boolean isGameOver() {
+        return spaceship.getHP() == 0;
+    }
+
 }

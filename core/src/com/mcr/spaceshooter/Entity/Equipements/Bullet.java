@@ -1,6 +1,7 @@
 package com.mcr.spaceshooter.Entity.Equipements;
 
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
@@ -13,6 +14,7 @@ public class Bullet {
     private Texture texture;
     private boolean outOfBound;
     private boolean alive;
+    private Sound sound;
 
     public static int SIZE = 50;
     
@@ -21,6 +23,8 @@ public class Bullet {
 
         this.speed = speed;
         texture = new Texture(Gdx.files.internal("bullet1.png"));
+        sound = Gdx.audio.newSound(Gdx.files.internal("sounds/bullet.mp3"));
+        sound.play();
         outOfBound = false;
         alive = true;
         bounds = new Rectangle(x, y, size, size);

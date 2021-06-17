@@ -25,6 +25,8 @@ public class SpaceRenderer {
     private BitmapFont font;
     private Texture backgroundTexture;
 
+    
+
     public SpaceRenderer(Space space) {
         this.space = space;
         //TODO Centrer.
@@ -60,6 +62,7 @@ public class SpaceRenderer {
     public void update() {
         space.update();
     }
+
 
 
     public void draw(SpriteBatch spriteBatch) {

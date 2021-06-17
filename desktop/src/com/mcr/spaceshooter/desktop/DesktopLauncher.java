@@ -10,6 +10,7 @@ public class DesktopLauncher {
 		config.height= 1000;
 		config.width = 800;
 		config.fullscreen = false;
+		config.resizable = false;
 		new LwjglApplication(new SpaceShooter(), config);
 	}
 }

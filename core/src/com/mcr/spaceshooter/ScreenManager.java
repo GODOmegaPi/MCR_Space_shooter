@@ -10,11 +10,10 @@ public class ScreenManager {
     private Game game;
     private Screen currentScreen;
 
-    // TODO singleton
-
     private ScreenManager(){
 
     }
+
     public void setScreen(Screen screen){
         currentScreen = screen;
         game.setScreen(screen);
