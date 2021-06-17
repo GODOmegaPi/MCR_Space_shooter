@@ -30,6 +30,7 @@ public class EquipementSelector extends Group {
     private ImageButton leftArrowBtn;
     private ImageButton rightArrowBtn;
     private Texture btnTex; //
+    private Texture pressedBtnTex;
     private int currentElementIdx;
     private List<Pair<Equipment, Texture>> equipments;
     private Skin skin;
@@ -52,6 +53,7 @@ public class EquipementSelector extends Group {
         this.init();
         this.buildSetter = buildSetter;
         this.buildCleaner = buildCleaner;
+
     }
 
     private void changeEquipment(Pair<Equipment, Texture> equipement) {
@@ -93,7 +95,8 @@ public class EquipementSelector extends Group {
 
 
         btnTex = new Texture(Gdx.files.internal("leftArrow.png"));
-        leftArrowBtn = new ImageButton(new TextureRegionDrawable(new TextureRegion(btnTex)));
+        pressedBtnTex = new Texture(Gdx.files.internal("leftArrow_pressed.png"));
+        leftArrowBtn = new ImageButton(new TextureRegionDrawable(new TextureRegion(btnTex)),new TextureRegionDrawable(new TextureRegion(pressedBtnTex)));
         leftArrowBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -107,7 +110,7 @@ public class EquipementSelector extends Group {
                 changeEquipment(equipments.get(currentElementIdx));
             }
         });
-        rightArrowBtn = new ImageButton(new TextureRegionDrawable(new TextureRegion(btnTex)));
+        rightArrowBtn =  new ImageButton(new TextureRegionDrawable(new TextureRegion(btnTex)),new TextureRegionDrawable(new TextureRegion(pressedBtnTex)));
         rightArrowBtn.addListener(new ClickListener() {
             @Override
 
