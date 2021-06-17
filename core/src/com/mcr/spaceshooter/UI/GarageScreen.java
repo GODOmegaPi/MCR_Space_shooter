@@ -1,10 +1,12 @@
 package com.mcr.spaceshooter.UI;
 
-import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -21,8 +23,11 @@ import com.mcr.spaceshooter.Entity.Equipments.Fuselage;
 import com.mcr.spaceshooter.Entity.Equipments.Shield;
 import com.mcr.spaceshooter.Entity.Equipments.Weapon;
 import com.mcr.spaceshooter.ScreenManager;
+import com.mcr.spaceshooter.Utils.Toast;    // https://github.com/wentsa/Toast-LibGDX
 import com.sun.tools.javac.util.Pair;
 
+import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -31,9 +36,9 @@ import java.util.List;
  * L Faire la sous-structure Equipment (OffensiveEquipment, DefensiveEquipment) & Ajouter un nom aux équipements
  * - Rajouter les specs des équipements (+ coût etc)
  * - Afficher un coût du vaisseau à chaque appui sur équiper => màj du coût
- * - Afficher des erreurs  https://github.com/wentsa/Toast-LibGDX ou label ou dialog
+ * L Afficher des erreurs https://github.com/wentsa/Toast-LibGDX ou label ou dialog
  * - Transfert du vaisseau vers le jeu
- *      - Transfert des textures.
+ * - Transfert des textures.
  * - Faire des données pour les équipements (HP, cost, etc.)
  */
 public class GarageScreen implements Screen {
@@ -43,12 +48,25 @@ public class GarageScreen implements Screen {
     private List<Pair<Equipment, Texture>> weaponsList;
     private List<Pair<Equipment, Texture>> shieldsList;
     private ShipBuilder builder;
+    private List<Toast> toasts;
+    private final Toast.ToastFactory errorToastFactory;
 
     public GarageScreen() {
         builder = new PlayableShipBuilder();
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         skin = new Skin(Gdx.files.internal("skin/craftacular-ui.json"));
+
+        // Toasts pour les messages d'erreur
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("skin/Amble-Regular.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        BitmapFont font24 = generator.generateFont(parameter);
+        errorToastFactory = new Toast.ToastFactory.Builder()
+            .font(font24)
+            .backgroundColor(Color.DARK_GRAY) // default : new Color(0.5f, 0.5f, 0.5f, 1f)
+            .fadingDuration(1.2f)
+            .fontColor(Color.RED).build();
+        toasts = new ArrayList<>();
 
         // TODO voir comment opti new LinkedList<>([p1,p2,p3])
         fuselagesList = new LinkedList<>();
@@ -67,7 +85,6 @@ public class GarageScreen implements Screen {
         weaponsList.add(pc);
         weaponsList.add(pb);
         weaponsList.add(pa);
-
 
         shieldsList = new LinkedList<>();
         Pair px = new Pair<>(new Shield("Phantom Shield", 10, 10), new Texture(Gdx.files.internal("sh_1.png")));
@@ -105,11 +122,11 @@ public class GarageScreen implements Screen {
 
         table.add(titleLabel).colspan(3);
         table.row();
-        table.add(new EquipementSelector(fuselagesList, skin, c -> builder.setFuselage((Fuselage) c), () -> builder.clearFuselage())).height(200).colspan(3).center();
+        table.add(new EquipementSelector(fuselagesList, skin, c -> builder.setFuselage((Fuselage) c), () -> builder.clearFuselage(), this)).height(200).colspan(3).center();
         table.row();
-        table.add(new EquipementSelector(weaponsList, skin, c -> builder.setWeapon((Weapon) c), () -> builder.clearWeapon())).height(200).colspan(3).center();
+        table.add(new EquipementSelector(weaponsList, skin, c -> builder.setWeapon((Weapon) c), () -> builder.clearWeapon(), this)).height(200).colspan(3).center();
         table.row();
-        table.add(new EquipementSelector(shieldsList, skin, c -> builder.setShield((Shield) c), () -> builder.clearShield())).height(200).colspan(3).center();
+        table.add(new EquipementSelector(shieldsList, skin, c -> builder.setShield((Shield) c), () -> builder.clearShield(), this)).height(200).colspan(3).center();
         table.row();
         table.add(playButton).width(300).colspan(3);
         table.row();
@@ -121,6 +138,20 @@ public class GarageScreen implements Screen {
         Gdx.input.setInputProcessor(stage);
     }
 
+    /**
+     * Displays long toast
+     */
+    public void toastLong(String text) {
+        toasts.add(errorToastFactory.create(text, Toast.Length.LONG));
+    }
+
+    /**
+     * Displays short toast
+     */
+    public void toastShort(String text) {
+        toasts.add(errorToastFactory.create(text, Toast.Length.SHORT));
+    }
+
     @Override
     public void render(float delta) {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
@@ -129,6 +160,17 @@ public class GarageScreen implements Screen {
         // tell our stage to do actions and draw itself
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
+
+        // Affiche les toasts
+        Iterator<Toast> it = toasts.iterator();
+        while(it.hasNext()) {
+            Toast t = it.next();
+            if(!t.render(Gdx.graphics.getDeltaTime())) {
+                it.remove(); // toast finished -> remove
+            } else {
+                break; // first toast still active, break the loop
+            }
+        }
     }
 
     @Override

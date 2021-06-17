@@ -37,9 +37,10 @@ public class EquipementSelector extends Group {
     private Boolean isEquiped = false;
     Consumer<Equipment> buildSetter;
     Runnable buildCleaner;
+    GarageScreen garageScreen;
 
 
-    public EquipementSelector(List<Pair<Equipment, Texture>> equipments, Skin skin, Consumer<Equipment> buildSetter, Runnable buildCleaner) {
+    public EquipementSelector(List<Pair<Equipment, Texture>> equipments, Skin skin, Consumer<Equipment> buildSetter, Runnable buildCleaner, GarageScreen garageScreen) {
         // On le set l'index de l'élément courant à une valeur impossible car au commencement
         // Aucun élément n'est sélectionné
         this.currentElementIdx = 0;
@@ -52,6 +53,7 @@ public class EquipementSelector extends Group {
         this.init();
         this.buildSetter = buildSetter;
         this.buildCleaner = buildCleaner;
+        this.garageScreen = garageScreen;
     }
 
     private void changeEquipment(Pair<Equipment, Texture> equipement) {
@@ -77,7 +79,6 @@ public class EquipementSelector extends Group {
                     } else {
                         Gdx.app.debug(this.getClass().getName(), "PAR LA"  );
                         buildSetter.accept(equipments.get(currentElementIdx).fst);
-
                         isEquiped = true;
                         equipBtn.setText("Desequiper");
                         leftArrowBtn.setDisabled(true);
@@ -85,6 +86,7 @@ public class EquipementSelector extends Group {
                         Gdx.app.debug(this.getClass().getName(), "PAR La en bas"  );
                     }
                 }catch(ShipBuilderException sbe){
+                    garageScreen.toastLong("Erreur de construction: " + sbe.getMessage());
                     Gdx.app.debug(this.getClass().getName(), "Erreur de construction: " + sbe.getMessage()  );
                 }
 
