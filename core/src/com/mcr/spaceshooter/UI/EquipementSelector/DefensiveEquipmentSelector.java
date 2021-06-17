@@ -1,4 +1,4 @@
-package com.mcr.spaceshooter.UI;
+package com.mcr.spaceshooter.UI.EquipementSelector;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
@@ -6,7 +6,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mcr.spaceshooter.Entity.Equipments.DefensiveEquipment;
 import com.mcr.spaceshooter.Entity.Equipments.Equipment;
-import com.mcr.spaceshooter.Entity.Equipments.Weapon;
+import com.mcr.spaceshooter.UI.Screen.GarageScreen;
 import com.sun.tools.javac.util.Pair;
 
 import java.util.List;

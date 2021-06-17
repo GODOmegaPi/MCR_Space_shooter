@@ -1,10 +1,9 @@
-package com.mcr.spaceshooter.UI;
+package com.mcr.spaceshooter.UI.EquipementSelector;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -17,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mcr.spaceshooter.Builder.ShipBuilderException;
 import com.mcr.spaceshooter.Entity.Equipments.Equipment;
+import com.mcr.spaceshooter.UI.Screen.GarageScreen;
 import com.sun.tools.javac.util.Pair;
 
 import java.util.List;

@@ -1,4 +1,4 @@
-package com.mcr.spaceshooter.UI;
+package com.mcr.spaceshooter.UI.Screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -6,7 +6,6 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -19,11 +18,16 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import com.mcr.spaceshooter.Builder.PlayableShipBuilder;
 import com.mcr.spaceshooter.Builder.ShipBuilder;
+import com.mcr.spaceshooter.Builder.ShipBuilderException;
 import com.mcr.spaceshooter.Entity.Equipments.Equipment;
 import com.mcr.spaceshooter.Entity.Equipments.Fuselage;
 import com.mcr.spaceshooter.Entity.Equipments.Shield;
 import com.mcr.spaceshooter.Entity.Equipments.Weapon;
+import com.mcr.spaceshooter.Entity.Spaceship;
 import com.mcr.spaceshooter.ScreenManager;
+import com.mcr.spaceshooter.UI.EquipementSelector.DefensiveEquipmentSelector;
+import com.mcr.spaceshooter.UI.EquipementSelector.OffensiveEquipmentSelector;
+import com.mcr.spaceshooter.UI.GameScreen;
 import com.mcr.spaceshooter.Utils.Assets;
 import com.mcr.spaceshooter.Utils.Constants;
 import com.mcr.spaceshooter.Utils.Toast;    // https://github.com/wentsa/Toast-LibGDX
@@ -75,7 +79,6 @@ public class GarageScreen implements Screen {
 
         fuselagesList = new LinkedList<>();
 
-
         Pair p1 = new Pair<>(new Fuselage("Falcon 1", 30, 75), assets.get("ss_1.png", Texture.class));
         Pair p2 = new Pair<>(new Fuselage("Falcon 9", 40, 90), assets.get("ss_1.png", Texture.class));
         Pair p3 = new Pair<>(new Fuselage("Falcon Heavy", 50, 100), assets.get("ss_1.png", Texture.class));
@@ -118,9 +121,16 @@ public class GarageScreen implements Screen {
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                // TODO si le builder est ok, récupérer ship
-                Screen screen = new GameScreen();
-                ScreenManager.getInstance().setScreen(screen);
+                try{
+                    Spaceship ship = builder.build();
+                    // TODO si le builder est ok, récupérer ship
+                    Screen screen = new GameScreen();
+                    ScreenManager.getInstance().setScreen(screen);
+
+                }catch(ShipBuilderException sbe){
+                    toastLong(sbe.getMessage());
+                }
+
             }
         });
 

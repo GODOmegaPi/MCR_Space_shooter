@@ -6,7 +6,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mcr.spaceshooter.Entity.Spaceship;
-import com.mcr.spaceshooter.UI.GarageScreen;
+import com.mcr.spaceshooter.UI.Screen.GarageScreen;
 import com.mcr.spaceshooter.Utils.Assets;
 
 public class SpaceShooter extends Game {
