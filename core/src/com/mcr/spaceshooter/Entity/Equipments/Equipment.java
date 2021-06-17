@@ -1,23 +1,19 @@
 package com.mcr.spaceshooter.Entity.Equipments;
 
 abstract public class Equipment {
-    private int hp;
-    private int price;
+    private final int price;
+    private final String name;
 
-    public void setHp(int hp) {
-        this.hp = hp;
-    }
-
-    public int getHp() {
-        return hp;
+    public Equipment(String name, int price) {
+        this.name = name;
+        this.price = price;
     }
 
     public int getPrice() {
         return price;
     }
 
-    public Equipment(int hp, int price){
-        this.hp = hp;
-        this.price = price;
+    public String getName() {
+        return name;
     }
 }

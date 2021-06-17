@@ -28,17 +28,13 @@ import java.util.List;
 
 /**
  * TODO:
- *  - Aller dormir
- *  - Faire la sous-structure Equipement (Off, defensive) & Ajouter un nom au équipements
- *  - Rajouter les specs des equipements (+ cout etc)
- *  - Afficher un cout du vaisseau à chaque appuit sur equiper => màj du cout
- *  - Afficher des erreurs  https://github.com/wentsa/Toast-LibGDX ou label ou dialog
- *  - Transfert du vaisseau vers le jeu
+ * L Faire la sous-structure Equipment (OffensiveEquipment, DefensiveEquipment) & Ajouter un nom aux équipements
+ * - Rajouter les specs des équipements (+ coût etc)
+ * - Afficher un coût du vaisseau à chaque appui sur équiper => màj du coût
+ * - Afficher des erreurs  https://github.com/wentsa/Toast-LibGDX ou label ou dialog
+ * - Transfert du vaisseau vers le jeu
  *      - Transfert des textures.
- *  - Faire des données pour les équipements (HP, cost, )
-
- *
- *  https://itch.io/game-assets/tag-2d/tag-space
+ * - Faire des données pour les équipements (HP, cost, etc.)
  */
 public class GarageScreen implements Screen {
     private Stage stage;
@@ -56,27 +52,27 @@ public class GarageScreen implements Screen {
 
         // TODO voir comment opti new LinkedList<>([p1,p2,p3])
         fuselagesList = new LinkedList<>();
-        Pair p1 = new Pair<>(new Fuselage(10, 10), new Texture(Gdx.files.internal("ss_1.png")));
-        Pair p2 = new Pair<>(new Fuselage(651, 25), new Texture(Gdx.files.internal("ss_2.png")));
-        Pair p3 = new Pair<>(new Fuselage(10, 10), new Texture(Gdx.files.internal("ss_3.png")));
+        Pair p1 = new Pair<>(new Fuselage("Falcon 1", 10, 10), new Texture(Gdx.files.internal("ss_1.png")));
+        Pair p2 = new Pair<>(new Fuselage("Falcon 9", 651, 25), new Texture(Gdx.files.internal("ss_2.png")));
+        Pair p3 = new Pair<>(new Fuselage("Falcon Heavy", 10, 10), new Texture(Gdx.files.internal("ss_3.png")));
 
         fuselagesList.add(p1);
         fuselagesList.add(p3);
         fuselagesList.add(p2);
 
         weaponsList = new LinkedList<>();
-        Pair pa = new Pair<>(new Weapon(10, 10, 1), new Texture(Gdx.files.internal("wp_1.png")));
-        Pair pb = new Pair<>(new Weapon(10, 10, 1), new Texture(Gdx.files.internal("wp_2.png")));
-        Pair pc = new Pair<>(new Weapon(10, 10, 2), new Texture(Gdx.files.internal("wp_3.png")));
+        Pair pa = new Pair<>(new Weapon("SIG 550", 10, 10), new Texture(Gdx.files.internal("wp_1.png")));
+        Pair pb = new Pair<>(new Weapon("Browning M2HB", 10, 10), new Texture(Gdx.files.internal("wp_2.png")));
+        Pair pc = new Pair<>(new Weapon("Panzerfaust", 10, 10), new Texture(Gdx.files.internal("wp_3.png")));
         weaponsList.add(pc);
         weaponsList.add(pb);
         weaponsList.add(pa);
 
 
         shieldsList = new LinkedList<>();
-        Pair px = new Pair<>(new Shield(10, 10), new Texture(Gdx.files.internal("sh_1.png")));
-        Pair py = new Pair<>(new Shield(10, 10), new Texture(Gdx.files.internal("sh_2.png")));
-        Pair pz = new Pair<>(new Shield(10, 10), new Texture(Gdx.files.internal("sh_3.png")));
+        Pair px = new Pair<>(new Shield("Phantom Shield", 10, 10), new Texture(Gdx.files.internal("sh_1.png")));
+        Pair py = new Pair<>(new Shield("Diamond Shield", 10, 10), new Texture(Gdx.files.internal("sh_2.png")));
+        Pair pz = new Pair<>(new Shield("Green Plasma Shield", 10, 10), new Texture(Gdx.files.internal("sh_3.png")));
 
         shieldsList.add(pz);
         shieldsList.add(px);
@@ -120,44 +116,44 @@ public class GarageScreen implements Screen {
         table.add(quitButton).width(300).colspan(3);
     }
 
-        @Override
-        public void show () {
-            Gdx.input.setInputProcessor(stage);
-        }
-
-        @Override
-        public void render ( float delta){
-            Gdx.gl.glClearColor(0f, 0f, 0f, 1);
-            Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
-            // tell our stage to do actions and draw itself
-            stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
-            stage.draw();
-        }
-
-        @Override
-        public void resize ( int width, int height){
-            stage.getViewport().update(width, height, true);
-        }
-
-        @Override
-        public void pause () {
-
-        }
-
-        @Override
-        public void resume () {
-
-        }
-
-        @Override
-        public void hide () {
-
-        }
-
-        @Override
-        public void dispose () {
-
-            stage.dispose();
-        }
+    @Override
+    public void show() {
+        Gdx.input.setInputProcessor(stage);
     }
+
+    @Override
+    public void render(float delta) {
+        Gdx.gl.glClearColor(0f, 0f, 0f, 1);
+        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        // tell our stage to do actions and draw itself
+        stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
+        stage.draw();
+    }
+
+    @Override
+    public void resize(int width, int height) {
+        stage.getViewport().update(width, height, true);
+    }
+
+    @Override
+    public void pause() {
+
+    }
+
+    @Override
+    public void resume() {
+
+    }
+
+    @Override
+    public void hide() {
+
+    }
+
+    @Override
+    public void dispose() {
+
+        stage.dispose();
+    }
+}
