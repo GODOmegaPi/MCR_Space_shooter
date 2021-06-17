@@ -20,7 +20,6 @@ public class PlayableShipBuilder implements ShipBuilder {
 
     @Override
     public void reset() {
-        // TODO A quoi cela sert de reset ?
         currentHp = 0;
         fuselage = null;
         weapon = null;

@@ -123,6 +123,8 @@ public class GarageScreen implements Screen {
             public void clicked(InputEvent event, float x, float y) {
                 try{
                     Spaceship ship = builder.build();
+                    builder.reset();
+
                     // TODO si le builder est ok, récupérer ship
                     Screen screen = new GameScreen();
                     ScreenManager.getInstance().setScreen(screen);
