@@ -26,10 +26,9 @@ public class Space {
     }
 
     public void update() {
-        boolean ded = false;
         for(Asteroid asteroid: asteroids) {
             if(spaceship.isColliding(asteroid.getBounds())){
-                ded = true;
+                asteroid.hit();
             }
         }
 
@@ -46,6 +45,7 @@ public class Space {
 
         asteroids = asteroids.stream()
                 .filter(a -> !a.isOutOfBound())
+                .filter(a -> !a.isHit())
                 .collect(Collectors.toList());
 
         generateAsteroids(20);

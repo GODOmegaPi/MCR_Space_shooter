@@ -26,7 +26,9 @@ public class Weapon extends Equipment {
     public boolean isColliding(Rectangle rect) {
         boolean colliding = false;
         for(Bullet bullet : bullets) {
-            colliding = !colliding ? bullet.isColliding(rect) : colliding;
+            if(colliding) break;
+            colliding = bullet.isColliding(rect);
+            // colliding = !colliding ? bullet.isColliding(rect) : colliding;
         }
         return colliding;
     }
@@ -37,13 +39,12 @@ public class Weapon extends Equipment {
 
         bullets = bullets.stream()
                 .filter(b -> !b.isOutOfBound())
-                .filter(b-> b.isAlive())
+                .filter(Bullet::isAlive)
                 .collect(Collectors.toList());
 
 
         for(Bullet bullet : bullets){
             bullet.render(spriteBatch);
-
-            }
+        }
     }
 }

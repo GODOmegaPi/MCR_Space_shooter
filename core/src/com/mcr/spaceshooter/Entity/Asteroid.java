@@ -13,7 +13,7 @@ public class Asteroid {
     private int size;
     private int speed;
     private boolean outOfBound;
-    private boolean alive;
+    private boolean hit;
     private Rectangle bounds;
 
     public Asteroid() {
@@ -21,7 +21,7 @@ public class Asteroid {
         speed = Rand.generateRandom(2, 5);
         texture = new Texture(Gdx.files.internal("asteroid1.png"));
         outOfBound = false;
-        alive = true;
+        hit = false;
 
         //TODO remove variables tampons ouloulou
         int x = Rand.generateRandom(0, Gdx.graphics.getWidth());
@@ -40,8 +40,16 @@ public class Asteroid {
         }
     }
 
-    boolean isOutOfBound(){
+    public boolean isOutOfBound(){
         return outOfBound;
+    }
+
+    public void hit(){
+        hit = true;
+    }
+
+    public boolean isHit(){
+        return hit;
     }
 
     public Rectangle getBounds() {

@@ -25,15 +25,11 @@ public class Spaceship {
          shield = new Shield(50, 50);
     }
 
-    public void move(int amountX, int amountY) {
-        this.bounds.setX( getX() + (amountX * speed));
-        this.bounds.setY( getY() + (amountY * speed));
-    }
-
     public boolean isColliding(Rectangle rect) {
+        boolean hit;
         if(Intersector.overlaps(bounds, rect)) {
             //alive = false;
-            return true;
+            hit = true;
         }
         return weapon.isColliding(rect);
     }
@@ -55,7 +51,7 @@ public class Spaceship {
         if(Gdx.input.isKeyPressed(Keys.S)){
             bounds.setY(getY() - speed);
         }
-        if(Gdx.input.isKeyPressed(Keys.SPACE)){
+        if(Gdx.input.isKeyJustPressed(Keys.SPACE)){
             shoot();
         }
 
