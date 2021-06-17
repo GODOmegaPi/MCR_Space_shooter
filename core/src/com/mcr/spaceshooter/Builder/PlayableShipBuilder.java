@@ -6,7 +6,9 @@ import com.mcr.spaceshooter.Entity.Equipments.Shield;
 import com.mcr.spaceshooter.Entity.Equipments.Weapon;
 import com.mcr.spaceshooter.Utils.Constants;
 
+
 public class PlayableShipBuilder implements ShipBuilder {
+
     private int currentHp;
     private int totalCost;
     private Fuselage fuselage;
@@ -53,10 +55,11 @@ public class PlayableShipBuilder implements ShipBuilder {
 
     @Override
     public ShipBuilder clearFuselage() throws ShipBuilderException {
-        if(shield != null) {
-            throw new ShipBuilderException("Déséquiper le bouclier avant !");
-        } else if(weapon != null) {
-            throw new ShipBuilderException("Déséquiper l'arme avant !");
+        if(shield != null || weapon != null) {
+            StringBuilder msg = new StringBuilder("Vous devez déséquiper: \n");
+            if(shield != null) msg.append("- le bouclier \n");
+            if(weapon != null) msg.append("- l'arme");
+            throw new ShipBuilderException(msg.toString());
         }
         totalCost -= fuselage.getPrice();
         fuselage = null;

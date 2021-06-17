@@ -81,7 +81,7 @@ public class Toast {
         GlyphLayout layoutSimple = new GlyphLayout();
         layoutSimple.setText(this.font, text);
 
-        int lineHeight = (int) layoutSimple.height;
+        int lineHeight = (int) 10;
         fontWidth = (int) (layoutSimple.width);
         int fontHeight = (int) (layoutSimple.height);
 
