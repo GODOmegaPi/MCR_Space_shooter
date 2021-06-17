@@ -13,21 +13,19 @@ import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mcr.spaceshooter.ScreenManager;
+import com.mcr.spaceshooter.Utils.Assets;
 
 public class GameScreen implements Screen {
-    private Stage stage;
-    private Skin skin;
-
-    private SpaceRenderer renderer;
+    private final Stage stage;
+    private final Skin skin;
+    private final SpaceRenderer renderer;
 
     public GameScreen(){
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        skin = new Skin(Gdx.files.internal("skin/craftacular-ui.json"));
-
+        Assets assets = Assets.getInstance();
+        skin = assets.get("skin/craftacular-ui.json", Skin.class);
         renderer = new SpaceRenderer(stage.getBatch());
-
-
     }
 
     @Override

@@ -24,6 +24,7 @@ import com.mcr.spaceshooter.Entity.Equipments.Fuselage;
 import com.mcr.spaceshooter.Entity.Equipments.Shield;
 import com.mcr.spaceshooter.Entity.Equipments.Weapon;
 import com.mcr.spaceshooter.ScreenManager;
+import com.mcr.spaceshooter.Utils.Assets;
 import com.mcr.spaceshooter.Utils.Constants;
 import com.mcr.spaceshooter.Utils.Toast;    // https://github.com/wentsa/Toast-LibGDX
 import com.sun.tools.javac.util.Pair;
@@ -56,41 +57,45 @@ public class GarageScreen implements Screen {
         builder = new PlayableShipBuilder();
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        skin = new Skin(Gdx.files.internal("skin/craftacular-ui.json"));
+        Assets assets = Assets.getInstance();
+        //skin = new Skin(Gdx.files.internal("skin/craftacular-ui.json"));
+        skin = assets.get("skin/craftacular-ui.json", Skin.class);
+
 
         // Toasts pour les messages d'erreur
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("skin/Amble-Regular.ttf"));
-        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        BitmapFont font24 = generator.generateFont(parameter);
+        //FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("skin/Amble-Regular.ttf"));
+        //FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        //BitmapFont font24 = generator.generateFont(parameter);
         errorToastFactory = new Toast.ToastFactory.Builder()
-            .font(font24)
-            .backgroundColor(new Color(0.98f, 0.98f, 0.98f, 1f)) // default : new Color(0.5f, 0.5f, 0.5f, 1f)
-            .fadingDuration(1.2f)
-            .fontColor(new Color(0.86f, 0, 0, 1f)).build();
+                .font(assets.get("skin/Amble-Regular.ttf", BitmapFont.class))
+                .backgroundColor(new Color(0.98f, 0.98f, 0.98f, 1f)) // default : new Color(0.5f, 0.5f, 0.5f, 1f)
+                .fadingDuration(1.2f)
+                .fontColor(new Color(0.86f, 0, 0, 1f)).build();
         toasts = new ArrayList<>();
 
-        // TODO voir comment opti new LinkedList<>([p1,p2,p3])
         fuselagesList = new LinkedList<>();
-        Pair p1 = new Pair<>(new Fuselage("Falcon 1", 30, 75), new Texture(Gdx.files.internal("ss_1.png")));
-        Pair p2 = new Pair<>(new Fuselage("Falcon 9", 40, 90), new Texture(Gdx.files.internal("ss_2.png")));
-        Pair p3 = new Pair<>(new Fuselage("Falcon Heavy", 50, 100), new Texture(Gdx.files.internal("ss_3.png")));
+
+
+        Pair p1 = new Pair<>(new Fuselage("Falcon 1", 30, 75), assets.get("ss_1.png", Texture.class));
+        Pair p2 = new Pair<>(new Fuselage("Falcon 9", 40, 90), assets.get("ss_1.png", Texture.class));
+        Pair p3 = new Pair<>(new Fuselage("Falcon Heavy", 50, 100), assets.get("ss_1.png", Texture.class));
 
         fuselagesList.add(p1);
         fuselagesList.add(p2);
         fuselagesList.add(p3);
 
         weaponsList = new LinkedList<>();
-        Pair pa = new Pair<>(new Weapon("SIG 550", 30, 10), new Texture(Gdx.files.internal("wp_1.png")));
-        Pair pb = new Pair<>(new Weapon("Browning M2HB", 40, 15), new Texture(Gdx.files.internal("wp_2.png")));
-        Pair pc = new Pair<>(new Weapon("Panzerfaust", 50, 20), new Texture(Gdx.files.internal("wp_3.png")));
+        Pair pa = new Pair<>(new Weapon("SIG 550", 30, 10), assets.get("wp_1.png", Texture.class));
+        Pair pb = new Pair<>(new Weapon("Browning M2HB", 40, 15), assets.get("wp_2.png", Texture.class));
+        Pair pc = new Pair<>(new Weapon("Panzerfaust", 50, 20), assets.get("wp_3.png", Texture.class));
         weaponsList.add(pa);
         weaponsList.add(pb);
         weaponsList.add(pc);
 
         shieldsList = new LinkedList<>();
-        Pair px = new Pair<>(new Shield("Phantom Shield", 30, 10), new Texture(Gdx.files.internal("sh_1.png")));
-        Pair py = new Pair<>(new Shield("Diamond Shield", 40, 20), new Texture(Gdx.files.internal("sh_2.png")));
-        Pair pz = new Pair<>(new Shield("Plasma Shield", 50, 30), new Texture(Gdx.files.internal("sh_3.png")));
+        Pair px = new Pair<>(new Shield("Phantom Shield", 30, 10), assets.get("sh_1.png", Texture.class));
+        Pair py = new Pair<>(new Shield("Diamond Shield", 40, 20), assets.get("sh_2.png", Texture.class));
+        Pair pz = new Pair<>(new Shield("Plasma Shield", 50, 30), assets.get("sh_3.png", Texture.class));
 
         shieldsList.add(px);
         shieldsList.add(py);
@@ -160,7 +165,7 @@ public class GarageScreen implements Screen {
     }
 
     public void updateCost() {
-        if(builder.getTotalCost() > Constants.MAX_COST) {
+        if (builder.getTotalCost() > Constants.MAX_COST) {
             costValueLbl.setColor(Color.RED);
         } else {
             costValueLbl.setColor(Color.WHITE);
@@ -193,9 +198,9 @@ public class GarageScreen implements Screen {
 
         // Affiche les toasts
         Iterator<Toast> it = toasts.iterator();
-        while(it.hasNext()) {
+        while (it.hasNext()) {
             Toast t = it.next();
-            if(!t.render(Gdx.graphics.getDeltaTime())) {
+            if (!t.render(Gdx.graphics.getDeltaTime())) {
                 it.remove(); // toast finished -> remove
             } else {
                 break; // first toast still active, break the loop
