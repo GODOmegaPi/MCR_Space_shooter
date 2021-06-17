@@ -14,6 +14,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
+import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
 import com.mcr.spaceshooter.Builder.PlayableShipBuilder;
@@ -23,6 +24,7 @@ import com.mcr.spaceshooter.Entity.Equipments.Fuselage;
 import com.mcr.spaceshooter.Entity.Equipments.Shield;
 import com.mcr.spaceshooter.Entity.Equipments.Weapon;
 import com.mcr.spaceshooter.ScreenManager;
+import com.mcr.spaceshooter.Utils.Constants;
 import com.mcr.spaceshooter.Utils.Toast;    // https://github.com/wentsa/Toast-LibGDX
 import com.sun.tools.javac.util.Pair;
 
@@ -51,6 +53,10 @@ public class GarageScreen implements Screen {
     private List<Toast> toasts;
     private final Toast.ToastFactory errorToastFactory;
 
+    private Label costLbl;
+    private Label costValueLbl;
+    private Label maxCostLbl;
+
     public GarageScreen() {
         builder = new PlayableShipBuilder();
         stage = new Stage(new ScreenViewport());
@@ -63,9 +69,9 @@ public class GarageScreen implements Screen {
         BitmapFont font24 = generator.generateFont(parameter);
         errorToastFactory = new Toast.ToastFactory.Builder()
             .font(font24)
-            .backgroundColor(new Color(0.98f,0.98f,0.98f, 1f)) // default : new Color(0.5f, 0.5f, 0.5f, 1f)
+            .backgroundColor(new Color(0.98f, 0.98f, 0.98f, 1f)) // default : new Color(0.5f, 0.5f, 0.5f, 1f)
             .fadingDuration(1.2f)
-            .fontColor(new Color(0.86f,0,0,1f)).build();
+            .fontColor(new Color(0.86f, 0, 0, 1f)).build();
         toasts = new ArrayList<>();
 
         // TODO voir comment opti new LinkedList<>([p1,p2,p3])
@@ -122,6 +128,11 @@ public class GarageScreen implements Screen {
             }
         });
 
+
+        costLbl = new Label("Cout total du vaisseau :", skin);
+        costValueLbl = new Label("0", skin);
+        maxCostLbl = new Label("/" + Integer.toString(Constants.MAX_COST), skin);
+
         table.add(titleLabel).colspan(2).expand();
         table.row();
         table.add(firstColTable).expand();
@@ -132,15 +143,30 @@ public class GarageScreen implements Screen {
         firstColTable.add(new OffensiveEquipmentSelector(weaponsList, skin, c -> builder.setWeapon((Weapon) c), () -> builder.clearWeapon(), this)).height(250).width(300).colspan(3).pad(10).center();
         firstColTable.row();
         firstColTable.add(new DefensiveEquipmentSelector(shieldsList, skin, c -> builder.setShield((Shield) c), () -> builder.clearShield(), this)).height(250).width(300).colspan(3).pad(10).center();
-        secondColTable.add(playButton).width(300);
+
+        secondColTable.add(costLbl).colspan(2);
         secondColTable.row();
-        secondColTable.add(quitButton).width(300);
-        stage.setDebugAll(true);
+        secondColTable.add(costValueLbl).uniform().align(Align.right);
+        secondColTable.add(maxCostLbl).colspan(1).align(Align.left);
+        secondColTable.row();
+        secondColTable.add(playButton).width(300).colspan(2);
+        secondColTable.row();
+        secondColTable.add(quitButton).width(300).colspan(2);
+        //stage.setDebugAll(true);
     }
 
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
+    }
+
+    public void updateCost() {
+        if(builder.getTotalCost() > Constants.MAX_COST) {
+            costValueLbl.setColor(Color.RED);
+        } else {
+            costValueLbl.setColor(Color.WHITE);
+        }
+        costValueLbl.setText(builder.getTotalCost());
     }
 
     /**

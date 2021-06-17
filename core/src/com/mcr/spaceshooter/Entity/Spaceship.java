@@ -4,10 +4,6 @@ import com.mcr.spaceshooter.Builder.PlayableShipBuilder;
 import com.mcr.spaceshooter.Entity.Equipments.Fuselage;
 import com.mcr.spaceshooter.Entity.Equipments.Shield;
 import com.mcr.spaceshooter.Entity.Equipments.Weapon;
-import com.sun.tools.jdeps.JdepsFilter;
-
-import java.security.KeyStore;
-import java.util.Calendar;
 
 public class Spaceship {
     private int currentHp;

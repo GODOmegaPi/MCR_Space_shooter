@@ -77,6 +77,7 @@ abstract public class EquipementSelector extends Group {
                         equipBtn.setText("Equiper");
                         leftArrowBtn.setDisabled(false);
                         rightArrowBtn.setDisabled(false);
+                        garageScreen.updateCost();
                         Gdx.app.debug(this.getClass().getName(), "PAR ici en bas"  );
                     } else {
                         Gdx.app.debug(this.getClass().getName(), "PAR LA"  );
@@ -85,6 +86,7 @@ abstract public class EquipementSelector extends Group {
                         equipBtn.setText("Desequiper");
                         leftArrowBtn.setDisabled(true);
                         rightArrowBtn.setDisabled(true);
+                        garageScreen.updateCost();
                         Gdx.app.debug(this.getClass().getName(), "PAR La en bas"  );
                     }
                 }catch(ShipBuilderException sbe){

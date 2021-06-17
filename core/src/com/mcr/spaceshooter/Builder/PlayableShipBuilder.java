@@ -33,7 +33,7 @@ public class PlayableShipBuilder implements ShipBuilder {
 
     @Override
     public ShipBuilder setShield(Shield shield) throws ShipBuilderException {
-        if (fuselage == null) {
+        if(fuselage == null) {
             throw new ShipBuilderException("Fuselage nécessaire avant l'ajout d'un bouclier !");
         }
         this.shield = shield;
@@ -43,7 +43,7 @@ public class PlayableShipBuilder implements ShipBuilder {
 
     @Override
     public ShipBuilder setWeapon(Weapon weapon) throws ShipBuilderException {
-        if (fuselage == null) {
+        if(fuselage == null) {
             throw new ShipBuilderException("Fuselage nécessaire avant l'ajout d'une arme !");
         }
         this.weapon = weapon;
@@ -53,23 +53,26 @@ public class PlayableShipBuilder implements ShipBuilder {
 
     @Override
     public ShipBuilder clearFuselage() throws ShipBuilderException {
-        if (shield != null) {
+        if(shield != null) {
             throw new ShipBuilderException("Déséquiper le bouclier avant !");
-        } else if (weapon != null) {
+        } else if(weapon != null) {
             throw new ShipBuilderException("Déséquiper l'arme avant !");
         }
+        totalCost -= fuselage.getPrice();
         fuselage = null;
         return this;
     }
 
     @Override
     public ShipBuilder clearShield() throws ShipBuilderException {
+        totalCost -= shield.getPrice();
         shield = null;
         return this;
     }
 
     @Override
     public ShipBuilder clearWeapon() throws ShipBuilderException {
+        totalCost -= weapon.getPrice();
         weapon = null;
         return this;
     }
@@ -77,7 +80,7 @@ public class PlayableShipBuilder implements ShipBuilder {
     @Override
     public Spaceship build() {
         Spaceship ship = new Spaceship(this);
-        if (!isValidShip(ship)) {
+        if(!isValidShip(ship)) {
             throw new ShipBuilderException("Construction invalide !");
         }
         return ship;
