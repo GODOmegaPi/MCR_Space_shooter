@@ -23,17 +23,17 @@ import java.util.List;
 import java.util.function.Consumer;
 
 
-public class EquipementSelector extends Group {
+abstract public class EquipementSelector extends Group {
     // TODO voir ce qui peut etre static  eg: btnTex restera toujours le même (comme defaultEuiqpementTex)
-    private Table table;
+    protected Table table;
+    protected List<Pair<Equipment, Texture>> equipments;
+    protected int currentElementIdx;
+    protected Skin skin;
     private Image imgEquipement;
     private ImageButton leftArrowBtn;
     private ImageButton rightArrowBtn;
     private Texture btnTex; //
     private Texture pressedBtnTex;
-    private int currentElementIdx;
-    private List<Pair<Equipment, Texture>> equipments;
-    private Skin skin;
     private TextButton equipBtn;
     private Boolean isEquiped = false;
     Consumer<Equipment> buildSetter;
@@ -51,7 +51,7 @@ public class EquipementSelector extends Group {
         this.table = new Table();
         table.setFillParent(true);
         addActor(table);
-        this.init();
+
         this.buildSetter = buildSetter;
         this.buildCleaner = buildCleaner;
         this.garageScreen = garageScreen;
@@ -62,7 +62,8 @@ public class EquipementSelector extends Group {
     }
 
 
-    private void init() {
+
+    protected void init() {
         equipBtn = new TextButton("Equiper", skin);
         equipBtn.addListener(new ClickListener() {
             @Override
@@ -109,6 +110,7 @@ public class EquipementSelector extends Group {
                 }
                 Gdx.app.debug(this.getClass().getName(), String.format("is disabled : %b", leftArrowBtn.isDisabled()));
                 changeEquipment(equipments.get(currentElementIdx));
+                updateLabels();
             }
         });
         rightArrowBtn =  new ImageButton(new TextureRegionDrawable(new TextureRegion(btnTex)),new TextureRegionDrawable(new TextureRegion(pressedBtnTex)));
@@ -117,13 +119,13 @@ public class EquipementSelector extends Group {
 
             public void clicked(InputEvent event, float x, float y) {
                 if (rightArrowBtn.isDisabled())
-                    return; // TODO vraiment nécessaire ? : Il faut vraiement faire ça soit même ? -_-'
+                    return; // TODO vraiment nécessaire ? : Il faut vraiment faire ça soit même ? -_-'
                 if (++currentElementIdx >= equipments.size()) {
                     currentElementIdx = 0;
                 }
                 Gdx.app.debug(this.getClass().getName(), String.format("index : %d", currentElementIdx));
                 changeEquipment(equipments.get(currentElementIdx));
-
+                updateLabels();
             }
         });
 
@@ -136,8 +138,12 @@ public class EquipementSelector extends Group {
         table.add(imgEquipement).width(100).height(100).colspan(1);
         table.add(rightArrowBtn).width(40).height(40).colspan(1);
         table.row();
+        addSpecs();
+        table.row();
         table.add(equipBtn).width(250).height(40).colspan(3).center();
         table.row();
     }
+    abstract void addSpecs();
+    abstract void updateLabels();
 
 }

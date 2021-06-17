@@ -25,6 +25,7 @@ import com.mcr.spaceshooter.Entity.Equipments.Weapon;
 import com.mcr.spaceshooter.ScreenManager;
 import com.mcr.spaceshooter.Utils.Toast;    // https://github.com/wentsa/Toast-LibGDX
 import com.sun.tools.javac.util.Pair;
+import org.graalvm.compiler.lir.LIRInstruction;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -96,6 +97,8 @@ public class GarageScreen implements Screen {
         shieldsList.add(py);
 
         Table table = new Table();
+        Table firstColTable = new Table();
+        Table secondColTable = new Table();
 
         table.setFillParent(true);
         stage.addActor(table);
@@ -120,17 +123,20 @@ public class GarageScreen implements Screen {
             }
         });
 
-        table.add(titleLabel).colspan(3);
+        table.add(titleLabel).colspan(2);
         table.row();
-        table.add(new EquipementSelector(fuselagesList, skin, c -> builder.setFuselage((Fuselage) c), () -> builder.clearFuselage(), this)).height(200).colspan(3).center();
-        table.row();
-        table.add(new EquipementSelector(weaponsList, skin, c -> builder.setWeapon((Weapon) c), () -> builder.clearWeapon(), this)).height(200).colspan(3).center();
-        table.row();
-        table.add(new EquipementSelector(shieldsList, skin, c -> builder.setShield((Shield) c), () -> builder.clearShield(), this)).height(200).colspan(3).center();
-        table.row();
-        table.add(playButton).width(300).colspan(3);
-        table.row();
-        table.add(quitButton).width(300).colspan(3);
+        table.add(firstColTable);
+        table.add(secondColTable);
+
+
+        firstColTable.add(new DefensiveEquipmentSelector(fuselagesList, skin, c -> builder.setFuselage((Fuselage) c), () -> builder.clearFuselage(), this)).height(250).width(300).pad(10).colspan(3).center();
+        firstColTable.row();
+        firstColTable.add(new OffensiveEquipmentSelector(weaponsList, skin, c -> builder.setWeapon((Weapon) c), () -> builder.clearWeapon(), this)).height(250).width(300).colspan(3).pad(10).center();
+        firstColTable.row();
+        firstColTable.add(new DefensiveEquipmentSelector(shieldsList, skin, c -> builder.setShield((Shield) c), () -> builder.clearShield(), this)).height(250).width(300).colspan(3).pad(10).center();
+        secondColTable.add(playButton).width(300);
+        secondColTable.row();
+        secondColTable.add(quitButton).width(300);
     }
 
     @Override
