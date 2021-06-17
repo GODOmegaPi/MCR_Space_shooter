@@ -64,8 +64,8 @@ public class GarageScreen implements Screen {
         BitmapFont font24 = generator.generateFont(parameter);
         errorToastFactory = new Toast.ToastFactory.Builder()
             .font(font24)
-            .backgroundColor(Color.DARK_GRAY) // default : new Color(0.5f, 0.5f, 0.5f, 1f)
-            .fadingDuration(1.2f)
+            .backgroundColor(Color.WHITE) // default : new Color(0.5f, 0.5f, 0.5f, 1f)
+            .fadingDuration(1f)
             .fontColor(Color.RED).build();
         toasts = new ArrayList<>();
 
@@ -123,11 +123,10 @@ public class GarageScreen implements Screen {
             }
         });
 
-        table.add(titleLabel).colspan(2);
+        table.add(titleLabel).colspan(2).expand();
         table.row();
-        table.add(firstColTable);
-        table.add(secondColTable);
-
+        table.add(firstColTable).expand();
+        table.add(secondColTable).expand();
 
         firstColTable.add(new DefensiveEquipmentSelector(fuselagesList, skin, c -> builder.setFuselage((Fuselage) c), () -> builder.clearFuselage(), this)).height(250).width(300).pad(10).colspan(3).center();
         firstColTable.row();
@@ -137,6 +136,7 @@ public class GarageScreen implements Screen {
         secondColTable.add(playButton).width(300);
         secondColTable.row();
         secondColTable.add(quitButton).width(300);
+        stage.setDebugAll(true);
     }
 
     @Override
