@@ -21,7 +21,7 @@ public class Asteroid {
     public Asteroid() {
         size = Rand.generateRandom(50, 75);
         speed = Rand.generateRandom(2, 5);
-        texture = new Texture(Gdx.files.internal("asteroid1.png"));
+        texture = new Texture(Gdx.files.internal("asteroids/asteroid (" + Rand.generateRandom(1, 8) + ").png"));
         outOfBound = false;
         hit = false;
 

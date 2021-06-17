@@ -23,7 +23,7 @@ public class SpaceShooter extends Game {
 
 		batch = new SpriteBatch();
 		img = new Texture("badlogic.jpg");
-		s = new GameScreen();
+		s = new GarageScreen();
 		ScreenManager.getInstance().setGame(this);
 		ScreenManager.getInstance().setScreen(s);
 	}
