@@ -28,16 +28,16 @@ public class GameScreen implements Screen {
         skin = new Skin(Gdx.files.internal("skin/craftacular-ui.json"));
         music = Gdx.audio.newMusic(Gdx.files.internal("sounds/ambiance.mp3"));
         music.setLooping(true);
-        space = new Space(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+        space = new Space();
         spriteBatch = new SpriteBatch();
 
-        renderer = new SpaceRenderer(space);
+        renderer = new SpaceRenderer(space, skin);
     }
 
     @Override
     public void show() {
         music.play();
-        music.setVolume(0.01F);
+        music.setVolume(0.5F);
     }
 
     private void update() {

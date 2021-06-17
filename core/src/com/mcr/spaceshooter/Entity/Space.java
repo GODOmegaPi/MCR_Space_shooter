@@ -1,5 +1,6 @@
 package com.mcr.spaceshooter.Entity;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.LinkedList;
@@ -16,17 +17,13 @@ public class Space {
     private final long INCREASE_DIFFICULTY_TIME_MS = 10000;
 
     private int score;
-    private int height;
-    private int width;
 
-    public Space(int width, int height) {
-        spaceship = new Spaceship(50, 50, 5, width, height);
+    public Space() {
+        spaceship = new Spaceship(Gdx.graphics.getWidth() / 2, 50, 5);
         asteroids = new LinkedList<>();
-        generateAsteroids(N_ASTEROIDS / 2);
+        generateAsteroids(BASE_NB_ASTEROIDS);
         score = 0;
-        this.width = width;
-        this.height = height;
-           lastDifficultyIncrease = System.currentTimeMillis();
+        lastDifficultyIncrease = System.currentTimeMillis();
     }
 
     public Spaceship getSpaceship() {
@@ -39,17 +36,27 @@ public class Space {
 
     public void update() {
         for(Asteroid asteroid: asteroids) {
+            asteroid.update();
             if(spaceship.isColliding(asteroid.getBounds())){
                 asteroid.hit();
                 ++score;
             }
         }
 
+        spaceship.update();
+
         long currentTime = System.currentTimeMillis();
         if(currentTime - lastDifficultyIncrease >= INCREASE_DIFFICULTY_TIME_MS) {
             difficulty++;
             lastDifficultyIncrease = currentTime;
         }
+
+        asteroids = asteroids.stream()
+                .filter(a -> !a.isOutOfBound())
+                .filter(a -> !a.isHit())
+                .collect(Collectors.toList());
+
+        generateAsteroids(BASE_NB_ASTEROIDS);
     }
 
     private void generateAsteroids(int number) {
@@ -60,13 +67,6 @@ public class Space {
 
     public void render(SpriteBatch spriteBatch) {
         spaceship.render(spriteBatch);
-
-        asteroids = asteroids.stream()
-                .filter(a -> !a.isOutOfBound())
-                .filter(a -> !a.isHit())
-                .collect(Collectors.toList());
-
-        generateAsteroids(BASE_NB_ASTEROIDS);
 
         for(Asteroid asteroid : asteroids){
             asteroid.render(spriteBatch);

@@ -9,8 +9,6 @@ import com.badlogic.gdx.math.Rectangle;
 
 public class Asteroid {
     private Texture texture;
-    // private int x, y;
-    private int size;
     private int speed;
     private boolean outOfBound;
     private boolean hit;
@@ -19,26 +17,22 @@ public class Asteroid {
     public static int DAMAGE = 10;
 
     public Asteroid() {
-        size = Rand.generateRandom(50, 75);
         speed = Rand.generateRandom(2, 5);
         texture = new Texture(Gdx.files.internal("asteroids/asteroid (" + Rand.generateRandom(1, 8) + ").png"));
         outOfBound = false;
         hit = false;
 
         //TODO remove variables tampons ouloulou
-        int x = Rand.generateRandom(0, Gdx.graphics.getWidth());
-        int y = Rand.generateRandom(Gdx.graphics.getHeight(), Gdx.graphics.getHeight() + 20);
+        int size = Rand.generateRandom(50, 75);
+        int x = Rand.generateRandom(size, Gdx.graphics.getWidth() - size);
+        int y = Rand.generateRandom(Gdx.graphics.getHeight(), (int) (Gdx.graphics.getHeight() + Gdx.graphics.getHeight() * 0.5));
         bounds = new Rectangle(x, y, size, size);
     }
 
     public void render(SpriteBatch spriteBatch) {
-        bounds.setY(bounds.getY() - speed);
         spriteBatch.begin();
-        spriteBatch.draw(texture, bounds.getX(), bounds.getY(), size, size);
+        spriteBatch.draw(texture, bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight());
         spriteBatch.end();
-        if(bounds.getY() < 0) {
-            outOfBound = true;
-        }
     }
 
     public boolean isOutOfBound(){
@@ -55,5 +49,12 @@ public class Asteroid {
 
     public Rectangle getBounds() {
         return bounds;
+    }
+
+    public void update() {
+        bounds.setY(bounds.getY() - speed);
+        if(bounds.getY() < 0) {
+            outOfBound = true;
+        }
     }
 }
