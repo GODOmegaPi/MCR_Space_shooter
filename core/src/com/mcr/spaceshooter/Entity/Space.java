@@ -7,14 +7,13 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class Space {
-
-    /**
-     * TODO: Nombre croissant d'asteroids.
-     */
-
     private Spaceship spaceship;
     private List<Asteroid> asteroids;
-    private static int N_ASTEROIDS = 20;
+    private final int BASE_NB_ASTEROIDS = 20;
+    private final int ADD_DIFFICULTY = 5;
+    private int difficulty = 0;
+    private long lastDifficultyIncrease;
+    private final long INCREASE_DIFFICULTY_TIME_MS = 10000;
 
     private int score;
     private int height;
@@ -27,7 +26,7 @@ public class Space {
         score = 0;
         this.width = width;
         this.height = height;
-        System.out.println("SPACE CREATED (" + width + ", "+ height + ")");
+           lastDifficultyIncrease = System.currentTimeMillis();
     }
 
     public Spaceship getSpaceship() {
@@ -45,10 +44,16 @@ public class Space {
                 ++score;
             }
         }
+
+        long currentTime = System.currentTimeMillis();
+        if(currentTime - lastDifficultyIncrease >= INCREASE_DIFFICULTY_TIME_MS) {
+            difficulty++;
+            lastDifficultyIncrease = currentTime;
+        }
     }
 
     private void generateAsteroids(int number) {
-        for(int i = asteroids.size(); i < number; ++i) {
+        for(int i = asteroids.size(); i < number + difficulty * ADD_DIFFICULTY; ++i) {
             asteroids.add(new Asteroid());
         }
     }
@@ -61,7 +66,7 @@ public class Space {
                 .filter(a -> !a.isHit())
                 .collect(Collectors.toList());
 
-        generateAsteroids(N_ASTEROIDS);
+        generateAsteroids(BASE_NB_ASTEROIDS);
 
         for(Asteroid asteroid : asteroids){
             asteroid.render(spriteBatch);

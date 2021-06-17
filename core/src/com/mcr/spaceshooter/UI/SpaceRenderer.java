@@ -51,7 +51,6 @@ public class SpaceRenderer {
         font.draw(spriteBatch, "SCORE : " + score, 20, height - 20);
     }
 
-
     public void setSize (int w, int h) {
         width = w;
         height = h;
@@ -61,14 +60,11 @@ public class SpaceRenderer {
         space.update();
     }
 
-
-
-    public void draw(SpriteBatch spriteBatch) {
+    public void render(SpriteBatch spriteBatch) {
         spriteBatch.begin();
         renderBackground(spriteBatch);
         renderText(spriteBatch);
         spriteBatch.end();
         space.render(spriteBatch);
-
     }
 }

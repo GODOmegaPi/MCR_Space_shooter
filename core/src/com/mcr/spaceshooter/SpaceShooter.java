@@ -13,7 +13,6 @@ import com.mcr.spaceshooter.UI.GarageScreen;
 
 public class SpaceShooter extends Game {
 	SpriteBatch batch;
-	Texture img;
 	Screen s;
 	
 	@Override
@@ -22,7 +21,6 @@ public class SpaceShooter extends Game {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 
 		batch = new SpriteBatch();
-		img = new Texture("badlogic.jpg");
 		s = new GarageScreen();
 		ScreenManager.getInstance().setGame(this);
 		ScreenManager.getInstance().setScreen(s);
