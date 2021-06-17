@@ -25,8 +25,6 @@ public class SpaceRenderer {
     private BitmapFont font;
     private Texture backgroundTexture;
 
-    
-
     public SpaceRenderer(Space space) {
         this.space = space;
         //TODO Centrer.

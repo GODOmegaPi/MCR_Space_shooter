@@ -16,17 +16,21 @@ public class Spaceship {
     private Weapon weapon;
     private Shield shield;
     private int HP;
+    private int maxWidth;
+    private int maxHeight;
 
     private static final int SIZE = 50;
     private static final int MAX_HP = 100;
 
-    public Spaceship(int x, int y, int speed) {
+    public Spaceship(int x, int y, int speed, int maxWidth, int maxHeight) {
          bounds = new Rectangle(x, y, SIZE, SIZE);
          this.speed = speed;
          texture = new Texture(Gdx.files.internal("ss_4.png"));
          weapon = new Weapon(50, 50);
          shield = new Shield(50, 50);
          HP = MAX_HP;
+        this.maxWidth = maxWidth;
+        this.maxHeight = maxHeight;
     }
 
     public boolean isColliding(Rectangle rect) {
@@ -68,6 +72,18 @@ public class Spaceship {
         }
         if(Gdx.input.isKeyJustPressed(Keys.SPACE)){
             shoot();
+        }
+
+        if(bounds.getX() >= maxWidth){
+            bounds.setX(-80);
+        }else if(bounds.getX() <= -80){
+            bounds.setX(maxWidth);
+        }
+        
+        if(bounds.getY() >= maxHeight){
+            bounds.setY(-80);
+        }else if(bounds.getY() <= -80){
+            bounds.setY(maxHeight);
         }
 
         spriteBatch.begin();

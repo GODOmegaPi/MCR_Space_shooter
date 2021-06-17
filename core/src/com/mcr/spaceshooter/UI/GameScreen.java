@@ -23,10 +23,10 @@ import com.badlogic.gdx.Audio;
 /**
  *
  * TODO:
- * - Game over
  * - Espace torique (à voir)
  * - Astéroïdes déplacement en diagonale
  * - Vitesse de tir à placer variable dans Weapon shootingSpeed
+ * - Séparer render et update - GUILLAUME
  */
 
 public class GameScreen implements Screen {
@@ -43,12 +43,10 @@ public class GameScreen implements Screen {
         skin = new Skin(Gdx.files.internal("skin/craftacular-ui.json"));
         music = Gdx.audio.newMusic(Gdx.files.internal("sounds/ambiance.mp3"));
         music.setLooping(true);
-        space = new Space();
+        space = new Space(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
         spriteBatch = new SpriteBatch();
 
         renderer = new SpaceRenderer(space);
-
-
     }
 
     @Override
@@ -70,7 +68,9 @@ public class GameScreen implements Screen {
         table.row();
         table.add(quitButton).width(300).colspan(2);
          */
-    music.play();
+        music.play();
+        //TODO: Pas oublier volume.
+        music.setVolume(0.01F);
 
     }
 

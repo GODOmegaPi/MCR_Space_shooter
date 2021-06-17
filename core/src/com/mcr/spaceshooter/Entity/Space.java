@@ -17,12 +17,17 @@ public class Space {
     private static int N_ASTEROIDS = 20;
 
     private int score;
+    private int height;
+    private int width;
 
-    public Space() {
-           spaceship = new Spaceship(50, 50, 5);
-           asteroids = new LinkedList<>();
-           generateAsteroids(N_ASTEROIDS / 2);
-           score = 0;
+    public Space(int width, int height) {
+        spaceship = new Spaceship(50, 50, 5, width, height);
+        asteroids = new LinkedList<>();
+        generateAsteroids(N_ASTEROIDS / 2);
+        score = 0;
+        this.width = width;
+        this.height = height;
+        System.out.println("SPACE CREATED (" + width + ", "+ height + ")");
     }
 
     public Spaceship getSpaceship() {
