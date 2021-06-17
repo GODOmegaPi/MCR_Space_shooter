@@ -25,7 +25,6 @@ import com.mcr.spaceshooter.Entity.Equipments.Weapon;
 import com.mcr.spaceshooter.ScreenManager;
 import com.mcr.spaceshooter.Utils.Toast;    // https://github.com/wentsa/Toast-LibGDX
 import com.sun.tools.javac.util.Pair;
-import org.graalvm.compiler.lir.LIRInstruction;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -64,9 +63,9 @@ public class GarageScreen implements Screen {
         BitmapFont font24 = generator.generateFont(parameter);
         errorToastFactory = new Toast.ToastFactory.Builder()
             .font(font24)
-            .backgroundColor(Color.DARK_GRAY) // default : new Color(0.5f, 0.5f, 0.5f, 1f)
+            .backgroundColor(new Color(0.98f,0.98f,0.98f, 1f)) // default : new Color(0.5f, 0.5f, 0.5f, 1f)
             .fadingDuration(1.2f)
-            .fontColor(Color.RED).build();
+            .fontColor(new Color(0.86f,0,0,1f)).build();
         toasts = new ArrayList<>();
 
         // TODO voir comment opti new LinkedList<>([p1,p2,p3])
