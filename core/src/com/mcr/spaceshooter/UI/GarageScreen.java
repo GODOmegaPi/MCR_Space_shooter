@@ -34,7 +34,7 @@ import java.util.List;
 /**
  * TODO:
  * L Faire la sous-structure Equipment (OffensiveEquipment, DefensiveEquipment) & Ajouter un nom aux équipements
- * - Rajouter les specs des équipements (+ coût etc)
+ * I Rajouter les specs des équipements (+ coût etc)
  * - Afficher un coût du vaisseau à chaque appui sur équiper => màj du coût
  * L Afficher des erreurs https://github.com/wentsa/Toast-LibGDX ou label ou dialog
  * - Transfert du vaisseau vers le jeu
@@ -89,15 +89,19 @@ public class GarageScreen implements Screen {
         shieldsList = new LinkedList<>();
         Pair px = new Pair<>(new Shield("Phantom Shield", 10, 10), new Texture(Gdx.files.internal("sh_1.png")));
         Pair py = new Pair<>(new Shield("Diamond Shield", 10, 10), new Texture(Gdx.files.internal("sh_2.png")));
-        Pair pz = new Pair<>(new Shield("Green Plasma Shield", 10, 10), new Texture(Gdx.files.internal("sh_3.png")));
+        Pair pz = new Pair<>(new Shield("Plasma Shield", 10, 10), new Texture(Gdx.files.internal("sh_3.png")));
 
         shieldsList.add(pz);
         shieldsList.add(px);
         shieldsList.add(py);
 
         Table table = new Table();
+        table.setDebug(true);
         Table firstColTable = new Table();
+        firstColTable.setDebug(true);
+
         Table secondColTable = new Table();
+        secondColTable.setDebug(true);
 
         table.setFillParent(true);
         stage.addActor(table);
