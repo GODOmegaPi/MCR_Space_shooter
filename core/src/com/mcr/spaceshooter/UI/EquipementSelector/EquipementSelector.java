@@ -22,7 +22,6 @@ import com.mcr.spaceshooter.Utils.Asset;
 import java.util.List;
 import java.util.function.Consumer;
 
-
 abstract public class EquipementSelector extends Group {
     // TODO voir ce qui peut etre static  eg: btnTex restera toujours le même (comme defaultEuiqpementTex)
     protected Table table;

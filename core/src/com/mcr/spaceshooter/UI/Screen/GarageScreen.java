@@ -34,11 +34,6 @@ import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
-/**
- * TODO:
- * - Transfert des textures.
- * - Transfert du vaisseau vers le jeu
- */
 public class GarageScreen implements Screen {
     private Stage stage;
     private SpriteBatch spriteBatch;
@@ -119,7 +114,6 @@ public class GarageScreen implements Screen {
                 try{
                     Spaceship ship = builder.build();
                     Asset.getInstance().getGarageMusic().stop();
-                    // TODO si le builder est ok, récupérer ship
                     Screen screen = new GameScreen(ship);
                     ScreenManager.getInstance().setScreen(screen);
 

@@ -13,9 +13,9 @@ public class Asteroid {
     private boolean hit;
     private Rectangle bounds;
     private final int asteroidTextureId;
-
-    public static int DAMAGE = 10;
     private int dLateral;
+
+    public static final int DAMAGE = 10;
 
     public Asteroid() {
         speed = Rand.generateRandom(2, 3);
