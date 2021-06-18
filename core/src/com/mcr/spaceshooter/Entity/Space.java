@@ -1,6 +1,5 @@
 package com.mcr.spaceshooter.Entity;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.LinkedList;
@@ -18,8 +17,8 @@ public class Space {
 
     private int score;
 
-    public Space() {
-        spaceship = new Spaceship(Gdx.graphics.getWidth() / 2, 50, 5);
+    public Space(Spaceship spaceship) {
+        this.spaceship = spaceship;
         asteroids = new LinkedList<>();
         generateAsteroids(BASE_NB_ASTEROIDS);
         score = 0;
@@ -74,7 +73,8 @@ public class Space {
     }
 
     public boolean isGameOver() {
-        return spaceship.getHp() == 0;
+        return spaceship.getFuselage().getHp() <= 0 && spaceship.getShield().getHp() <= 0;
+
     }
 
 }

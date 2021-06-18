@@ -26,7 +26,7 @@ import java.util.function.Consumer;
 abstract public class EquipementSelector extends Group {
     // TODO voir ce qui peut etre static  eg: btnTex restera toujours le même (comme defaultEuiqpementTex)
     protected Table table;
-    protected List<Pair<Equipment, Texture>> equipments;
+    protected List<Equipment> equipments;
     protected int currentElementIdx;
     protected Skin skin;
     private Image imgEquipement;
@@ -41,7 +41,7 @@ abstract public class EquipementSelector extends Group {
     GarageScreen garageScreen;
 
 
-    public EquipementSelector(List<Pair<Equipment, Texture>> equipments, Skin skin, Consumer<Equipment> buildSetter, Runnable buildCleaner, GarageScreen garageScreen) {
+    public EquipementSelector(List<Equipment> equipments, Skin skin, Consumer<Equipment> buildSetter, Runnable buildCleaner, GarageScreen garageScreen) {
         // On le set l'index de l'élément courant à une valeur impossible car au commencement
         // Aucun élément n'est sélectionné
         this.currentElementIdx = 0;
@@ -57,8 +57,8 @@ abstract public class EquipementSelector extends Group {
         this.garageScreen = garageScreen;
     }
 
-    private void changeEquipment(Pair<Equipment, Texture> equipement) {
-        imgEquipement.setDrawable(new SpriteDrawable(new Sprite(equipement.snd)));
+    private void changeEquipment(Equipment equipement) {
+        imgEquipement.setDrawable(new SpriteDrawable(new Sprite(equipement.getTexture())));
     }
 
 
@@ -81,7 +81,7 @@ abstract public class EquipementSelector extends Group {
                         Gdx.app.debug(this.getClass().getName(), "PAR ici en bas"  );
                     } else {
                         Gdx.app.debug(this.getClass().getName(), "PAR LA"  );
-                        buildSetter.accept(equipments.get(currentElementIdx).fst);
+                        buildSetter.accept(equipments.get(currentElementIdx));
                         isEquiped = true;
                         equipBtn.setText("Desequiper");
                         leftArrowBtn.setDisabled(true);

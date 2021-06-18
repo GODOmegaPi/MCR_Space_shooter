@@ -1,5 +1,6 @@
 package com.mcr.spaceshooter.Builder;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.mcr.spaceshooter.Entity.Spaceship;
 import com.mcr.spaceshooter.Entity.Equipments.Fuselage;
 import com.mcr.spaceshooter.Entity.Equipments.Shield;
@@ -8,8 +9,6 @@ import com.mcr.spaceshooter.Utils.Constants;
 
 
 public class PlayableShipBuilder implements ShipBuilder {
-
-    private int hp;
     private int totalCost;
     private Fuselage fuselage;
     private Weapon weapon;
@@ -20,7 +19,6 @@ public class PlayableShipBuilder implements ShipBuilder {
 
     @Override
     public void reset() {
-        hp = 0;
         fuselage = null;
         weapon = null;
         shield = null;
@@ -54,33 +52,42 @@ public class PlayableShipBuilder implements ShipBuilder {
 
     @Override
     public ShipBuilder clearFuselage() throws ShipBuilderException {
-        if(shield != null || weapon != null) {
-            StringBuilder msg = new StringBuilder("Vous devez déséquiper: \n");
-            if(shield != null) msg.append("- le bouclier \n");
-            if(weapon != null) msg.append("- l'arme");
-            throw new ShipBuilderException(msg.toString());
+        if (fuselage != null) { // TODO controler que c'est pas vide ?
+            if(shield != null || weapon != null) {
+                StringBuilder msg = new StringBuilder("Vous devez déséquiper: \n");
+                if(shield != null) msg.append("- le bouclier \n");
+                if(weapon != null) msg.append("- l'arme");
+                throw new ShipBuilderException(msg.toString());
+            }
+                totalCost -= fuselage.getPrice();
+                fuselage = null;
         }
-        totalCost -= fuselage.getPrice();
-        fuselage = null;
         return this;
     }
 
     @Override
     public ShipBuilder clearShield() throws ShipBuilderException {
-        totalCost -= shield.getPrice();
-        shield = null;
+        if (shield != null) {
+            totalCost -= shield.getPrice();
+            shield = null;
+        }
         return this;
     }
 
     @Override
     public ShipBuilder clearWeapon() throws ShipBuilderException {
-        totalCost -= weapon.getPrice();
-        weapon = null;
+        if(weapon != null) {
+            totalCost -= weapon.getPrice();
+            weapon = null;
+        }
         return this;
     }
 
     @Override
     public Spaceship build() {
+        if(shield == null) {
+            shield = new Shield("none", null,0, 0);
+        }
         Spaceship ship = new Spaceship(this);
         if(!isValidShip(ship)) {
             throw new ShipBuilderException("Construction invalide !");
@@ -91,10 +98,6 @@ public class PlayableShipBuilder implements ShipBuilder {
     @Override
     public int getTotalCost() {
         return totalCost;
-    }
-
-    public int getHp() {
-        return hp;
     }
 
     public Fuselage getFuselage() {

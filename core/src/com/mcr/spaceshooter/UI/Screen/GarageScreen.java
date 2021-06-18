@@ -16,6 +16,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
+import com.mcr.spaceshooter.Asset.Asset;
 import com.mcr.spaceshooter.Builder.PlayableShipBuilder;
 import com.mcr.spaceshooter.Builder.ShipBuilder;
 import com.mcr.spaceshooter.Builder.ShipBuilderException;
@@ -44,10 +45,9 @@ import java.util.List;
  */
 public class GarageScreen implements Screen {
     private Stage stage;
-    private Skin skin;
-    private List<Pair<Equipment, Texture>> fuselagesList;
-    private List<Pair<Equipment, Texture>> weaponsList;
-    private List<Pair<Equipment, Texture>> shieldsList;
+    private List<Equipment> fuselagesList;
+    private List<Equipment> weaponsList;
+    private List<Equipment> shieldsList;
     private ShipBuilder builder;
     private List<Toast> toasts;
     private final Toast.ToastFactory errorToastFactory;
@@ -61,9 +61,8 @@ public class GarageScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         Assets assets = Assets.getInstance();
-        //skin = new Skin(Gdx.files.internal("skin/craftacular-ui.json"));
-        skin = assets.get("skin/craftacular-ui.json", Skin.class);
 
+        Asset.getInstance().getGarageMusic().play();
 
         // Toasts pour les messages d'erreur
         //FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("skin/Amble-Regular.ttf"));
@@ -78,26 +77,26 @@ public class GarageScreen implements Screen {
 
         fuselagesList = new LinkedList<>();
 
-        Pair p1 = new Pair<>(new Fuselage("Falcon 1", 30, 75), assets.get("ss_1.png", Texture.class));
-        Pair p2 = new Pair<>(new Fuselage("Falcon 9", 40, 90), assets.get("ss_1.png", Texture.class));
-        Pair p3 = new Pair<>(new Fuselage("Falcon Heavy", 50, 100), assets.get("ss_1.png", Texture.class));
+        Fuselage p1 = new Fuselage("Falcon 1",  Asset.getInstance().getCockpitsTexture(1),30, 75);
+        Fuselage p2 = new Fuselage("Falcon 9",Asset.getInstance().getCockpitsTexture(5) ,40, 90);
+        Fuselage p3 = new Fuselage("Falcon Heavy", Asset.getInstance().getCockpitsTexture(9),50, 100);
 
         fuselagesList.add(p1);
         fuselagesList.add(p2);
         fuselagesList.add(p3);
 
         weaponsList = new LinkedList<>();
-        Pair pa = new Pair<>(new Weapon("SIG 550", 30, 10), assets.get("wp_1.png", Texture.class));
-        Pair pb = new Pair<>(new Weapon("Browning M2HB", 40, 15), assets.get("wp_2.png", Texture.class));
-        Pair pc = new Pair<>(new Weapon("Panzerfaust", 50, 20), assets.get("wp_3.png", Texture.class));
+        Weapon pa = new Weapon("SIG 550", Asset.getInstance().getWeaponsTexture(1), 30, 10);
+        Weapon pb = new Weapon("Browning M2HB", Asset.getInstance().getWeaponsTexture(2),40, 15);
+        Weapon pc = new Weapon("Panzerfaust", Asset.getInstance().getWeaponsTexture(3), 50, 20);
         weaponsList.add(pa);
         weaponsList.add(pb);
         weaponsList.add(pc);
 
         shieldsList = new LinkedList<>();
-        Pair px = new Pair<>(new Shield("Phantom Shield", 30, 10), assets.get("sh_1.png", Texture.class));
-        Pair py = new Pair<>(new Shield("Diamond Shield", 40, 20), assets.get("sh_2.png", Texture.class));
-        Pair pz = new Pair<>(new Shield("Plasma Shield", 50, 30), assets.get("sh_3.png", Texture.class));
+        Shield px = new Shield("Phantom Shield", Asset.getInstance().getShieldsTexture(1),30, 10);
+        Shield py = new Shield("Diamond Shield", Asset.getInstance().getShieldsTexture(2),40, 20);
+        Shield pz = new Shield("Plasma Shield", Asset.getInstance().getShieldsTexture(3), 50, 30);
 
         shieldsList.add(px);
         shieldsList.add(py);
@@ -114,28 +113,26 @@ public class GarageScreen implements Screen {
         table.setFillParent(true);
         stage.addActor(table);
 
-        Label titleLabel = new Label("Garage", skin);
+        Label titleLabel = new Label("Garage", Asset.getInstance().getSkin());
         titleLabel.setFontScale(1);
-        TextButton playButton = new TextButton("Jouer", skin);
+        TextButton playButton = new TextButton("Jouer", Asset.getInstance().getSkin());
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 try{
                     Spaceship ship = builder.build();
-                    builder.reset();
-
+                    Asset.getInstance().getGarageMusic().stop();
                     // TODO si le builder est ok, récupérer ship
-                    Screen screen = new GameScreen();
+                    Screen screen = new GameScreen(ship);
                     ScreenManager.getInstance().setScreen(screen);
 
                 }catch(ShipBuilderException sbe){
                     toastLong(sbe.getMessage());
                 }
-
             }
         });
 
-        TextButton quitButton = new TextButton("Quitter", skin);
+        TextButton quitButton = new TextButton("Quitter", Asset.getInstance().getSkin());
         quitButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -144,20 +141,20 @@ public class GarageScreen implements Screen {
         });
 
 
-        costLbl = new Label("Cout total du vaisseau :", skin);
-        costValueLbl = new Label("0", skin);
-        maxCostLbl = new Label("/" + Constants.MAX_COST, skin);
+        costLbl = new Label("Cout total du vaisseau :", Asset.getInstance().getSkin());
+        costValueLbl = new Label("0", Asset.getInstance().getSkin());
+        maxCostLbl = new Label("/" + Constants.MAX_COST, Asset.getInstance().getSkin());
 
         table.add(titleLabel).colspan(2).expand();
         table.row();
         table.add(firstColTable).expand();
         table.add(secondColTable).expand();
 
-        firstColTable.add(new DefensiveEquipmentSelector(fuselagesList, skin, c -> builder.setFuselage((Fuselage) c), () -> builder.clearFuselage(), this)).height(250).width(300).pad(10).colspan(3).center();
+        firstColTable.add(new DefensiveEquipmentSelector(fuselagesList, Asset.getInstance().getSkin(), c -> builder.setFuselage((Fuselage) c), () -> builder.clearFuselage(), this)).height(250).width(300).pad(10).colspan(3).center();
         firstColTable.row();
-        firstColTable.add(new OffensiveEquipmentSelector(weaponsList, skin, c -> builder.setWeapon((Weapon) c), () -> builder.clearWeapon(), this)).height(250).width(300).colspan(3).pad(10).center();
+        firstColTable.add(new OffensiveEquipmentSelector(weaponsList, Asset.getInstance().getSkin(), c -> builder.setWeapon((Weapon) c), () -> builder.clearWeapon(), this)).height(250).width(300).colspan(3).pad(10).center();
         firstColTable.row();
-        firstColTable.add(new DefensiveEquipmentSelector(shieldsList, skin, c -> builder.setShield((Shield) c), () -> builder.clearShield(), this)).height(250).width(300).colspan(3).pad(10).center();
+        firstColTable.add(new DefensiveEquipmentSelector(shieldsList, Asset.getInstance().getSkin(), c -> builder.setShield((Shield) c), () -> builder.clearShield(), this)).height(250).width(300).colspan(3).pad(10).center();
 
         secondColTable.add(costLbl).colspan(2);
         secondColTable.row();
@@ -167,7 +164,6 @@ public class GarageScreen implements Screen {
         secondColTable.add(playButton).width(300).colspan(2);
         secondColTable.row();
         secondColTable.add(quitButton).width(300).colspan(2);
-        //stage.setDebugAll(true);
     }
 
     @Override

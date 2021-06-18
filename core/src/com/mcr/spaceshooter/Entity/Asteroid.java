@@ -19,7 +19,7 @@ public class Asteroid {
     private int dLateral;
 
     public Asteroid() {
-        speed = Rand.generateRandom(2, 5);
+        speed = Rand.generateRandom(2, 3);
         dLateral = Rand.generateRandom(-3, 3);
 
         outOfBound = false;
@@ -29,7 +29,6 @@ public class Asteroid {
                 Asset.getInstance().MAX_ASTEROIDS_TEXTURES
         );
 
-        //TODO remove variables tampons ouloulou
         int size = Rand.generateRandom(50, 75);
         int x = Rand.generateRandom(size, Gdx.graphics.getWidth() - size);
         int y = Rand.generateRandom(

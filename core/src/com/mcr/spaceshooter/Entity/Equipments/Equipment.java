@@ -1,20 +1,15 @@
 package com.mcr.spaceshooter.Entity.Equipments;
 
+import com.badlogic.gdx.graphics.Texture;
+
 abstract public class Equipment {
     private final int price;
     private final String name;
-    protected int hp;
+    private final Texture texture;
 
-    public Equipment(String name, int price, int hp) {
+    public Equipment(String name, Texture texture, int price) {
         this.name = name;
-        this.price = price;
-        this.hp = hp;
-    }
-
-
-    public Equipment(String name, int price) {
-        // TODO Probablement ne pas laisser HP dans Equipement...
-        this.name = name;
+        this.texture = texture;
         this.price = price;
     }
 
@@ -32,12 +27,7 @@ abstract public class Equipment {
         return credit;
     }
 
-    public int getHp(){
-        return hp;
-    }
-
-    public void setHp(int hp) {
-        // Pas de point de vie négative.
-        this.hp = Math.max(hp, 0);
+    public Texture getTexture() {
+        return texture;
     }
 }

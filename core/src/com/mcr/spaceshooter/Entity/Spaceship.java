@@ -2,6 +2,7 @@ package com.mcr.spaceshooter.Entity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
@@ -11,18 +12,21 @@ import com.mcr.spaceshooter.Entity.Equipments.Shield;
 import com.mcr.spaceshooter.Entity.Equipments.Weapon;
 import com.mcr.spaceshooter.Entity.Equipments.Fuselage;
 
+// TODO remove : import javax.swing.plaf.synth.SynthOptionPaneUI;
+
 public class Spaceship {
     private Rectangle bounds;
     private int speed;
     private Weapon weapon;
     private Shield shield;
     private Fuselage fuselage;
-    private int hp;
+    // private int hp;
     private boolean unlimitedPower;
 
     public static final int SIZE = 50;
-    private static final int MAX_HP = 100;
+    private static final int SPEED  = 5;
 
+    /*
     public Spaceship(int x, int y, int speed) {
          bounds = new Rectangle(x, y, SIZE, SIZE);
          this.speed = speed;
@@ -31,12 +35,16 @@ public class Spaceship {
          hp = MAX_HP;
          unlimitedPower = false;
     }
+     */
 
     public Spaceship(PlayableShipBuilder playableShipBuilder) {
-        hp = playableShipBuilder.getHp();
+        // hp = playableShipBuilder.getHp();
         fuselage = playableShipBuilder.getFuselage();
         weapon = playableShipBuilder.getWeapon();
         shield = playableShipBuilder.getShield();
+        bounds = new Rectangle(Gdx.graphics.getWidth() / 2, 50, SIZE, SIZE);
+        unlimitedPower = false;
+        speed = SPEED;
     }
 
     public boolean isColliding(Rectangle rect) {
@@ -57,19 +65,20 @@ public class Spaceship {
     }
 
     public void hit(int damage){
-        int shieldPV = shield.getHp();
-        shieldPV -= damage;
+        int shieldHP = shield.getHp();
+        shieldHP -= damage;
 
-        if(shieldPV < 0){
-            hp += shieldPV;
+        if(shieldHP <= 0){
+            fuselage.setHp(fuselage.getHp() + shieldHP);
+            shieldHP = 0;
         }
 
-        shield.setHp(shieldPV);
+        shield.setHp(shieldHP);
     }
 
     public void render(SpriteBatch spriteBatch) {
         spriteBatch.begin();
-        spriteBatch.draw(Asset.getInstance().getCockpitsTexture(8), getX(), getY(), bounds.getWidth(), bounds.getHeight());
+        spriteBatch.draw(fuselage.getTexture(), getX(), getY(), bounds.getWidth(), bounds.getHeight());
         spriteBatch.end();
 
         weapon.render(spriteBatch);
@@ -81,10 +90,6 @@ public class Spaceship {
 
     public float getY() {
         return bounds.getY();
-    }
-
-    public int getHp() {
-        return hp;
     }
 
     public Shield getShield() {
@@ -121,6 +126,11 @@ public class Spaceship {
         }else if(bounds.getY() <= 0){
             bounds.setY(0);
         }
+
+        System.out.println("==");
+        System.out.println("(" + bounds.getX() + ", " + bounds.getY() + ")");
+        System.out.println("(" + Gdx.graphics.getWidth() + ", " + Gdx.graphics.getHeight() + ")");
+        System.out.println("==");
 
         weapon.update();
     }

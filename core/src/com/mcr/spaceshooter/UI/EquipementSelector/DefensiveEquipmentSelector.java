@@ -13,15 +13,15 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class DefensiveEquipmentSelector extends EquipementSelector {
-    private Label nameLbl = new Label("test", skin);
+    private Label nameLbl;
     private Label priceLbl;
     private Label hpLbl;
 
-    public DefensiveEquipmentSelector(List<Pair<Equipment, Texture>> equipments, Skin skin, Consumer<Equipment> buildSetter, Runnable buildCleaner, GarageScreen garageScreen) {
+    public DefensiveEquipmentSelector(List<Equipment> equipments, Skin skin, Consumer<Equipment> buildSetter, Runnable buildCleaner, GarageScreen garageScreen) {
         super(equipments, skin, buildSetter, buildCleaner, garageScreen);
-        nameLbl = new Label(equipments.get(currentElementIdx).fst.getName(), skin);
-        priceLbl = new Label(String.valueOf(equipments.get(currentElementIdx).fst.getPrice()), skin);
-        hpLbl = new Label(String.valueOf(((DefensiveEquipment) equipments.get(currentElementIdx).fst).getHp()), skin);
+        nameLbl = new Label(equipments.get(currentElementIdx).getName(), skin);
+        priceLbl = new Label(String.valueOf(equipments.get(currentElementIdx).getPrice()), skin);
+        hpLbl = new Label(String.valueOf(((DefensiveEquipment) equipments.get(currentElementIdx)).getHp()), skin);
         init();
     }
 
@@ -43,10 +43,10 @@ public class DefensiveEquipmentSelector extends EquipementSelector {
 
     @Override
     void updateLabels() {
-        Gdx.app.debug(this.getClass().getName(), String.format("name %s| price %s| hp %s", equipments.get(currentElementIdx).fst.getName(), String.valueOf(equipments.get(currentElementIdx).fst.getPrice()), String.valueOf(((DefensiveEquipment) equipments.get(currentElementIdx).fst).getHp())));
-        nameLbl.setText(equipments.get(currentElementIdx).fst.getName());
-        priceLbl.setText(String.valueOf(equipments.get(currentElementIdx).fst.getPrice()));
-        hpLbl.setText(String.valueOf(((DefensiveEquipment) equipments.get(currentElementIdx).fst).getHp()));
+        Gdx.app.debug(this.getClass().getName(), String.format("name %s| price %s| hp %s", equipments.get(currentElementIdx).getName(), String.valueOf(equipments.get(currentElementIdx).getPrice()), String.valueOf(((DefensiveEquipment) equipments.get(currentElementIdx)).getHp())));
+        nameLbl.setText(equipments.get(currentElementIdx).getName());
+        priceLbl.setText(String.valueOf(equipments.get(currentElementIdx).getPrice()));
+        hpLbl.setText(String.valueOf(((DefensiveEquipment) equipments.get(currentElementIdx)).getHp()));
     }
 
 }

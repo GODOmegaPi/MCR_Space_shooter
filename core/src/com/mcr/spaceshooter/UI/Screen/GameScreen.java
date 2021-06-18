@@ -4,6 +4,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mcr.spaceshooter.Asset.Asset;
 import com.mcr.spaceshooter.Entity.Space;
+import com.mcr.spaceshooter.Entity.Spaceship;
 import com.mcr.spaceshooter.ScreenManager;
 import com.mcr.spaceshooter.UI.SpaceRenderer;
 
@@ -12,8 +13,8 @@ public class GameScreen implements Screen {
     private Space space;
     private SpaceRenderer renderer;
 
-    public GameScreen() {
-        space = new Space();
+    public GameScreen(Spaceship spaceship) {
+        space = new Space(spaceship);
         spriteBatch = new SpriteBatch();
 
         renderer = new SpaceRenderer(space);

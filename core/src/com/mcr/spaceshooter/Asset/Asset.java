@@ -22,6 +22,8 @@ public class Asset {
 
     private Sound bulletSound;
 
+    private Texture leftArrowTexture;
+    private Texture leftArrowPressedTexture;
     private Texture backgroundTexture;
 
     public final int MIN_ASTEROIDS_TEXTURES = 1;
@@ -31,6 +33,10 @@ public class Asset {
     public final int MIN_COCKPITS_TEXTURES = 1;
     public final int MAX_COCKPITS_TEXTURES = 16;
     private List<Texture> cockpitsTexture;
+
+    public final int MIN_SHIELDS_TEXTURES = 1;
+    public final int MAX_SHIELDS_TEXTURES = 3;
+    private List<Texture> shieldsTexture;
 
     public final int MIN_WEAPONS_TEXTURES = 1;
     public final int MAX_WEAPONS_TEXTURES = 48;
@@ -73,11 +79,12 @@ public class Asset {
 
     private void loadSounds() {
         bulletSound = Gdx.audio.newSound(Gdx.files.internal("sounds/7.wav"));
-        // bulletSound.setVolume(bulletSound.play(), Constants.AUDIO_LEVEL);
     }
 
     private void loadTextures() {
         backgroundTexture = new Texture(Gdx.files.internal("bg.jpg"));
+        leftArrowTexture = new Texture(Gdx.files.internal("leftArrow.png"));
+        leftArrowPressedTexture = new Texture(Gdx.files.internal("leftArrow_pressed.png"));
 
         asteroidsTexture = new LinkedList<>();
         for (int i = MIN_ASTEROIDS_TEXTURES; i <= MAX_ASTEROIDS_TEXTURES; ++i) {
@@ -87,6 +94,11 @@ public class Asset {
         cockpitsTexture = new LinkedList<>();
         for (int i = MIN_COCKPITS_TEXTURES; i <= MAX_COCKPITS_TEXTURES; ++i) {
             cockpitsTexture.add(new Texture(Gdx.files.internal("ships/cockpits/ship (" + i + ").png")));
+        }
+
+        shieldsTexture = new LinkedList<>();
+        for (int i = MIN_SHIELDS_TEXTURES; i <= MAX_SHIELDS_TEXTURES; ++i) {
+            shieldsTexture.add(new Texture(Gdx.files.internal("sh_" + i + ".png")));
         }
 
         weaponsTexture = new LinkedList<>();
@@ -129,13 +141,18 @@ public class Asset {
         return cockpitsTexture.get(i - 1);
     }
 
+    public Texture getShieldsTexture(int i) {
+        inRange(MIN_SHIELDS_TEXTURES, MAX_SHIELDS_TEXTURES, i);
+        return shieldsTexture.get(i - 1);
+    }
+
     public Texture getWeaponsTexture(int i) {
         inRange(MIN_WEAPONS_TEXTURES, MAX_WEAPONS_TEXTURES, i);
         return weaponsTexture.get(i - 1);
     }
 
     private void inRange(int lowerBound, int upperBound, int value) {
-        if(value < lowerBound || value > MAX_WEAPONS_TEXTURES) {
+        if(value < lowerBound || value > upperBound) {
             throw new IllegalArgumentException(
                     String.format("Value %d not in range [%d; %d] !",
                             value, lowerBound, MAX_WEAPONS_TEXTURES));

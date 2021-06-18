@@ -18,8 +18,6 @@ public class SpaceRenderer {
 
     public SpaceRenderer(Space space) {
         this.space = space;
-        //TODO Centrer.
-       // this.cam = new OrthographicCamera(0, 0);
     }
 
     public void renderBackground(SpriteBatch spriteBatch){
@@ -27,8 +25,8 @@ public class SpaceRenderer {
     }
 
     public void renderGUI(SpriteBatch spriteBatch){
-        int spaceshipHP = space.getSpaceship().getHp();
         int shieldHP    = space.getSpaceship().getShield().getHp();
+        int spaceshipHP = space.getSpaceship().getFuselage().getHp();
         int score       = space.getScore();
 
         Label hpLabel = new Label(String.format("PV       : %d", spaceshipHP), Asset.getInstance().getSkin());

@@ -1,5 +1,6 @@
 package com.mcr.spaceshooter.Entity.Equipments;
 
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Rectangle;
 import com.mcr.spaceshooter.Entity.Equipments.OffensiveEquipment;
@@ -15,12 +16,13 @@ public class Weapon extends OffensiveEquipment {
     private List<Bullet> bullets;
     private int attackSpeeder = 15;
     private long lastTimeShot;
-    private final long MAX_SHOOT_PER_MS = 100;
+    private final int shootSpeed;
 
-    public Weapon(String name, int price, int damage) {
-        super(name, price, damage);
+    public Weapon(String name, Texture texture, int price, int shootSpeed) {
+        super(name, texture, price, 0);
         bullets = new LinkedList<>();
         lastTimeShot = 0;
+        this.shootSpeed = shootSpeed;
     }
 
     public void shoot(float x, float y) {
@@ -39,7 +41,7 @@ public class Weapon extends OffensiveEquipment {
 
     private boolean canShoot() {
         long currentTime = System.currentTimeMillis();
-        if(currentTime - lastTimeShot >= MAX_SHOOT_PER_MS) {
+        if(currentTime - lastTimeShot >= shootSpeed) {
             lastTimeShot = currentTime;
             return true;
         }
