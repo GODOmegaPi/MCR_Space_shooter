@@ -7,6 +7,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 import com.mcr.spaceshooter.UI.Screen.GarageScreen;
+import com.mcr.spaceshooter.UI.Screen.WelcomeScreen;
 import com.mcr.spaceshooter.Utils.Assets;
 import com.mcr.spaceshooter.Entity.Spaceship;
 
@@ -20,7 +21,7 @@ public class SpaceShooter extends Game {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 
 		batch = new SpriteBatch();
-		s = new GarageScreen();
+		s = new WelcomeScreen();
 		ScreenManager.getInstance().setGame(this);
 		ScreenManager.getInstance().setScreen(s);
 	}
