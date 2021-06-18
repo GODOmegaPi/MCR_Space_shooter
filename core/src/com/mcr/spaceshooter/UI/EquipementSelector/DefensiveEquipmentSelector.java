@@ -1,13 +1,10 @@
 package com.mcr.spaceshooter.UI.EquipementSelector;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mcr.spaceshooter.Entity.Equipments.DefensiveEquipment;
 import com.mcr.spaceshooter.Entity.Equipments.Equipment;
 import com.mcr.spaceshooter.UI.Screen.GarageScreen;
-import com.sun.tools.javac.util.Pair;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -43,7 +40,6 @@ public class DefensiveEquipmentSelector extends EquipementSelector {
 
     @Override
     void updateLabels() {
-        Gdx.app.debug(this.getClass().getName(), String.format("name %s| price %s| hp %s", equipments.get(currentElementIdx).getName(), String.valueOf(equipments.get(currentElementIdx).getPrice()), String.valueOf(((DefensiveEquipment) equipments.get(currentElementIdx)).getHp())));
         nameLbl.setText(equipments.get(currentElementIdx).getName());
         priceLbl.setText(String.valueOf(equipments.get(currentElementIdx).getPrice()));
         hpLbl.setText(String.valueOf(((DefensiveEquipment) equipments.get(currentElementIdx)).getHp()));

@@ -10,6 +10,7 @@ import com.mcr.spaceshooter.Entity.Equipments.Shield;
 import com.mcr.spaceshooter.Entity.Equipments.Weapon;
 import com.mcr.spaceshooter.Entity.Equipments.Fuselage;
 
+
 public class Spaceship {
     private Rectangle bounds;
     private int speed;

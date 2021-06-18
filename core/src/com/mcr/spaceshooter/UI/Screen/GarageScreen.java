@@ -27,23 +27,21 @@ import com.mcr.spaceshooter.ScreenManager;
 import com.mcr.spaceshooter.UI.EquipementSelector.DefensiveEquipmentSelector;
 import com.mcr.spaceshooter.UI.EquipementSelector.OffensiveEquipmentSelector;
 import com.mcr.spaceshooter.Utils.Constants;
+import com.mcr.spaceshooter.Utils.Loader;
 import com.mcr.spaceshooter.Utils.Toast;    // https://github.com/wentsa/Toast-LibGDX
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
 import java.util.List;
 
 public class GarageScreen implements Screen {
-    private Stage stage;
-    private SpriteBatch spriteBatch;
-    private List<Equipment> fuselagesList;
-    private List<Equipment> weaponsList;
-    private List<Equipment> shieldsList;
-    private ShipBuilder builder;
-    private List<Toast> toasts;
+    private final Stage stage;
+    private final SpriteBatch spriteBatch;
+    private final ShipBuilder builder;
+    private final List<Toast> toasts;
     private final Toast.ToastFactory errorToastFactory;
 
+    // TODO local variable (intellij suggest)
     private Label costLbl;
     private Label costValueLbl;
     private Label maxCostLbl;
@@ -53,6 +51,9 @@ public class GarageScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         spriteBatch = new SpriteBatch();
+        List<Equipment> fuselagesList = Loader.getInstance().getFuselageList();
+        List<Equipment> weaponsList = Loader.getInstance().getWeaponList();
+        List<Equipment> shieldsList = Loader.getInstance().getShieldList();
 
         Asset.getInstance().getGarageMusic().play();
 
@@ -67,40 +68,10 @@ public class GarageScreen implements Screen {
                 .fontColor(new Color(0.86f, 0, 0, 1f)).build();
         toasts = new ArrayList<>();
 
-        fuselagesList = new LinkedList<>();
-
-        Fuselage p1 = new Fuselage("Falcon 1",  Asset.getInstance().getFuselagesTexture(1),30, 75);
-        Fuselage p2 = new Fuselage("Falcon 9",Asset.getInstance().getFuselagesTexture(5) ,40, 90);
-        Fuselage p3 = new Fuselage("Falcon Heavy", Asset.getInstance().getFuselagesTexture(9),50, 100);
-
-        fuselagesList.add(p1);
-        fuselagesList.add(p2);
-        fuselagesList.add(p3);
-
-        weaponsList = new LinkedList<>();
-        Weapon pa = new Weapon("SIG 550", Asset.getInstance().getWeaponsTexture(1), 30, 200);
-        Weapon pb = new Weapon("Browning M2HB", Asset.getInstance().getWeaponsTexture(2),40, 100);
-        Weapon pc = new Weapon("Panzerfaust", Asset.getInstance().getWeaponsTexture(3), 50, 50);
-        weaponsList.add(pa);
-        weaponsList.add(pb);
-        weaponsList.add(pc);
-
-        shieldsList = new LinkedList<>();
-        Shield px = new Shield("Phantom Shield", Asset.getInstance().getShieldsTexture(1),30, 10);
-        Shield py = new Shield("Diamond Shield", Asset.getInstance().getShieldsTexture(2),40, 20);
-        Shield pz = new Shield("Plasma Shield", Asset.getInstance().getShieldsTexture(3), 50, 30);
-
-        shieldsList.add(px);
-        shieldsList.add(py);
-        shieldsList.add(pz);
-
         Table table = new Table();
-        //table.setDebug(true);
         Table firstColTable = new Table();
-        //firstColTable.setDebug(true);
 
         Table secondColTable = new Table();
-        //secondColTable.setDebug(true);
 
         table.setFillParent(true);
         stage.addActor(table);
