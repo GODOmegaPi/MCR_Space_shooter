@@ -95,7 +95,7 @@ public class Spaceship {
         if(Gdx.input.isKeyPressed(Keys.S)){
             bounds.setY(getY() - speed);
         }
-        if(Gdx.input.isKeyJustPressed(Keys.SPACE)){
+        if(Gdx.input.isKeyPressed(Keys.SPACE)){
             shoot();
         }
 

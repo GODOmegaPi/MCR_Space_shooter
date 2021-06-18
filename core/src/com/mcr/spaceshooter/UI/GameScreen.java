@@ -9,12 +9,6 @@ import com.mcr.spaceshooter.Entity.Space;
 import com.mcr.spaceshooter.ScreenManager;
 import com.badlogic.gdx.audio.Music;
 
-
-/**
- * TODO:
- * - Vitesse de tir à placer variable dans Weapon shootingSpeed
- */
-
 public class GameScreen implements Screen {
     private SpriteBatch spriteBatch;
     private Space space;
