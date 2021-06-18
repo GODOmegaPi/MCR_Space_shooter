@@ -1,4 +1,4 @@
-package com.mcr.spaceshooter.UI;
+package com.mcr.spaceshooter.UI.Screen;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
@@ -14,17 +14,16 @@ import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mcr.spaceshooter.Asset.Asset;
 import com.mcr.spaceshooter.ScreenManager;
+import com.mcr.spaceshooter.UI.Screen.GarageScreen;
 
 public class GameOverScreen implements Screen {
     private Stage stage;
     private int score;
-    private Music music;
 
     public GameOverScreen(int score) {
         this.score = score;
 
-        music = Asset.getInstance().getGameoverMusic();
-        music.play();
+        Asset.getInstance().getGameoverMusic().play();
 
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
@@ -44,7 +43,7 @@ public class GameOverScreen implements Screen {
         mainMenuButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                music.stop();
+                Asset.getInstance().getGameoverMusic().stop();
                 Screen screen = new GarageScreen();
                 ScreenManager.getInstance().setScreen(screen);
             }
@@ -105,6 +104,5 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void dispose() {
-        music.dispose();
     }
 }

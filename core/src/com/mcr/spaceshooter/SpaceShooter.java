@@ -4,21 +4,18 @@ import com.badlogic.gdx.Application;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
-import com.mcr.spaceshooter.Asset.Asset;
-import com.mcr.spaceshooter.UI.GameScreen;
-import com.mcr.spaceshooter.UI.GarageScreen;
-import com.mcr.spaceshooter.Utils.Assets;
 import com.mcr.spaceshooter.UI.Screen.GarageScreen;
+import com.mcr.spaceshooter.Utils.Assets;
 import com.mcr.spaceshooter.Entity.Spaceship;
 
 public class SpaceShooter extends Game {
-	SpriteBatch batch;
-	Screen s;
-	
+	private SpriteBatch batch;
 	private Spaceship ship;
 	private Screen s;
 	private Assets assets;
+
 	@Override
 	public void create () {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);

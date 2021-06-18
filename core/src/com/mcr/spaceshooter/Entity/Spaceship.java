@@ -2,20 +2,22 @@ package com.mcr.spaceshooter.Entity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.mcr.spaceshooter.Asset.Asset;
-import com.mcr.spaceshooter.Entity.Equipements.Shield;
-import com.mcr.spaceshooter.Entity.Equipements.Weapon;
+import com.mcr.spaceshooter.Builder.PlayableShipBuilder;
+import com.mcr.spaceshooter.Entity.Equipments.Shield;
+import com.mcr.spaceshooter.Entity.Equipments.Weapon;
+import com.mcr.spaceshooter.Entity.Equipments.Fuselage;
 
 public class Spaceship {
     private Rectangle bounds;
     private int speed;
     private Weapon weapon;
     private Shield shield;
-    private int HP;
+    private Fuselage fuselage;
+    private int hp;
     private boolean unlimitedPower;
 
     public static final int SIZE = 50;
@@ -24,10 +26,17 @@ public class Spaceship {
     public Spaceship(int x, int y, int speed) {
          bounds = new Rectangle(x, y, SIZE, SIZE);
          this.speed = speed;
-         weapon = new Weapon(50, 50);
-         shield = new Shield(50, 50);
-         HP = MAX_HP;
+         weapon = new Weapon("", 50, 50);
+         shield = new Shield("", 50, 50);
+         hp = MAX_HP;
          unlimitedPower = false;
+    }
+
+    public Spaceship(PlayableShipBuilder playableShipBuilder) {
+        hp = playableShipBuilder.getHp();
+        fuselage = playableShipBuilder.getFuselage();
+        weapon = playableShipBuilder.getWeapon();
+        shield = playableShipBuilder.getShield();
     }
 
     public boolean isColliding(Rectangle rect) {
@@ -52,7 +61,7 @@ public class Spaceship {
         shieldPV -= damage;
 
         if(shieldPV < 0){
-            HP += shieldPV;
+            hp += shieldPV;
         }
 
         shield.setHp(shieldPV);
@@ -74,8 +83,8 @@ public class Spaceship {
         return bounds.getY();
     }
 
-    public int getHP() {
-        return HP;
+    public int getHp() {
+        return hp;
     }
 
     public Shield getShield() {
@@ -117,26 +126,22 @@ public class Spaceship {
     }
 
     private void cheatCode() {
-        if(
+        if (
                 Gdx.input.isKeyPressed(Keys.P)
-                && Gdx.input.isKeyPressed(Keys.I)
-                && Gdx.input.isKeyPressed(Keys.O)
-                && Gdx.input.isKeyPressed(Keys.U)
+                        && Gdx.input.isKeyPressed(Keys.I)
+                        && Gdx.input.isKeyPressed(Keys.O)
+                        && Gdx.input.isKeyPressed(Keys.U)
         ) {
             unlimitedPower = true;
         }
     }
-    }
-        return fuselage;
+
     public Fuselage getFuselage() {
+        return fuselage;
     }
-        return weapon;
+
     public Weapon getWeapon() {
-    public Spaceship(PlayableShipBuilder playableShipBuilder) {
-        currentHp = playableShipBuilder.getCurrentHp();
-        fuselage = playableShipBuilder.getFuselage();
-        weapon = playableShipBuilder.getWeapon();
-        shield = playableShipBuilder.getShield();
+        return weapon;
     }
-    private Fuselage fuselage;
+
 }

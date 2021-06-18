@@ -5,6 +5,7 @@ import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.mcr.spaceshooter.Utils.Constants;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -59,12 +60,20 @@ public class Asset {
 
     private void loadMusics() {
         ambianceMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/ambiance.mp3"));
+        ambianceMusic.setVolume(Constants.AUDIO_LEVEL);
+        ambianceMusic.setLooping(true);
+
         gameoverMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/gameover.ogg"));
+        gameoverMusic.setVolume(Constants.AUDIO_LEVEL);
+
         garageMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/garage.ogg"));
+        garageMusic.setVolume(Constants.AUDIO_LEVEL);
+        garageMusic.setLooping(true);
     }
 
     private void loadSounds() {
         bulletSound = Gdx.audio.newSound(Gdx.files.internal("sounds/7.wav"));
+        // bulletSound.setVolume(bulletSound.play(), Constants.AUDIO_LEVEL);
     }
 
     private void loadTextures() {

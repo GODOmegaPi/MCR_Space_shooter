@@ -74,7 +74,7 @@ public class Space {
     }
 
     public boolean isGameOver() {
-        return spaceship.getHP() == 0;
+        return spaceship.getHp() == 0;
     }
 
 }

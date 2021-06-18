@@ -27,7 +27,6 @@ import com.mcr.spaceshooter.Entity.Spaceship;
 import com.mcr.spaceshooter.ScreenManager;
 import com.mcr.spaceshooter.UI.EquipementSelector.DefensiveEquipmentSelector;
 import com.mcr.spaceshooter.UI.EquipementSelector.OffensiveEquipmentSelector;
-import com.mcr.spaceshooter.UI.GameScreen;
 import com.mcr.spaceshooter.Utils.Assets;
 import com.mcr.spaceshooter.Utils.Constants;
 import com.mcr.spaceshooter.Utils.Toast;    // https://github.com/wentsa/Toast-LibGDX

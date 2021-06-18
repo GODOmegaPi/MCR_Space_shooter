@@ -4,7 +4,7 @@ public abstract class OffensiveEquipment extends Equipment {
     private final int damage;
 
     public OffensiveEquipment(String name, int price, int damage) {
-        super(name, price);
+        super(name, price, damage);
         this.damage = damage;
     }
 

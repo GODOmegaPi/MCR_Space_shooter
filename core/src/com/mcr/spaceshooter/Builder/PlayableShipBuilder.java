@@ -9,7 +9,7 @@ import com.mcr.spaceshooter.Utils.Constants;
 
 public class PlayableShipBuilder implements ShipBuilder {
 
-    private int currentHp;
+    private int hp;
     private int totalCost;
     private Fuselage fuselage;
     private Weapon weapon;
@@ -20,7 +20,7 @@ public class PlayableShipBuilder implements ShipBuilder {
 
     @Override
     public void reset() {
-        currentHp = 0;
+        hp = 0;
         fuselage = null;
         weapon = null;
         shield = null;
@@ -93,8 +93,8 @@ public class PlayableShipBuilder implements ShipBuilder {
         return totalCost;
     }
 
-    public int getCurrentHp() {
-        return currentHp;
+    public int getHp() {
+        return hp;
     }
 
     public Fuselage getFuselage() {

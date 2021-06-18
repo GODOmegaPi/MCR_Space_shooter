@@ -1,12 +1,14 @@
-package com.mcr.spaceshooter.Entity.Equipements;
+package com.mcr.spaceshooter.Entity.Equipments;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Sound;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.mcr.spaceshooter.Asset.Asset;
+import com.mcr.spaceshooter.Entity.Equipments.Equipment;
+import com.mcr.spaceshooter.Entity.Spaceship;
+import com.mcr.spaceshooter.Utils.Constants;
 
 public class Bullet {
 
@@ -14,7 +16,6 @@ public class Bullet {
     private final int speed;
     private boolean outOfBound;
     private boolean alive;
-    private Sound sound;
 
     public static int WIDTH = 7;
     public static int HEIGHT = 19;
@@ -22,8 +23,8 @@ public class Bullet {
 
     public Bullet(float x, float y, int speed) {
         this.speed = speed;
-        sound = Asset.getInstance().getBulletSound();
-        sound.play();
+        Asset.getInstance().getBulletSound().play(Constants.AUDIO_LEVEL);
+
         outOfBound = false;
         alive = true;
         bounds = new Rectangle(x - WIDTH / 2, y, WIDTH, HEIGHT);
@@ -61,4 +62,5 @@ public class Bullet {
 
         bounds.setY(bounds.getY() + speed);
     }
+
 }

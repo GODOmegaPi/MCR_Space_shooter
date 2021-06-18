@@ -1,22 +1,18 @@
-package com.mcr.spaceshooter.UI;
+package com.mcr.spaceshooter.UI.Screen;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mcr.spaceshooter.Asset.Asset;
 import com.mcr.spaceshooter.Entity.Space;
 import com.mcr.spaceshooter.ScreenManager;
-import com.badlogic.gdx.audio.Music;
+import com.mcr.spaceshooter.UI.SpaceRenderer;
 
 public class GameScreen implements Screen {
-    public GameScreen(){
     private SpriteBatch spriteBatch;
     private Space space;
     private SpaceRenderer renderer;
-    private Music music;
 
     public GameScreen() {
-        music = Asset.getInstance().getAmbianceMusic();
-        music.setLooping(true);
         space = new Space();
         spriteBatch = new SpriteBatch();
 
@@ -25,14 +21,13 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-        music.play();
-        music.setVolume(0.5F);
+        Asset.getInstance().getAmbianceMusic().play();
     }
 
     private void update() {
         renderer.update();
         if (space.isGameOver()) {
-            music.stop();
+            Asset.getInstance().getAmbianceMusic().stop();
             ScreenManager.getInstance().setScreen(new GameOverScreen(space.getScore()));
         }
     }
@@ -65,7 +60,6 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        music.dispose();
         spriteBatch.dispose();
     }
 }
