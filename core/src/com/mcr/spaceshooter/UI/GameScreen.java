@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.mcr.spaceshooter.Asset.Asset;
 import com.mcr.spaceshooter.Entity.Space;
 import com.mcr.spaceshooter.ScreenManager;
 import com.badlogic.gdx.audio.Music;
@@ -19,19 +20,17 @@ import com.badlogic.gdx.audio.Music;
 
 public class GameScreen implements Screen {
     private SpriteBatch spriteBatch;
-    private Skin skin;
     private Space space;
     private SpaceRenderer renderer;
     private Music music;
 
     public GameScreen() {
-        skin = new Skin(Gdx.files.internal("skin/craftacular-ui.json"));
-        music = Gdx.audio.newMusic(Gdx.files.internal("sounds/ambiance.mp3"));
+        music = Asset.getInstance().getAmbiance();
         music.setLooping(true);
         space = new Space();
         spriteBatch = new SpriteBatch();
 
-        renderer = new SpaceRenderer(space, skin);
+        renderer = new SpaceRenderer(space);
     }
 
     @Override
@@ -77,6 +76,5 @@ public class GameScreen implements Screen {
     public void dispose() {
         music.dispose();
         spriteBatch.dispose();
-        skin.dispose();
     }
 }

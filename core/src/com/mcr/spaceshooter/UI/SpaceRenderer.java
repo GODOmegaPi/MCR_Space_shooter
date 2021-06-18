@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.mcr.spaceshooter.Asset.Asset;
 import com.mcr.spaceshooter.Entity.Space;
 
 public class SpaceRenderer {
@@ -15,26 +16,14 @@ public class SpaceRenderer {
     private int width;
     private int height;
 
-    private BitmapFont font;
-    private Texture backgroundTexture;
-    private Skin skin;
-
-    public SpaceRenderer(Space space, Skin skin) {
+    public SpaceRenderer(Space space) {
         this.space = space;
-        this.skin = skin;
         //TODO Centrer.
        // this.cam = new OrthographicCamera(0, 0);
-        font = new BitmapFont();
-
-        loadTextures();
-    }
-
-    private void loadTextures() {
-        backgroundTexture = new Texture(Gdx.files.internal("bg.jpg"));
     }
 
     public void renderBackground(SpriteBatch spriteBatch){
-        spriteBatch.draw(backgroundTexture, 0, 0);
+        spriteBatch.draw(Asset.getInstance().getBackgroundTexture(), 0, 0);
     }
 
     public void renderGUI(SpriteBatch spriteBatch){
@@ -42,13 +31,13 @@ public class SpaceRenderer {
         int shieldHP    = space.getSpaceship().getShield().getHp();
         int score       = space.getScore();
 
-        Label hpLabel = new Label(String.format("PV       : %d", spaceshipHP), skin);
+        Label hpLabel = new Label(String.format("PV       : %d", spaceshipHP), Asset.getInstance().getSkin());
         hpLabel.setPosition(width - 225, height - 50);
 
-        Label shieldLabel = new Label(String.format("SHIELD : %d", shieldHP), skin);
+        Label shieldLabel = new Label(String.format("SHIELD : %d", shieldHP), Asset.getInstance().getSkin());
         shieldLabel.setPosition(width - 225, height - 100);
 
-        Label scoreLabel = new Label(String.format("Score : %d", score), skin);
+        Label scoreLabel = new Label(String.format("Score : %d", score), Asset.getInstance().getSkin());
         scoreLabel.setPosition(20, height - 50);
 
         hpLabel.draw(spriteBatch, 1);

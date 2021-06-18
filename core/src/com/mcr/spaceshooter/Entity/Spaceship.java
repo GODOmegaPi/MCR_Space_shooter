@@ -6,13 +6,13 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
+import com.mcr.spaceshooter.Asset.Asset;
 import com.mcr.spaceshooter.Entity.Equipements.Shield;
 import com.mcr.spaceshooter.Entity.Equipements.Weapon;
 
 public class Spaceship {
     private Rectangle bounds;
     private int speed;
-    private Texture texture;
     private Weapon weapon;
     private Shield shield;
     private int HP;
@@ -23,7 +23,6 @@ public class Spaceship {
     public Spaceship(int x, int y, int speed) {
          bounds = new Rectangle(x, y, SIZE, SIZE);
          this.speed = speed;
-         texture = new Texture(Gdx.files.internal("ships/cockpits/ship (8).png"));
          weapon = new Weapon(50, 50);
          shield = new Shield(50, 50);
          HP = MAX_HP;
@@ -55,7 +54,7 @@ public class Spaceship {
 
     public void render(SpriteBatch spriteBatch) {
         spriteBatch.begin();
-        spriteBatch.draw(texture, getX(), getY(), bounds.getWidth(), bounds.getHeight());
+        spriteBatch.draw(Asset.getInstance().getCockpitsTexture(8), getX(), getY(), bounds.getWidth(), bounds.getHeight());
         spriteBatch.end();
 
         weapon.render(spriteBatch);

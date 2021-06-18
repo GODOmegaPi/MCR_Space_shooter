@@ -11,11 +11,11 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.mcr.spaceshooter.Asset.Asset;
 import com.mcr.spaceshooter.ScreenManager;
 
 public class GameOverScreen implements Screen {
     private Stage stage;
-    private Skin skin;
     private int score;
 
     public GameOverScreen(int score) {
@@ -23,21 +23,19 @@ public class GameOverScreen implements Screen {
 
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        skin = new Skin(Gdx.files.internal("skin/craftacular-ui.json"));
-
 
         Table table = new Table();
         table.setFillParent(true);
         stage.addActor(table);
 
 
-        Label titleLabel = new Label("Game over puto", skin);
+        Label titleLabel = new Label("Game over puto", Asset.getInstance().getSkin());
         titleLabel.setFontScale(2);
 
-        Label scoreLabel = new Label("Score : " + score, skin);
+        Label scoreLabel = new Label("Score : " + score, Asset.getInstance().getSkin());
         scoreLabel.setFontScale(1);
 
-        TextButton mainMenuButton = new TextButton("Retour au menu", skin);
+        TextButton mainMenuButton = new TextButton("Retour au menu", Asset.getInstance().getSkin());
         mainMenuButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
@@ -46,7 +44,7 @@ public class GameOverScreen implements Screen {
             }
         });
 
-        TextButton quitButton = new TextButton("Quitter", skin);
+        TextButton quitButton = new TextButton("Quitter", Asset.getInstance().getSkin());
         quitButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
