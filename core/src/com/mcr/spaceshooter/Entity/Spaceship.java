@@ -106,13 +106,17 @@ public class Spaceship {
 
         cheatCode();
 
-        //TODO: ERic
+        if(bounds.getX() > Gdx.graphics.getWidth()){
+            bounds.setX(-bounds.width);
+        }else if(bounds.getX() < -bounds.getWidth()){
+            bounds.setX(Gdx.graphics.getWidth());
+        }
 
-
-        System.out.println("==");
-        System.out.println("(" + bounds.getX() + ", " + bounds.getY() + ")");
-        System.out.println("(" + Gdx.graphics.getWidth() + ", " + Gdx.graphics.getHeight() + ")");
-        System.out.println("==");
+        if(bounds.getY() > Gdx.graphics.getHeight()){
+            bounds.setY(-bounds.height);
+        }else if(bounds.getY() < -bounds.getHeight()){
+            bounds.setY(Gdx.graphics.getHeight());
+        }
 
         weapon.update();
     }
