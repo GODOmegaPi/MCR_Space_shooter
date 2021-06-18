@@ -24,7 +24,6 @@ import java.util.function.Consumer;
 
 
 abstract public class EquipementSelector extends Group {
-    // TODO voir ce qui peut etre static  eg: btnTex restera toujours le même (comme defaultEuiqpementTex)
     protected Table table;
     protected List<Equipment> equipments;
     protected int currentElementIdx;
@@ -34,6 +33,9 @@ abstract public class EquipementSelector extends Group {
     private ImageButton rightArrowBtn;
     private TextButton equipBtn;
     private Boolean isEquiped = false;
+    private static final String EQUIPER_TEXT = "Equiper";
+    private static final String DESEQUIPER_TEXT = "Desequiper";
+
     Consumer<Equipment> buildSetter;
     Runnable buildCleaner;
     GarageScreen garageScreen;
@@ -44,7 +46,6 @@ abstract public class EquipementSelector extends Group {
         // Aucun élément n'est sélectionné
         this.currentElementIdx = 0;
         this.equipments = equipments;
-        //this.table = table;
         this.skin = skin;
         this.table = new Table();
         table.setFillParent(true);
@@ -58,40 +59,36 @@ abstract public class EquipementSelector extends Group {
     private void changeEquipment(Equipment equipement) {
         imgEquipement.setDrawable(new SpriteDrawable(new Sprite(equipement.getTexture())));
     }
-
-
-
+    private void equipe(){
+        buildSetter.accept(equipments.get(currentElementIdx));
+        isEquiped = true;
+        equipBtn.setText(DESEQUIPER_TEXT);
+        leftArrowBtn.setDisabled(true);
+        rightArrowBtn.setDisabled(true);
+        garageScreen.updateCost();
+    }
+    private void desequipe(){
+        buildCleaner.run();
+        isEquiped = false;
+        equipBtn.setText(EQUIPER_TEXT);
+        leftArrowBtn.setDisabled(false);
+        rightArrowBtn.setDisabled(false);
+        garageScreen.updateCost();
+    }
     protected void init() {
-        equipBtn = new TextButton("Equiper", skin);
+        equipBtn = new TextButton(EQUIPER_TEXT, skin);
         equipBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 try{
-                    // TODO UTILISER LE BUILDER
                     if (isEquiped) {
-                        Gdx.app.debug(this.getClass().getName(), "PAR ici"  );
-                        buildCleaner.run();
-                        isEquiped = false;
-                        equipBtn.setText("Equiper");
-                        leftArrowBtn.setDisabled(false);
-                        rightArrowBtn.setDisabled(false);
-                        garageScreen.updateCost();
-                        Gdx.app.debug(this.getClass().getName(), "PAR ici en bas"  );
+                        desequipe();
                     } else {
-                        Gdx.app.debug(this.getClass().getName(), "PAR LA"  );
-                        buildSetter.accept(equipments.get(currentElementIdx));
-                        isEquiped = true;
-                        equipBtn.setText("Desequiper");
-                        leftArrowBtn.setDisabled(true);
-                        rightArrowBtn.setDisabled(true);
-                        garageScreen.updateCost();
-                        Gdx.app.debug(this.getClass().getName(), "PAR La en bas"  );
+                       equipe();
                     }
                 }catch(ShipBuilderException sbe){
                     garageScreen.toastLong("Erreur de construction: " + sbe.getMessage());
-                    Gdx.app.debug(this.getClass().getName(), "Erreur de construction: " + sbe.getMessage()  );
                 }
-
             }
         });
 
@@ -103,12 +100,11 @@ abstract public class EquipementSelector extends Group {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 if (leftArrowBtn.isDisabled())
-                    return; // TODO vraiment nécessaire ?: Il faut vraiement faire ça soit même ? -_-'
+                    return;
                 if (--currentElementIdx < 0) {
                     // On sette l'itérateur comment étant le dernières élements.
                     currentElementIdx = equipments.size() - 1;
                 }
-                Gdx.app.debug(this.getClass().getName(), String.format("is disabled : %b", leftArrowBtn.isDisabled()));
                 changeEquipment(equipments.get(currentElementIdx));
                 updateLabels();
             }
@@ -119,11 +115,10 @@ abstract public class EquipementSelector extends Group {
 
             public void clicked(InputEvent event, float x, float y) {
                 if (rightArrowBtn.isDisabled())
-                    return; // TODO vraiment nécessaire ? : Il faut vraiment faire ça soit même ? -_-'
+                    return;
                 if (++currentElementIdx >= equipments.size()) {
                     currentElementIdx = 0;
                 }
-                Gdx.app.debug(this.getClass().getName(), String.format("index : %d", currentElementIdx));
                 changeEquipment(equipments.get(currentElementIdx));
                 updateLabels();
             }

@@ -10,7 +10,6 @@ import com.mcr.spaceshooter.Entity.Equipments.Shield;
 import com.mcr.spaceshooter.Entity.Equipments.Weapon;
 import com.mcr.spaceshooter.Entity.Equipments.Fuselage;
 
-// TODO remove : import javax.swing.plaf.synth.SynthOptionPaneUI;
 
 public class Spaceship {
     private Rectangle bounds;
