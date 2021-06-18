@@ -27,7 +27,6 @@ public class Bullet {
         outOfBound = false;
         alive = true;
         bounds = new Rectangle(x - WIDTH / 2, y, WIDTH, HEIGHT);
-        
     }
 
     public void render(SpriteBatch spriteBatch) {

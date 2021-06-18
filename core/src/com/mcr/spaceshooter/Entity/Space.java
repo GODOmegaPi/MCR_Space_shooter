@@ -23,8 +23,6 @@ public class Space {
         asteroids = new LinkedList<>();
         generateAsteroids(BASE_NB_ASTEROIDS);
         score = 0;
-        this.width = width;
-        this.height = height;
         lastDifficultyIncrease = System.currentTimeMillis();
     }
 

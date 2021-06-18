@@ -16,6 +16,7 @@ public class Spaceship {
     private Weapon weapon;
     private Shield shield;
     private int HP;
+    private boolean unlimitedPower;
 
     public static final int SIZE = 50;
     private static final int MAX_HP = 100;
@@ -26,6 +27,7 @@ public class Spaceship {
          weapon = new Weapon(50, 50);
          shield = new Shield(50, 50);
          HP = MAX_HP;
+         unlimitedPower = false;
     }
 
     public boolean isColliding(Rectangle rect) {
@@ -38,7 +40,11 @@ public class Spaceship {
     }
 
     public void shoot() {
-        weapon.shoot(getX(), getY());
+        if(!unlimitedPower) {
+            weapon.shoot(getX(), getY());
+        } else {
+            weapon.shootMore(getX(), getY(), 4);
+        }
     }
 
     public void hit(int damage){
@@ -93,6 +99,8 @@ public class Spaceship {
             shoot();
         }
 
+        cheatCode();
+
         if(bounds.getX() + bounds.getWidth() >= Gdx.graphics.getWidth()){
             bounds.setX(Gdx.graphics.getWidth() - bounds.getWidth());
         }else if(bounds.getX() <= 0){
@@ -106,5 +114,16 @@ public class Spaceship {
         }
 
         weapon.update();
+    }
+
+    private void cheatCode() {
+        if(
+                Gdx.input.isKeyPressed(Keys.P)
+                && Gdx.input.isKeyPressed(Keys.I)
+                && Gdx.input.isKeyPressed(Keys.O)
+                && Gdx.input.isKeyPressed(Keys.U)
+        ) {
+            unlimitedPower = true;
+        }
     }
 }

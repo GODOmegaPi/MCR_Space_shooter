@@ -13,7 +13,6 @@ import com.badlogic.gdx.audio.Music;
 /**
  * TODO:
  * - Vitesse de tir à placer variable dans Weapon shootingSpeed
- * - Séparer render et update - GUILLAUME
  */
 
 public class GameScreen implements Screen {

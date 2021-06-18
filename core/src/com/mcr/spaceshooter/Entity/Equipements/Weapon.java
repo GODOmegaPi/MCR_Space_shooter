@@ -24,11 +24,11 @@ public class Weapon extends Equipment {
         bullets.add(new Bullet(x + Spaceship.SIZE / 2, y, this.attackSpeeder));
     }
 
-    // TODO possibility for a weapon to shoot multiple bullets (maybe make it that it's reload time is longer)
-    /*public void shoot(float x, float y) {
-        bullets.add(new Bullet(x + Spaceship.SIZE / 4, y, this.attackSpeeder));
-        bullets.add(new Bullet(x + (Spaceship.SIZE / 4) * 3, y, this.attackSpeeder));
-    }*/
+    public void shootMore(float x, float y, int number) {
+        for (int i = 1; i <= number; ++i) {
+            bullets.add(new Bullet(x + (Spaceship.SIZE / number) * i, y, this.attackSpeeder));
+        }
+    }
 
     public boolean isColliding(Rectangle rect) {
         boolean colliding = false;
