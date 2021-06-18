@@ -15,12 +15,14 @@ public class Asteroid {
     private boolean outOfBound;
     private boolean hit;
     private Rectangle bounds;
-
     public static int DAMAGE = 10;
+    private int dLateral;
 
     public Asteroid() {
         size = Rand.generateRandom(50, 75);
         speed = Rand.generateRandom(2, 5);
+        dLateral = Rand.generateRandom(-3, 3);
+
         texture = new Texture(Gdx.files.internal("asteroids/asteroid (" + Rand.generateRandom(1, 8) + ").png"));
         outOfBound = false;
         hit = false;
@@ -33,6 +35,7 @@ public class Asteroid {
 
     public void render(SpriteBatch spriteBatch) {
         bounds.setY(bounds.getY() - speed);
+        bounds.setX(bounds.getX() + dLateral);
         spriteBatch.begin();
         spriteBatch.draw(texture, bounds.getX(), bounds.getY(), size, size);
         spriteBatch.end();

@@ -13,7 +13,7 @@ public class Space {
     private final int ADD_DIFFICULTY = 5;
     private int difficulty = 0;
     private long lastDifficultyIncrease;
-    private final long INCREASE_DIFFICULTY_TIME_MS = 10000;
+    private final long INCREASE_DIFFICULTY_TIME_MS = 5000;
 
     private int score;
     private int height;
@@ -22,11 +22,11 @@ public class Space {
     public Space(int width, int height) {
         spaceship = new Spaceship(50, 50, 5, width, height);
         asteroids = new LinkedList<>();
-        generateAsteroids(N_ASTEROIDS / 2);
+        generateAsteroids(BASE_NB_ASTEROIDS / 2);
         score = 0;
         this.width = width;
         this.height = height;
-           lastDifficultyIncrease = System.currentTimeMillis();
+        lastDifficultyIncrease = System.currentTimeMillis();
     }
 
     public Spaceship getSpaceship() {

@@ -11,8 +11,6 @@ import com.badlogic.gdx.audio.Music;
 
 /**
  * TODO:
- * - Espace torique (à voir)
- * - Astéroïdes déplacement en diagonale
  * - Vitesse de tir à placer variable dans Weapon shootingSpeed
  * - Séparer render et update - GUILLAUME
  */
