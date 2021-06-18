@@ -8,6 +8,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
+import com.mcr.spaceshooter.Asset.Asset;
 import com.mcr.spaceshooter.UI.GameScreen;
 import com.mcr.spaceshooter.UI.GarageScreen;
 
@@ -28,21 +29,12 @@ public class SpaceShooter extends Game {
 
 	@Override
 	public void render () {
-
 		ScreenUtils.clear(1, 1, 1, 1);
-		/*batch.begin();
-		batch.draw(img, 0, 0);
-		batch.end();
-		 */
 		ScreenManager.getInstance().render();
 	}
 	
 	@Override
 	public void dispose () {
-		/*
-		batch.dispose();
-		img.dispose();
-		 */
         super.dispose();
 	}
 }

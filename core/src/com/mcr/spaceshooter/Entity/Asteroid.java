@@ -3,33 +3,39 @@ package com.mcr.spaceshooter.Entity;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mcr.spaceshooter.Asset.Asset;
 import com.mcr.spaceshooter.Utils.Rand;
 
 import com.badlogic.gdx.math.Rectangle;
 
 public class Asteroid {
-    private Texture texture;
-    // private int x, y;
-    private int size;
-    private int speed;
+    private final int speed;
     private boolean outOfBound;
     private boolean hit;
     private Rectangle bounds;
+    private final int asteroidTextureId;
+
     public static int DAMAGE = 10;
     private int dLateral;
 
     public Asteroid() {
-        size = Rand.generateRandom(50, 75);
         speed = Rand.generateRandom(2, 5);
         dLateral = Rand.generateRandom(-3, 3);
 
-        texture = new Texture(Gdx.files.internal("asteroids/asteroid (" + Rand.generateRandom(1, 8) + ").png"));
         outOfBound = false;
         hit = false;
+        asteroidTextureId = Rand.generateRandom(
+                Asset.getInstance().MIN_ASTEROIDS_TEXTURES,
+                Asset.getInstance().MAX_ASTEROIDS_TEXTURES
+        );
 
         //TODO remove variables tampons ouloulou
-        int x = Rand.generateRandom(0, Gdx.graphics.getWidth());
-        int y = Rand.generateRandom(Gdx.graphics.getHeight(), Gdx.graphics.getHeight() + 20);
+        int size = Rand.generateRandom(50, 75);
+        int x = Rand.generateRandom(size, Gdx.graphics.getWidth() - size);
+        int y = Rand.generateRandom(
+                Gdx.graphics.getHeight(),
+                (int) (Gdx.graphics.getHeight() + Gdx.graphics.getHeight() * 0.5)
+        );
         bounds = new Rectangle(x, y, size, size);
     }
 
@@ -37,11 +43,11 @@ public class Asteroid {
         bounds.setY(bounds.getY() - speed);
         bounds.setX(bounds.getX() + dLateral);
         spriteBatch.begin();
-        spriteBatch.draw(texture, bounds.getX(), bounds.getY(), size, size);
+        spriteBatch.draw(
+                Asset.getInstance().getAsteroidsTexture(asteroidTextureId),
+                bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight()
+        );
         spriteBatch.end();
-        if(bounds.getY() < 0) {
-            outOfBound = true;
-        }
     }
 
     public boolean isOutOfBound(){
@@ -58,5 +64,12 @@ public class Asteroid {
 
     public Rectangle getBounds() {
         return bounds;
+    }
+
+    public void update() {
+        bounds.setY(bounds.getY() - speed);
+        if(bounds.getY() < 0) {
+            outOfBound = true;
+        }
     }
 }

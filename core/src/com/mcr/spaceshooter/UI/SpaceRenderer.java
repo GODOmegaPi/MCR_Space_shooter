@@ -1,19 +1,13 @@
 package com.mcr.spaceshooter.UI;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Batch;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g2d.freetype.FreeType;
-import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.Rectangle;
-import com.mcr.spaceshooter.Entity.Asteroid;
+import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
+import com.mcr.spaceshooter.Asset.Asset;
 import com.mcr.spaceshooter.Entity.Space;
-import com.mcr.spaceshooter.Entity.Spaceship;
-
-import java.awt.Font;
 
 public class SpaceRenderer {
 
@@ -22,33 +16,33 @@ public class SpaceRenderer {
     private int width;
     private int height;
 
-    private BitmapFont font;
-    private Texture backgroundTexture;
-
     public SpaceRenderer(Space space) {
         this.space = space;
         //TODO Centrer.
        // this.cam = new OrthographicCamera(0, 0);
-        font = new BitmapFont();
-
-        loadTextures();
-    }
-
-    private void loadTextures() {
-        backgroundTexture = new Texture(Gdx.files.internal("bg.jpg"));
     }
 
     public void renderBackground(SpriteBatch spriteBatch){
-        spriteBatch.draw(backgroundTexture, 0, 0);
+        spriteBatch.draw(Asset.getInstance().getBackgroundTexture(), 0, 0);
     }
 
-    public void renderText(SpriteBatch spriteBatch){
+    public void renderGUI(SpriteBatch spriteBatch){
         int spaceshipHP = space.getSpaceship().getHP();
         int shieldHP    = space.getSpaceship().getShield().getHp();
         int score       = space.getScore();
-        
-        font.draw(spriteBatch, "PV : " + spaceshipHP + ", SHIELD : " + shieldHP, width - 200, height - 20);
-        font.draw(spriteBatch, "SCORE : " + score, 20, height - 20);
+
+        Label hpLabel = new Label(String.format("PV       : %d", spaceshipHP), Asset.getInstance().getSkin());
+        hpLabel.setPosition(width - 225, height - 50);
+
+        Label shieldLabel = new Label(String.format("SHIELD : %d", shieldHP), Asset.getInstance().getSkin());
+        shieldLabel.setPosition(width - 225, height - 100);
+
+        Label scoreLabel = new Label(String.format("Score : %d", score), Asset.getInstance().getSkin());
+        scoreLabel.setPosition(20, height - 50);
+
+        hpLabel.draw(spriteBatch, 1);
+        shieldLabel.draw(spriteBatch, 1);
+        scoreLabel.draw(spriteBatch, 1);
     }
 
     public void setSize (int w, int h) {
@@ -63,8 +57,12 @@ public class SpaceRenderer {
     public void render(SpriteBatch spriteBatch) {
         spriteBatch.begin();
         renderBackground(spriteBatch);
-        renderText(spriteBatch);
         spriteBatch.end();
+
         space.render(spriteBatch);
+
+        spriteBatch.begin();
+        renderGUI(spriteBatch);
+        spriteBatch.end();
     }
 }
