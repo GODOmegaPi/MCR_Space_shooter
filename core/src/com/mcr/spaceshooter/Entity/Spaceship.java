@@ -2,12 +2,9 @@ package com.mcr.spaceshooter.Entity;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
-import com.badlogic.gdx.math.RandomXS128;
 import com.badlogic.gdx.math.Rectangle;
-import com.mcr.spaceshooter.Asset.Asset;
 import com.mcr.spaceshooter.Builder.PlayableShipBuilder;
 import com.mcr.spaceshooter.Entity.Equipments.Shield;
 import com.mcr.spaceshooter.Entity.Equipments.Weapon;
@@ -65,14 +62,14 @@ public class Spaceship {
     }
 
     public void render(SpriteBatch spriteBatch) {
+        weapon.render(spriteBatch);
+
         spriteBatch.begin();
         spriteBatch.draw(fuselage.getTexture(), getX(), getY(), bounds.getWidth(), bounds.getHeight());
         if(shield.getHp() > 0) {
             spriteBatch.draw(shield.getTexture(), getX() - 10, getY() - 10, bounds.getWidth() + 20, bounds.getHeight() + 20);
         }
         spriteBatch.end();
-
-        weapon.render(spriteBatch);
     }
 
     public float getX() {

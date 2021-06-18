@@ -17,8 +17,7 @@ import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
 import com.mcr.spaceshooter.Builder.ShipBuilderException;
 import com.mcr.spaceshooter.Entity.Equipments.Equipment;
 import com.mcr.spaceshooter.UI.Screen.GarageScreen;
-import com.sun.tools.javac.util.Pair;
-import com.mcr.spaceshooter.Asset.Asset;
+import com.mcr.spaceshooter.Utils.Asset;
 
 import java.util.List;
 import java.util.function.Consumer;

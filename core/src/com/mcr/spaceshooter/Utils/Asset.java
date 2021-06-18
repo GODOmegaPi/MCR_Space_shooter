@@ -1,4 +1,4 @@
-package com.mcr.spaceshooter.Asset;
+package com.mcr.spaceshooter.Utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
@@ -7,9 +7,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.mcr.spaceshooter.Utils.Constants;
 
-import java.awt.*;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -69,8 +67,19 @@ public class Asset {
         loadSkins();
     }
 
+    public void unload() {
+        unloadTextures();
+        unloadSounds();
+        unloadMusics();
+        unloadSkins();
+    }
+
     private void loadSkins() {
         skin = new Skin(Gdx.files.internal("skin/craftacular-ui.json"));
+    }
+
+    private void unloadTextures() {
+        skin.dispose();
     }
 
     private void loadMusics() {
@@ -86,8 +95,18 @@ public class Asset {
         garageMusic.setLooping(true);
     }
 
+    private void unloadMusics() {
+        ambianceMusic.dispose();
+        gameoverMusic.dispose();
+        garageMusic.dispose();
+    }
+
     private void loadSounds() {
         bulletSound = Gdx.audio.newSound(Gdx.files.internal("sounds/7.wav"));
+    }
+
+    private void unloadSounds() {
+        bulletSound.dispose();
     }
 
     private void loadTextures() {
@@ -125,6 +144,19 @@ public class Asset {
         for (int i = MIN_BULLETS_TEXTURES; i <= MAX_BULLETS_TEXTURES; ++i) {
             bulletsTexture.add(new Texture(Gdx.files.internal("ships/bullets/bullet (" + i + ").png")));
         }
+    }
+
+    private void unloadSkins() {
+        font.dispose();
+        backgroundTexture.dispose();
+        leftArrowTexture.dispose();
+        leftArrowPressedTexture.dispose();
+
+        asteroidsTexture.forEach(Texture::dispose);
+        fuselagesTexture.forEach(Texture::dispose);
+        shieldsTexture.forEach(Texture::dispose);
+        weaponsTexture.forEach(Texture::dispose);
+        bulletsTexture.forEach(Texture::dispose);
     }
 
     public Skin getSkin() {
