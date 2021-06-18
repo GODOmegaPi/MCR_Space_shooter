@@ -1,6 +1,7 @@
 package com.mcr.spaceshooter;
 
 import com.badlogic.gdx.Game;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 
 public class ScreenManager {
@@ -12,6 +13,7 @@ public class ScreenManager {
     private ScreenManager(){
 
     }
+
     public void setScreen(Screen screen){
         currentScreen = screen;
         game.setScreen(screen);
@@ -23,7 +25,7 @@ public class ScreenManager {
     }
 
     public void render () {
-        currentScreen.render(0);
+        currentScreen.render(Gdx.graphics.getDeltaTime());
     }
 
     public static ScreenManager getInstance(){

@@ -1,63 +1,46 @@
 package com.mcr.spaceshooter.UI;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.scenes.scene2d.Actor;
-import com.badlogic.gdx.scenes.scene2d.InputEvent;
-import com.badlogic.gdx.scenes.scene2d.InputListener;
-import com.badlogic.gdx.scenes.scene2d.Stage;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.badlogic.gdx.scenes.scene2d.ui.Table;
-import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
-import com.badlogic.gdx.scenes.scene2d.utils.ChangeListener;
-import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.ScreenViewport;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.mcr.spaceshooter.Asset.Asset;
+import com.mcr.spaceshooter.Entity.Space;
 import com.mcr.spaceshooter.ScreenManager;
-import com.mcr.spaceshooter.Utils.Assets;
+import com.badlogic.gdx.audio.Music;
 
 public class GameScreen implements Screen {
-    private final Stage stage;
-    private final Skin skin;
-    private final SpaceRenderer renderer;
-
     public GameScreen(){
-        stage = new Stage(new ScreenViewport());
-        Gdx.input.setInputProcessor(stage);
-        Assets assets = Assets.getInstance();
-        skin = assets.get("skin/craftacular-ui.json", Skin.class);
-        renderer = new SpaceRenderer(stage.getBatch());
+    private SpriteBatch spriteBatch;
+    private Space space;
+    private SpaceRenderer renderer;
+    private Music music;
+
+    public GameScreen() {
+        music = Asset.getInstance().getAmbianceMusic();
+        music.setLooping(true);
+        space = new Space();
+        spriteBatch = new SpriteBatch();
+
+        renderer = new SpaceRenderer(space);
     }
 
     @Override
     public void show() {
-        Gdx.input.setInputProcessor(stage);
-        Table table = new Table();
-        table.setFillParent(true);
-        stage.addActor(table);
+        music.play();
+        music.setVolume(0.5F);
+    }
 
-        TextButton quitButton = new TextButton("jean", skin);
-        quitButton.addListener(new ClickListener(){
-            @Override
-            public void clicked(InputEvent event, float x, float y) {
-                Gdx.app.exit();
-            }
-        });
-
-        table.row();
-        table.add(quitButton).width(300).colspan(2);
-
-
+    private void update() {
+        renderer.update();
+        if (space.isGameOver()) {
+            music.stop();
+            ScreenManager.getInstance().setScreen(new GameOverScreen(space.getScore()));
+        }
     }
 
     @Override
     public void render(float delta) {
-        Gdx.gl.glClearColor(1, 1, 1, 1); //%color value (1 = 100%)
-        //Gdx.gl.glClear();
-        stage.act();
-        stage.draw();
-
-        renderer.renderBackground();
-
+        update();
+        renderer.render(spriteBatch);
     }
 
     @Override
@@ -82,6 +65,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void dispose() {
-        stage.dispose();
+        music.dispose();
+        spriteBatch.dispose();
     }
 }
