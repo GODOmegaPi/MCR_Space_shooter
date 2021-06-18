@@ -4,13 +4,11 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
@@ -32,7 +30,6 @@ import com.mcr.spaceshooter.UI.EquipementSelector.OffensiveEquipmentSelector;
 import com.mcr.spaceshooter.Utils.Assets;
 import com.mcr.spaceshooter.Utils.Constants;
 import com.mcr.spaceshooter.Utils.Toast;    // https://github.com/wentsa/Toast-LibGDX
-import com.sun.tools.javac.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -62,7 +59,6 @@ public class GarageScreen implements Screen {
         builder = new PlayableShipBuilder();
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        Assets assets = Assets.getInstance();
         spriteBatch = new SpriteBatch();
 
         Asset.getInstance().getGarageMusic().play();
@@ -72,7 +68,7 @@ public class GarageScreen implements Screen {
         //FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         //BitmapFont font24 = generator.generateFont(parameter);
         errorToastFactory = new Toast.ToastFactory.Builder()
-                .font(assets.get("skin/Amble-Regular.ttf", BitmapFont.class)) // TODO
+                .font(Asset.getInstance().getFont()) // TODO
                 .backgroundColor(new Color(0.98f, 0.98f, 0.98f, 1f)) // default : new Color(0.5f, 0.5f, 0.5f, 1f)
                 .fadingDuration(1.2f)
                 .fontColor(new Color(0.86f, 0, 0, 1f)).build();
@@ -80,18 +76,18 @@ public class GarageScreen implements Screen {
 
         fuselagesList = new LinkedList<>();
 
-        Fuselage p1 = new Fuselage("Falcon 1",  Asset.getInstance().getCockpitsTexture(1),30, 75);
-        Fuselage p2 = new Fuselage("Falcon 9",Asset.getInstance().getCockpitsTexture(5) ,40, 90);
-        Fuselage p3 = new Fuselage("Falcon Heavy", Asset.getInstance().getCockpitsTexture(9),50, 100);
+        Fuselage p1 = new Fuselage("Falcon 1",  Asset.getInstance().getFuselagesTexture(1),30, 75);
+        Fuselage p2 = new Fuselage("Falcon 9",Asset.getInstance().getFuselagesTexture(5) ,40, 90);
+        Fuselage p3 = new Fuselage("Falcon Heavy", Asset.getInstance().getFuselagesTexture(9),50, 100);
 
         fuselagesList.add(p1);
         fuselagesList.add(p2);
         fuselagesList.add(p3);
 
         weaponsList = new LinkedList<>();
-        Weapon pa = new Weapon("SIG 550", Asset.getInstance().getWeaponsTexture(1), 30, 200);
-        Weapon pb = new Weapon("Browning M2HB", Asset.getInstance().getWeaponsTexture(2),40, 100);
-        Weapon pc = new Weapon("Panzerfaust", Asset.getInstance().getWeaponsTexture(3), 50, 50);
+        Weapon pa = new Weapon("SIG 550", Asset.getInstance().getBulletsTexture(1), 30, 200);
+        Weapon pb = new Weapon("Browning M2HB", Asset.getInstance().getBulletsTexture(2),40, 100);
+        Weapon pc = new Weapon("Panzerfaust", Asset.getInstance().getBulletsTexture(3), 50, 50);
         weaponsList.add(pa);
         weaponsList.add(pb);
         weaponsList.add(pc);

@@ -14,12 +14,10 @@ public class SpaceShooter extends Game {
 	private SpriteBatch batch;
 	private Spaceship ship;
 	private Screen s;
-	private Assets assets;
 
 	@Override
 	public void create () {
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
-		assets = Assets.getInstance();
 
 		batch = new SpriteBatch();
 		s = new GarageScreen();
@@ -36,6 +34,5 @@ public class SpaceShooter extends Game {
 	@Override
 	public void dispose () {
         super.dispose();
-        assets.dispose();
 	}
 }
