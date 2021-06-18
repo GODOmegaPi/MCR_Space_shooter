@@ -15,7 +15,9 @@ public class Asset {
 
     private Skin skin;
 
-    private Music ambiance;
+    private Music ambianceMusic;
+    private Music gameoverMusic;
+    private Music garageMusic;
 
     private Sound bulletSound;
 
@@ -56,7 +58,9 @@ public class Asset {
     }
 
     private void loadMusics() {
-        ambiance = Gdx.audio.newMusic(Gdx.files.internal("sounds/ambiance.mp3"));
+        ambianceMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/ambiance.mp3"));
+        gameoverMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/gameover.ogg"));
+        garageMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/garage.ogg"));
     }
 
     private void loadSounds() {
@@ -86,8 +90,16 @@ public class Asset {
         return skin;
     }
 
-    public Music getAmbiance() {
-        return ambiance;
+    public Music getAmbianceMusic() {
+        return ambianceMusic;
+    }
+
+    public Music getGameoverMusic() {
+        return gameoverMusic;
+    }
+
+    public Music getGarageMusic() {
+        return garageMusic;
     }
 
     public Sound getBulletSound() {

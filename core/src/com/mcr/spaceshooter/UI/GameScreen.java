@@ -1,9 +1,7 @@
 package com.mcr.spaceshooter.UI;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mcr.spaceshooter.Asset.Asset;
 import com.mcr.spaceshooter.Entity.Space;
 import com.mcr.spaceshooter.ScreenManager;
@@ -16,7 +14,7 @@ public class GameScreen implements Screen {
     private Music music;
 
     public GameScreen() {
-        music = Asset.getInstance().getAmbiance();
+        music = Asset.getInstance().getAmbianceMusic();
         music.setLooping(true);
         space = new Space();
         spriteBatch = new SpriteBatch();
@@ -33,6 +31,7 @@ public class GameScreen implements Screen {
     private void update() {
         renderer.update();
         if (space.isGameOver()) {
+            music.stop();
             ScreenManager.getInstance().setScreen(new GameOverScreen(space.getScore()));
         }
     }
