@@ -1,10 +1,9 @@
-package com.mcr.spaceshooter.UI;
+package com.mcr.spaceshooter.UI.EquipementSelector;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
-import com.badlogic.gdx.scenes.scene2d.Actor;
 import com.badlogic.gdx.scenes.scene2d.Group;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.ui.Image;
@@ -15,27 +14,34 @@ import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.scenes.scene2d.utils.SpriteDrawable;
 import com.badlogic.gdx.scenes.scene2d.utils.TextureRegionDrawable;
-import com.mcr.spaceshooter.Entity.Equipements.Equipment;
+import com.mcr.spaceshooter.Builder.ShipBuilderException;
+import com.mcr.spaceshooter.Entity.Equipments.Equipment;
+import com.mcr.spaceshooter.UI.Screen.GarageScreen;
 import com.sun.tools.javac.util.Pair;
-import java.util.List;
 
-public class ConfigRow extends Group {
+import java.util.List;
+import java.util.function.Consumer;
+
+
+abstract public class EquipementSelector extends Group {
     // TODO voir ce qui peut etre static  eg: btnTex restera toujours le même (comme defaultEuiqpementTex)
-    private Table table;
+    protected Table table;
+    protected List<Pair<Equipment, Texture>> equipments;
+    protected int currentElementIdx;
+    protected Skin skin;
     private Image imgEquipement;
     private ImageButton leftArrowBtn;
     private ImageButton rightArrowBtn;
-    private Texture btnTex;
-    private int currentElementIdx;
-    private List<Pair<Equipment, Texture>> equipments;
-    private Skin skin;
+    private Texture btnTex; //
+    private Texture pressedBtnTex;
     private TextButton equipBtn;
-    private TextButton unequipBtn;
     private Boolean isEquiped = false;
+    Consumer<Equipment> buildSetter;
+    Runnable buildCleaner;
+    GarageScreen garageScreen;
 
 
-
-    public ConfigRow( List<Pair<Equipment, Texture>> equipments, Skin skin) {
+    public EquipementSelector(List<Pair<Equipment, Texture>> equipments, Skin skin, Consumer<Equipment> buildSetter, Runnable buildCleaner, GarageScreen garageScreen) {
         // On le set l'index de l'élément courant à une valeur impossible car au commencement
         // Aucun élément n'est sélectionné
         this.currentElementIdx = 0;
@@ -45,7 +51,10 @@ public class ConfigRow extends Group {
         this.table = new Table();
         table.setFillParent(true);
         addActor(table);
-        this.init();
+
+        this.buildSetter = buildSetter;
+        this.buildCleaner = buildCleaner;
+        this.garageScreen = garageScreen;
     }
 
     private void changeEquipment(Pair<Equipment, Texture> equipement) {
@@ -53,60 +62,72 @@ public class ConfigRow extends Group {
     }
 
 
-    private void init() {
+
+    protected void init() {
         equipBtn = new TextButton("Equiper", skin);
-        equipBtn.addListener(new ClickListener(){
+        equipBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-
-                // TODO UTILISER LE BUILDER
-
-                if(isEquiped){
-                    isEquiped = false;
-                    equipBtn.setText("Equiper");
-                    leftArrowBtn.setDisabled(false);
-                    rightArrowBtn.setDisabled(false);
-                }else{
-                    isEquiped = true;
-                    equipBtn.setText("Desequiper");
-                    leftArrowBtn.setDisabled(true);
-                    rightArrowBtn.setDisabled(true);
-
+                try{
+                    // TODO UTILISER LE BUILDER
+                    if (isEquiped) {
+                        Gdx.app.debug(this.getClass().getName(), "PAR ici"  );
+                        buildCleaner.run();
+                        isEquiped = false;
+                        equipBtn.setText("Equiper");
+                        leftArrowBtn.setDisabled(false);
+                        rightArrowBtn.setDisabled(false);
+                        garageScreen.updateCost();
+                        Gdx.app.debug(this.getClass().getName(), "PAR ici en bas"  );
+                    } else {
+                        Gdx.app.debug(this.getClass().getName(), "PAR LA"  );
+                        buildSetter.accept(equipments.get(currentElementIdx).fst);
+                        isEquiped = true;
+                        equipBtn.setText("Desequiper");
+                        leftArrowBtn.setDisabled(true);
+                        rightArrowBtn.setDisabled(true);
+                        garageScreen.updateCost();
+                        Gdx.app.debug(this.getClass().getName(), "PAR La en bas"  );
+                    }
+                }catch(ShipBuilderException sbe){
+                    garageScreen.toastLong("Erreur de construction: " + sbe.getMessage());
+                    Gdx.app.debug(this.getClass().getName(), "Erreur de construction: " + sbe.getMessage()  );
                 }
+
             }
         });
 
 
-
         btnTex = new Texture(Gdx.files.internal("leftArrow.png"));
-        leftArrowBtn = new ImageButton(new TextureRegionDrawable(new TextureRegion(btnTex)));
+        pressedBtnTex = new Texture(Gdx.files.internal("leftArrow_pressed.png"));
+        leftArrowBtn = new ImageButton(new TextureRegionDrawable(new TextureRegion(btnTex)),new TextureRegionDrawable(new TextureRegion(pressedBtnTex)));
         leftArrowBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if(leftArrowBtn.isDisabled()) return; // TODO vraiment nécessaire ?: Il faut vraiement faire ça soit même ? -_-'
+                if (leftArrowBtn.isDisabled())
+                    return; // TODO vraiment nécessaire ?: Il faut vraiement faire ça soit même ? -_-'
                 if (--currentElementIdx < 0) {
                     // On sette l'itérateur comment étant le dernières élements.
                     currentElementIdx = equipments.size() - 1;
                 }
                 Gdx.app.debug(this.getClass().getName(), String.format("is disabled : %b", leftArrowBtn.isDisabled()));
                 changeEquipment(equipments.get(currentElementIdx));
-
-
+                updateLabels();
             }
         });
-        rightArrowBtn = new ImageButton(new TextureRegionDrawable(new TextureRegion(btnTex)));
+        rightArrowBtn =  new ImageButton(new TextureRegionDrawable(new TextureRegion(btnTex)),new TextureRegionDrawable(new TextureRegion(pressedBtnTex)));
         rightArrowBtn.addListener(new ClickListener() {
             @Override
 
             public void clicked(InputEvent event, float x, float y) {
-             if(rightArrowBtn.isDisabled()) return; // TODO vraiment nécessaire ? : Il faut vraiement faire ça soit même ? -_-'
+                if (rightArrowBtn.isDisabled())
+                    return; // TODO vraiment nécessaire ? : Il faut vraiment faire ça soit même ? -_-'
                 if (++currentElementIdx >= equipments.size()) {
                     currentElementIdx = 0;
                 }
                 Gdx.app.debug(this.getClass().getName(), String.format("index : %d", currentElementIdx));
                 changeEquipment(equipments.get(currentElementIdx));
-
-
+                updateLabels();
             }
         });
 
@@ -119,13 +140,12 @@ public class ConfigRow extends Group {
         table.add(imgEquipement).width(100).height(100).colspan(1);
         table.add(rightArrowBtn).width(40).height(40).colspan(1);
         table.row();
+        addSpecs();
+        table.row();
         table.add(equipBtn).width(250).height(40).colspan(3).center();
         table.row();
-
-        table.add(unequipBtn).width(250).height(40).colspan(3).center();
-
-
-
     }
+    abstract void addSpecs();
+    abstract void updateLabels();
 
 }
