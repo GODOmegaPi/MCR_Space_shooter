@@ -1,12 +1,8 @@
 package com.mcr.spaceshooter.UI;
 
-import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.mcr.spaceshooter.Asset.Asset;
+import com.mcr.spaceshooter.Utils.Asset;
 import com.mcr.spaceshooter.Entity.Space;
 
 public class SpaceRenderer {

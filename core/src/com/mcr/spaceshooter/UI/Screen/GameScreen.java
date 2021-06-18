@@ -2,7 +2,7 @@ package com.mcr.spaceshooter.UI.Screen;
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mcr.spaceshooter.Asset.Asset;
+import com.mcr.spaceshooter.Utils.Asset;
 import com.mcr.spaceshooter.Entity.Space;
 import com.mcr.spaceshooter.Entity.Spaceship;
 import com.mcr.spaceshooter.ScreenManager;

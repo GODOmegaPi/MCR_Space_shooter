@@ -1,11 +1,12 @@
-package com.mcr.spaceshooter.Asset;
+package com.mcr.spaceshooter.Utils;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
-import com.mcr.spaceshooter.Utils.Constants;
 
 import java.util.LinkedList;
 import java.util.List;
@@ -22,6 +23,8 @@ public class Asset {
 
     private Sound bulletSound;
 
+    private BitmapFont font;
+
     private Texture leftArrowTexture;
     private Texture leftArrowPressedTexture;
     private Texture backgroundTexture;
@@ -30,16 +33,20 @@ public class Asset {
     public final int MAX_ASTEROIDS_TEXTURES = 8;
     private List<Texture> asteroidsTexture;
 
-    public final int MIN_COCKPITS_TEXTURES = 1;
-    public final int MAX_COCKPITS_TEXTURES = 16;
-    private List<Texture> cockpitsTexture;
+    public final int MIN_FUSELAGES_TEXTURES = 1;
+    public final int MAX_FUSELAGES_TEXTURES = 16;
+    private List<Texture> fuselagesTexture;
 
     public final int MIN_SHIELDS_TEXTURES = 1;
     public final int MAX_SHIELDS_TEXTURES = 3;
     private List<Texture> shieldsTexture;
 
+    public final int MIN_BULLETS_TEXTURES = 1;
+    public final int MAX_BULLETS_TEXTURES = 16;
+    private List<Texture> bulletsTexture;
+
     public final int MIN_WEAPONS_TEXTURES = 1;
-    public final int MAX_WEAPONS_TEXTURES = 48;
+    public final int MAX_WEAPONS_TEXTURES = 3;
     private List<Texture> weaponsTexture;
 
     private Asset() {
@@ -60,8 +67,19 @@ public class Asset {
         loadSkins();
     }
 
+    public void unload() {
+        unloadTextures();
+        unloadSounds();
+        unloadMusics();
+        unloadSkins();
+    }
+
     private void loadSkins() {
         skin = new Skin(Gdx.files.internal("skin/craftacular-ui.json"));
+    }
+
+    private void unloadTextures() {
+        skin.dispose();
     }
 
     private void loadMusics() {
@@ -77,11 +95,27 @@ public class Asset {
         garageMusic.setLooping(true);
     }
 
+    private void unloadMusics() {
+        ambianceMusic.dispose();
+        gameoverMusic.dispose();
+        garageMusic.dispose();
+    }
+
     private void loadSounds() {
         bulletSound = Gdx.audio.newSound(Gdx.files.internal("sounds/7.wav"));
     }
 
+    private void unloadSounds() {
+        bulletSound.dispose();
+    }
+
     private void loadTextures() {
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("skin/Amble-Regular.ttf"));
+        FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
+        parameter.size = 12;
+        font = generator.generateFont(parameter);
+        generator.dispose();
+
         backgroundTexture = new Texture(Gdx.files.internal("bg.jpg"));
         leftArrowTexture = new Texture(Gdx.files.internal("leftArrow.png"));
         leftArrowPressedTexture = new Texture(Gdx.files.internal("leftArrow_pressed.png"));
@@ -91,20 +125,38 @@ public class Asset {
             asteroidsTexture.add(new Texture(Gdx.files.internal("asteroids/asteroid (" + i + ").png")));
         }
 
-        cockpitsTexture = new LinkedList<>();
-        for (int i = MIN_COCKPITS_TEXTURES; i <= MAX_COCKPITS_TEXTURES; ++i) {
-            cockpitsTexture.add(new Texture(Gdx.files.internal("ships/cockpits/ship (" + i + ").png")));
+        fuselagesTexture = new LinkedList<>();
+        for (int i = MIN_FUSELAGES_TEXTURES; i <= MAX_FUSELAGES_TEXTURES; ++i) {
+            fuselagesTexture.add(new Texture(Gdx.files.internal("ships/fuselages/ship (" + i + ").png")));
         }
 
         shieldsTexture = new LinkedList<>();
         for (int i = MIN_SHIELDS_TEXTURES; i <= MAX_SHIELDS_TEXTURES; ++i) {
-            shieldsTexture.add(new Texture(Gdx.files.internal("sh_" + i + ".png")));
+            shieldsTexture.add(new Texture(Gdx.files.internal("ships/shields/shield (" + i + ").png")));
         }
 
         weaponsTexture = new LinkedList<>();
         for (int i = MIN_WEAPONS_TEXTURES; i <= MAX_WEAPONS_TEXTURES; ++i) {
             weaponsTexture.add(new Texture(Gdx.files.internal("ships/weapons/weapon (" + i + ").png")));
         }
+
+        bulletsTexture = new LinkedList<>();
+        for (int i = MIN_BULLETS_TEXTURES; i <= MAX_BULLETS_TEXTURES; ++i) {
+            bulletsTexture.add(new Texture(Gdx.files.internal("ships/bullets/bullet (" + i + ").png")));
+        }
+    }
+
+    private void unloadSkins() {
+        font.dispose();
+        backgroundTexture.dispose();
+        leftArrowTexture.dispose();
+        leftArrowPressedTexture.dispose();
+
+        asteroidsTexture.forEach(Texture::dispose);
+        fuselagesTexture.forEach(Texture::dispose);
+        shieldsTexture.forEach(Texture::dispose);
+        weaponsTexture.forEach(Texture::dispose);
+        bulletsTexture.forEach(Texture::dispose);
     }
 
     public Skin getSkin() {
@@ -127,6 +179,10 @@ public class Asset {
         return bulletSound;
     }
 
+    public BitmapFont getFont() {
+        return font;
+    }
+
     public Texture getBackgroundTexture() {
         return backgroundTexture;
     }
@@ -144,9 +200,9 @@ public class Asset {
         return asteroidsTexture.get(i - 1);
     }
 
-    public Texture getCockpitsTexture(int i) {
-        inRange(MIN_COCKPITS_TEXTURES, MAX_COCKPITS_TEXTURES, i);
-        return cockpitsTexture.get(i - 1);
+    public Texture getFuselagesTexture(int i) {
+        inRange(MIN_FUSELAGES_TEXTURES, MAX_FUSELAGES_TEXTURES, i);
+        return fuselagesTexture.get(i - 1);
     }
 
     public Texture getShieldsTexture(int i) {
@@ -159,11 +215,16 @@ public class Asset {
         return weaponsTexture.get(i - 1);
     }
 
+    public Texture getBulletsTexture(int i) {
+        inRange(MIN_BULLETS_TEXTURES, MAX_BULLETS_TEXTURES, i);
+        return bulletsTexture.get(i - 1);
+    }
+
     private void inRange(int lowerBound, int upperBound, int value) {
         if(value < lowerBound || value > upperBound) {
             throw new IllegalArgumentException(
                     String.format("Value %d not in range [%d; %d] !",
-                            value, lowerBound, MAX_WEAPONS_TEXTURES));
+                            value, lowerBound, MAX_BULLETS_TEXTURES));
         }
     }
 }

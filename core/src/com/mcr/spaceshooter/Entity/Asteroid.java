@@ -1,9 +1,8 @@
 package com.mcr.spaceshooter.Entity;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.mcr.spaceshooter.Asset.Asset;
+import com.mcr.spaceshooter.Utils.Asset;
 import com.mcr.spaceshooter.Utils.Rand;
 
 import com.badlogic.gdx.math.Rectangle;

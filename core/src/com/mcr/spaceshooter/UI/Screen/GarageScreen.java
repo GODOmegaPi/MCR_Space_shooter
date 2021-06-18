@@ -4,20 +4,17 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
-import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
-import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.Align;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
 
-import com.mcr.spaceshooter.Asset.Asset;
+import com.mcr.spaceshooter.Utils.Asset;
 import com.mcr.spaceshooter.Builder.PlayableShipBuilder;
 import com.mcr.spaceshooter.Builder.ShipBuilder;
 import com.mcr.spaceshooter.Builder.ShipBuilderException;
@@ -29,10 +26,8 @@ import com.mcr.spaceshooter.Entity.Spaceship;
 import com.mcr.spaceshooter.ScreenManager;
 import com.mcr.spaceshooter.UI.EquipementSelector.DefensiveEquipmentSelector;
 import com.mcr.spaceshooter.UI.EquipementSelector.OffensiveEquipmentSelector;
-import com.mcr.spaceshooter.Utils.Assets;
 import com.mcr.spaceshooter.Utils.Constants;
 import com.mcr.spaceshooter.Utils.Toast;    // https://github.com/wentsa/Toast-LibGDX
-import com.sun.tools.javac.util.Pair;
 
 import java.util.ArrayList;
 import java.util.Iterator;
@@ -62,8 +57,6 @@ public class GarageScreen implements Screen {
         builder = new PlayableShipBuilder();
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
-        Assets assets = Assets.getInstance();
-
         spriteBatch = new SpriteBatch();
 
         Asset.getInstance().getGarageMusic().play();
@@ -73,7 +66,7 @@ public class GarageScreen implements Screen {
         //FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         //BitmapFont font24 = generator.generateFont(parameter);
         errorToastFactory = new Toast.ToastFactory.Builder()
-                .font(assets.get("skin/Amble-Regular.ttf", BitmapFont.class)) // TODO
+                .font(Asset.getInstance().getFont()) // TODO
                 .backgroundColor(new Color(0.98f, 0.98f, 0.98f, 1f)) // default : new Color(0.5f, 0.5f, 0.5f, 1f)
                 .fadingDuration(1.2f)
                 .fontColor(new Color(0.86f, 0, 0, 1f)).build();
@@ -81,9 +74,9 @@ public class GarageScreen implements Screen {
 
         fuselagesList = new LinkedList<>();
 
-        Fuselage p1 = new Fuselage("Falcon 1",  Asset.getInstance().getCockpitsTexture(1),30, 75);
-        Fuselage p2 = new Fuselage("Falcon 9",Asset.getInstance().getCockpitsTexture(5) ,40, 90);
-        Fuselage p3 = new Fuselage("Falcon Heavy", Asset.getInstance().getCockpitsTexture(9),50, 100);
+        Fuselage p1 = new Fuselage("Falcon 1",  Asset.getInstance().getFuselagesTexture(1),30, 75);
+        Fuselage p2 = new Fuselage("Falcon 9",Asset.getInstance().getFuselagesTexture(5) ,40, 90);
+        Fuselage p3 = new Fuselage("Falcon Heavy", Asset.getInstance().getFuselagesTexture(9),50, 100);
 
         fuselagesList.add(p1);
         fuselagesList.add(p2);

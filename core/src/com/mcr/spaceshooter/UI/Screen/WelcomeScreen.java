@@ -10,7 +10,7 @@ import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.ui.TextButton;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
 import com.badlogic.gdx.utils.viewport.ScreenViewport;
-import com.mcr.spaceshooter.Asset.Asset;
+import com.mcr.spaceshooter.Utils.Asset;
 import com.mcr.spaceshooter.ScreenManager;
 
 public class WelcomeScreen implements Screen {

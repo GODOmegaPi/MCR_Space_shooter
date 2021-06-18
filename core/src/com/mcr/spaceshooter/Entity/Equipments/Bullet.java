@@ -1,13 +1,10 @@
 package com.mcr.spaceshooter.Entity.Equipments;
 
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
-import com.mcr.spaceshooter.Asset.Asset;
-import com.mcr.spaceshooter.Entity.Equipments.Equipment;
-import com.mcr.spaceshooter.Entity.Spaceship;
+import com.mcr.spaceshooter.Utils.Asset;
 import com.mcr.spaceshooter.Utils.Constants;
 
 public class Bullet {
@@ -33,7 +30,7 @@ public class Bullet {
     public void render(SpriteBatch spriteBatch) {
         spriteBatch.begin();
         spriteBatch.draw(
-                Asset.getInstance().getWeaponsTexture(38),
+                Asset.getInstance().getBulletsTexture(1),
                 bounds.getX(), bounds.getY(), bounds.getWidth(), bounds.getHeight()
         );
         spriteBatch.end();
