@@ -63,6 +63,7 @@ public class GarageScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         Assets assets = Assets.getInstance();
+
         spriteBatch = new SpriteBatch();
 
         Asset.getInstance().getGarageMusic().play();
@@ -201,11 +202,12 @@ public class GarageScreen implements Screen {
     public void render(float delta) {
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-
+        spriteBatch.begin();
+        spriteBatch.draw(Asset.getInstance().getBackgroundTexture(), 0, 0);
+        spriteBatch.end();
         // tell our stage to do actions and draw itself
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
-        spriteBatch.draw(Asset.getInstance().getBackgroundTexture(), 0, 0);
 
         // Affiche les toasts
         Iterator<Toast> it = toasts.iterator();
