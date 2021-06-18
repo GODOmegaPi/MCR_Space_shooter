@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
+import com.badlogic.gdx.math.RandomXS128;
 import com.badlogic.gdx.math.Rectangle;
 import com.mcr.spaceshooter.Asset.Asset;
 import com.mcr.spaceshooter.Builder.PlayableShipBuilder;
@@ -20,25 +21,12 @@ public class Spaceship {
     private Weapon weapon;
     private Shield shield;
     private Fuselage fuselage;
-    // private int hp;
     private boolean unlimitedPower;
 
     public static final int SIZE = 50;
     private static final int SPEED  = 5;
 
-    /*
-    public Spaceship(int x, int y, int speed) {
-         bounds = new Rectangle(x, y, SIZE, SIZE);
-         this.speed = speed;
-         weapon = new Weapon("", 50, 50);
-         shield = new Shield("", 50, 50);
-         hp = MAX_HP;
-         unlimitedPower = false;
-    }
-     */
-
     public Spaceship(PlayableShipBuilder playableShipBuilder) {
-        // hp = playableShipBuilder.getHp();
         fuselage = playableShipBuilder.getFuselage();
         weapon = playableShipBuilder.getWeapon();
         shield = playableShipBuilder.getShield();
@@ -79,6 +67,9 @@ public class Spaceship {
     public void render(SpriteBatch spriteBatch) {
         spriteBatch.begin();
         spriteBatch.draw(fuselage.getTexture(), getX(), getY(), bounds.getWidth(), bounds.getHeight());
+        if(shield.getHp() > 0) {
+            spriteBatch.draw(shield.getTexture(), getX() - 10, getY() - 10, bounds.getWidth() + 20, bounds.getHeight() + 20);
+        }
         spriteBatch.end();
 
         weapon.render(spriteBatch);
@@ -115,17 +106,8 @@ public class Spaceship {
 
         cheatCode();
 
-        if(bounds.getX() + bounds.getWidth() >= Gdx.graphics.getWidth()){
-            bounds.setX(Gdx.graphics.getWidth() - bounds.getWidth());
-        }else if(bounds.getX() <= 0){
-            bounds.setX(0);
-        }
+        //TODO: ERic
 
-        if(bounds.getY() >= Gdx.graphics.getHeight()){
-            bounds.setY(Gdx.graphics.getHeight() - bounds.getHeight());
-        }else if(bounds.getY() <= 0){
-            bounds.setY(0);
-        }
 
         System.out.println("==");
         System.out.println("(" + bounds.getX() + ", " + bounds.getY() + ")");

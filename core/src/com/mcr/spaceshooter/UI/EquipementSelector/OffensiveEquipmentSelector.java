@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.mcr.spaceshooter.Entity.Equipments.Equipment;
+import com.mcr.spaceshooter.Entity.Equipments.Weapon;
 import com.mcr.spaceshooter.Entity.Equipments.OffensiveEquipment;
 import com.mcr.spaceshooter.UI.Screen.GarageScreen;
 
@@ -11,7 +12,7 @@ import java.util.List;
 import java.util.function.Consumer;
 
 public class OffensiveEquipmentSelector extends EquipementSelector {
-    private Label damageLbl;
+    private Label shotFreqLbl;
     private Label nameLbl;
     private Label priceLbl;
 
@@ -20,7 +21,7 @@ public class OffensiveEquipmentSelector extends EquipementSelector {
 
         nameLbl = new Label(equipments.get(currentElementIdx).getName(), skin);
         priceLbl = new Label(String.valueOf(equipments.get(currentElementIdx).getPrice()), skin);
-        damageLbl = new Label(String.valueOf(((OffensiveEquipment) equipments.get(currentElementIdx)).getDamage()), skin);
+        shotFreqLbl = new Label(String.valueOf(((Weapon) equipments.get(currentElementIdx)).getShotFrequency()), skin);
         init();
     }
 
@@ -29,8 +30,8 @@ public class OffensiveEquipmentSelector extends EquipementSelector {
         table.add(nameLbl).width(240).colspan(3);
         table.row();
 
-        table.add(new Label("Degats", skin)).width(120).colspan(2);
-        table.add(damageLbl);
+        table.add(new Label("Tirs/sec.", skin)).width(120).colspan(2);
+        table.add(shotFreqLbl);
         table.row();
 
         table.add(new Label("Prix", skin)).width(120).colspan(2);
@@ -43,6 +44,6 @@ public class OffensiveEquipmentSelector extends EquipementSelector {
         Gdx.app.debug(this.getClass().getName(), "LABEL");
         nameLbl.setText(equipments.get(currentElementIdx).getName());
         priceLbl.setText(String.valueOf(equipments.get(currentElementIdx).getPrice()));
-        damageLbl.setText(String.valueOf(((OffensiveEquipment) equipments.get(currentElementIdx)).getDamage()));
+        shotFreqLbl.setText(String.valueOf(((Weapon) equipments.get(currentElementIdx)).getShotFrequency()));
     }
 }

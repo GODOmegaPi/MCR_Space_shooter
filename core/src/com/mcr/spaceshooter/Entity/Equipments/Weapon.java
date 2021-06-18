@@ -19,7 +19,7 @@ public class Weapon extends OffensiveEquipment {
     private final int shootSpeed;
 
     public Weapon(String name, Texture texture, int price, int shootSpeed) {
-        super(name, texture, price, 0);
+        super(name, texture, price);
         bullets = new LinkedList<>();
         lastTimeShot = 0;
         this.shootSpeed = shootSpeed;
@@ -73,5 +73,8 @@ public class Weapon extends OffensiveEquipment {
         for(Bullet bullet : bullets){
             bullet.update();
         }
+    }
+    public int getShotFrequency(){
+        return 1000/shootSpeed;
     }
 }

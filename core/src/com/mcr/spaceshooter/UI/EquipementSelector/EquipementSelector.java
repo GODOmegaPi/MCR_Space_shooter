@@ -18,6 +18,7 @@ import com.mcr.spaceshooter.Builder.ShipBuilderException;
 import com.mcr.spaceshooter.Entity.Equipments.Equipment;
 import com.mcr.spaceshooter.UI.Screen.GarageScreen;
 import com.sun.tools.javac.util.Pair;
+import com.mcr.spaceshooter.Asset.Asset;
 
 import java.util.List;
 import java.util.function.Consumer;
@@ -32,8 +33,6 @@ abstract public class EquipementSelector extends Group {
     private Image imgEquipement;
     private ImageButton leftArrowBtn;
     private ImageButton rightArrowBtn;
-    private Texture btnTex; //
-    private Texture pressedBtnTex;
     private TextButton equipBtn;
     private Boolean isEquiped = false;
     Consumer<Equipment> buildSetter;
@@ -98,8 +97,8 @@ abstract public class EquipementSelector extends Group {
         });
 
 
-        btnTex = new Texture(Gdx.files.internal("leftArrow.png"));
-        pressedBtnTex = new Texture(Gdx.files.internal("leftArrow_pressed.png"));
+        Texture btnTex = Asset.getInstance().getLeftArrowTexture();
+        Texture pressedBtnTex = Asset.getInstance().getLeftArrowPressedTexture();
         leftArrowBtn = new ImageButton(new TextureRegionDrawable(new TextureRegion(btnTex)),new TextureRegionDrawable(new TextureRegion(pressedBtnTex)));
         leftArrowBtn.addListener(new ClickListener() {
             @Override

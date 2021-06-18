@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.InputEvent;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
@@ -45,6 +46,7 @@ import java.util.List;
  */
 public class GarageScreen implements Screen {
     private Stage stage;
+    private SpriteBatch spriteBatch;
     private List<Equipment> fuselagesList;
     private List<Equipment> weaponsList;
     private List<Equipment> shieldsList;
@@ -61,6 +63,7 @@ public class GarageScreen implements Screen {
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         Assets assets = Assets.getInstance();
+        spriteBatch = new SpriteBatch();
 
         Asset.getInstance().getGarageMusic().play();
 
@@ -69,7 +72,7 @@ public class GarageScreen implements Screen {
         //FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         //BitmapFont font24 = generator.generateFont(parameter);
         errorToastFactory = new Toast.ToastFactory.Builder()
-                .font(assets.get("skin/Amble-Regular.ttf", BitmapFont.class))
+                .font(assets.get("skin/Amble-Regular.ttf", BitmapFont.class)) // TODO
                 .backgroundColor(new Color(0.98f, 0.98f, 0.98f, 1f)) // default : new Color(0.5f, 0.5f, 0.5f, 1f)
                 .fadingDuration(1.2f)
                 .fontColor(new Color(0.86f, 0, 0, 1f)).build();
@@ -86,9 +89,9 @@ public class GarageScreen implements Screen {
         fuselagesList.add(p3);
 
         weaponsList = new LinkedList<>();
-        Weapon pa = new Weapon("SIG 550", Asset.getInstance().getWeaponsTexture(1), 30, 10);
-        Weapon pb = new Weapon("Browning M2HB", Asset.getInstance().getWeaponsTexture(2),40, 15);
-        Weapon pc = new Weapon("Panzerfaust", Asset.getInstance().getWeaponsTexture(3), 50, 20);
+        Weapon pa = new Weapon("SIG 550", Asset.getInstance().getWeaponsTexture(1), 30, 200);
+        Weapon pb = new Weapon("Browning M2HB", Asset.getInstance().getWeaponsTexture(2),40, 100);
+        Weapon pc = new Weapon("Panzerfaust", Asset.getInstance().getWeaponsTexture(3), 50, 50);
         weaponsList.add(pa);
         weaponsList.add(pb);
         weaponsList.add(pc);
@@ -202,6 +205,7 @@ public class GarageScreen implements Screen {
         // tell our stage to do actions and draw itself
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
+        spriteBatch.draw(Asset.getInstance().getBackgroundTexture(), 0, 0);
 
         // Affiche les toasts
         Iterator<Toast> it = toasts.iterator();
@@ -237,7 +241,6 @@ public class GarageScreen implements Screen {
 
     @Override
     public void dispose() {
-
         stage.dispose();
     }
 }

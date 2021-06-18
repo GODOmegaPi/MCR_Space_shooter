@@ -33,7 +33,7 @@ public class GameOverScreen implements Screen {
         stage.addActor(table);
 
 
-        Label titleLabel = new Label("Game over puto", Asset.getInstance().getSkin());
+        Label titleLabel = new Label("Game over", Asset.getInstance().getSkin());
         titleLabel.setFontScale(2);
 
         Label scoreLabel = new Label("Score : " + score, Asset.getInstance().getSkin());

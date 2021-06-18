@@ -131,6 +131,14 @@ public class Asset {
         return backgroundTexture;
     }
 
+    public  Texture getLeftArrowTexture() {
+        return leftArrowTexture;
+    }
+
+    public  Texture getLeftArrowPressedTexture() {
+        return leftArrowPressedTexture;
+    }
+
     public Texture getAsteroidsTexture(int i) {
         inRange(MIN_ASTEROIDS_TEXTURES, MAX_ASTEROIDS_TEXTURES, i);
         return asteroidsTexture.get(i - 1);
