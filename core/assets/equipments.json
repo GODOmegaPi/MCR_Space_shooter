@@ -1,0 +1,62 @@
+{
+  "fuselages": [
+    {
+      "name": "Falcon 1",
+      "textureId": 1,
+      "price": 30,
+      "hp": 75
+    },
+    {
+      "name": "Falcon 9",
+      "textureId": 5,
+      "price": 40,
+      "hp": 90
+    },
+    {
+      "name": "Falcon Heavy",
+      "textureId": 9,
+      "price": 50,
+      "hp": 100
+    }
+  ],
+  "weapons": [
+    {
+      "name": "SIG 550",
+      "textureId": 1,
+      "price": 30,
+      "shotSpeed": 200
+    },
+    {
+      "name": "Browning M2HB",
+      "textureId": 2,
+      "price": 40,
+      "shotSpeed": 100
+    },
+    {
+      "name": "Panzerfaust",
+      "textureId": 3,
+      "price": 50,
+      "shotSpeed": 50
+    }
+  ],
+  "shields": [
+    {
+      "name": "Phantom Shield",
+      "textureId": 1,
+      "price": 30,
+      "hp": 10
+    },
+    {
+      "name": "Diamond Shield",
+      "textureId": 2,
+      "price": 40,
+      "hp": 20
+    },
+    {
+      "name": "Plasma Shield",
+      "textureId": 3,
+      "price": 50,
+      "hp": 30
+    }
+  ]
+}

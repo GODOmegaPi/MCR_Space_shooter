@@ -1,4 +1,7 @@
 package com.mcr.spaceshooter.Utils;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.utils.JsonReader;
+import com.badlogic.gdx.utils.JsonValue;
 import com.mcr.spaceshooter.Entity.Equipments.Equipment;
 import com.mcr.spaceshooter.Entity.Equipments.Fuselage;
 import com.mcr.spaceshooter.Entity.Equipments.Shield;
@@ -21,16 +24,35 @@ public class Loader {
     }
 
     private void init() {
+        JsonReader json = new JsonReader();
+        JsonValue equipments = json.parse(Gdx.files.internal("equipments.json"));
 
-        fuselageList.add(new Fuselage("Falcon 1", Asset.getInstance().getFuselagesTexture(1), 30, 75));
-        fuselageList.add(new Fuselage("Falcon 9", Asset.getInstance().getFuselagesTexture(5), 40, 90));
-        fuselageList.add(new Fuselage("Falcon Heavy", Asset.getInstance().getFuselagesTexture(9), 50, 100));
-        weaponList.add(new Weapon("SIG 550", Asset.getInstance().getWeaponsTexture(1), 30, 200));
-        weaponList.add(new Weapon("Browning M2HB", Asset.getInstance().getWeaponsTexture(2), 40, 100));
-        weaponList.add(new Weapon("Panzerfaust", Asset.getInstance().getWeaponsTexture(3), 50, 50));
-        shieldList.add(new Shield("Phantom Shield", Asset.getInstance().getShieldsTexture(1), 30, 10));
-        shieldList.add(new Shield("Diamond Shield", Asset.getInstance().getShieldsTexture(2), 40, 20));
-        shieldList.add(new Shield("Plasma Shield", Asset.getInstance().getShieldsTexture(3), 50, 30));
+        for (JsonValue fuselage : equipments.get("fuselages")) {
+            fuselageList.add(new Fuselage(
+                    fuselage.getString("name"),
+                    Asset.getInstance().getFuselagesTexture(fuselage.getInt("textureId")),
+                    fuselage.getInt("price"),
+                    fuselage.getInt("hp")
+            ));
+        }
+
+        for (JsonValue fuselage : equipments.get("weapons")) {
+            weaponList.add(new Weapon(
+                    fuselage.getString("name"),
+                    Asset.getInstance().getWeaponsTexture(fuselage.getInt("textureId")),
+                    fuselage.getInt("price"),
+                    fuselage.getInt("shotSpeed")
+            ));
+        }
+
+        for (JsonValue fuselage : equipments.get("shields")) {
+            shieldList.add(new Shield(
+                    fuselage.getString("name"),
+                    Asset.getInstance().getShieldsTexture(fuselage.getInt("textureId")),
+                    fuselage.getInt("price"),
+                    fuselage.getInt("hp")
+            ));
+        }
     }
 
     public static Loader getInstance() {
