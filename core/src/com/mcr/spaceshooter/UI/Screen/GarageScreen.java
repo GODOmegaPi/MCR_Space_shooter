@@ -41,10 +41,7 @@ public class GarageScreen implements Screen {
     private final List<Toast> toasts;
     private final Toast.ToastFactory errorToastFactory;
 
-    // TODO local variable (intellij suggest)
-    private Label costLbl;
-    private Label costValueLbl;
-    private Label maxCostLbl;
+    private final Label costValueLbl;
 
     public GarageScreen() {
         builder = new PlayableShipBuilder();
@@ -55,13 +52,9 @@ public class GarageScreen implements Screen {
         List<Equipment> weaponsList = Loader.getInstance().getWeaponList();
         List<Equipment> shieldsList = Loader.getInstance().getShieldList();
 
-        // TODO clean this
         // Toasts pour les messages d'erreur
-        //FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("skin/Amble-Regular.ttf"));
-        //FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
-        //BitmapFont font24 = generator.generateFont(parameter);
         errorToastFactory = new Toast.ToastFactory.Builder()
-                .font(Asset.getInstance().getFont()) // TODO
+                .font(Asset.getInstance().getFont()) // TODO: ?
                 .backgroundColor(new Color(0.98f, 0.98f, 0.98f, 1f)) // default : new Color(0.5f, 0.5f, 0.5f, 1f)
                 .fadingDuration(1.2f)
                 .fontColor(new Color(0.86f, 0, 0, 1f)).build();
@@ -81,14 +74,13 @@ public class GarageScreen implements Screen {
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                try{
+                try {
                     Spaceship ship = builder.build();
                     Asset.getInstance().getGarageMusic().stop();
                     Screen screen = new GameScreen(ship);
                     ScreenManager.getInstance().setScreen(screen);
-
-                }catch(ShipBuilderException sbe){
-                    toastLong(sbe.getMessage());
+                } catch (ShipBuilderException sbe) {
+                    displayToast(sbe.getMessage());
                 }
             }
         });
@@ -101,22 +93,38 @@ public class GarageScreen implements Screen {
             }
         });
 
-
-        costLbl = new Label("Cout total du vaisseau :", Asset.getInstance().getSkin());
+        Label costLbl = new Label("Cout total du vaisseau :", Asset.getInstance().getSkin());
         costValueLbl = new Label("0", Asset.getInstance().getSkin());
-        maxCostLbl = new Label("/" + Constants.MAX_COST, Asset.getInstance().getSkin());
+        Label maxCostLbl = new Label("/" + Constants.MAX_COST, Asset.getInstance().getSkin());
 
         table.add(titleLabel).colspan(2).expand();
         table.row();
         table.add(firstColTable).expand();
         table.add(secondColTable).expand();
 
-        // TODO make it cleaner. Maybe add some return line for each parameters for visibility purpose
-        firstColTable.add(new DefensiveEquipmentSelector(fuselagesList, Asset.getInstance().getSkin(), c -> builder.setFuselage((Fuselage) c), builder::clearFuselage, this)).height(250).width(300).pad(10).colspan(3).center();
+        firstColTable.add(new DefensiveEquipmentSelector(
+                fuselagesList,
+                Asset.getInstance().getSkin(),
+                c -> builder.setFuselage((Fuselage) c),
+                builder::clearFuselage,
+                this)
+        ).height(250).width(300).pad(10).colspan(3).center();
         firstColTable.row();
-        firstColTable.add(new OffensiveEquipmentSelector(weaponsList, Asset.getInstance().getSkin(), c -> builder.setWeapon((Weapon) c), builder::clearWeapon, this)).height(250).width(300).colspan(3).pad(10).center();
+        firstColTable.add(new OffensiveEquipmentSelector(
+                weaponsList,
+                Asset.getInstance().getSkin(),
+                c -> builder.setWeapon((Weapon) c),
+                builder::clearWeapon,
+                this)
+        ).height(250).width(300).colspan(3).pad(10).center();
         firstColTable.row();
-        firstColTable.add(new DefensiveEquipmentSelector(shieldsList, Asset.getInstance().getSkin(), c -> builder.setShield((Shield) c), builder::clearShield, this)).height(250).width(300).colspan(3).pad(10).center();
+        firstColTable.add(new DefensiveEquipmentSelector(
+                shieldsList,
+                Asset.getInstance().getSkin(),
+                c -> builder.setShield((Shield) c),
+                builder::clearShield,
+                this)
+        ).height(250).width(300).colspan(3).pad(10).center();
 
         secondColTable.add(costLbl).colspan(2);
         secondColTable.row();
@@ -143,23 +151,15 @@ public class GarageScreen implements Screen {
     }
 
     /**
-     * Displays long toast
-     */
-    public void toastLong(String text) {
-        toasts.add(errorToastFactory.create(text, Toast.Length.LONG));
-    }
-
-    // TODO do we need this functions ? if not delete it
-    /**
      * Displays short toast
      */
-    public void toastShort(String text) {
+    public void displayToast(String text) {
         toasts.add(errorToastFactory.create(text, Toast.Length.SHORT));
     }
 
     @Override
     public void render(float delta) {
-        if(!Asset.getInstance().getGarageMusic().isPlaying()) {
+        if (!Asset.getInstance().getGarageMusic().isPlaying()) {
             Asset.getInstance().getGarageMusic().play();
         }
 

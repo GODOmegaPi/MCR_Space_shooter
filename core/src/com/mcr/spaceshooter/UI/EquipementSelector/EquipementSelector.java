@@ -1,6 +1,5 @@
 package com.mcr.spaceshooter.UI.EquipementSelector;
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -86,7 +85,7 @@ abstract public class EquipementSelector extends Group {
                        equipe();
                     }
                 }catch(ShipBuilderException sbe){
-                    garageScreen.toastLong("Erreur de construction: " + sbe.getMessage());
+                    garageScreen.displayToast("Erreur de construction: " + sbe.getMessage());
                 }
             }
         });
