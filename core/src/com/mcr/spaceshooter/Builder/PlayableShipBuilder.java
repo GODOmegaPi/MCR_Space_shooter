@@ -22,6 +22,7 @@ public class PlayableShipBuilder implements ShipBuilder {
         fuselage = null;
         weapon = null;
         shield = null;
+        totalCost = 0;
     }
 
     public ShipBuilder setFuselage(Fuselage fuselage) throws ShipBuilderException {
@@ -85,13 +86,17 @@ public class PlayableShipBuilder implements ShipBuilder {
 
     @Override
     public Spaceship build() {
+        /*
         if(shield == null) {
+            //TODO: Merci guillaume tu nous rajoutes de bugs à 2h du mat fdp
             shield = new Shield("none", null,0, 0);
         }
-        Spaceship ship = new Spaceship(this);
-        if(!isValidShip(ship)) {
+        
+         */
+        if(!isValidShip()) {
             throw new ShipBuilderException("Construction invalide !");
         }
+        Spaceship ship = new Spaceship(this);
         return ship;
     }
 
@@ -112,7 +117,7 @@ public class PlayableShipBuilder implements ShipBuilder {
         return shield;
     }
 
-    private boolean isValidShip(Spaceship ship) throws ShipBuilderException {
-        return ship.getFuselage() != null && ship.getWeapon() != null && getTotalCost() <= Constants.MAX_COST;
+    private boolean isValidShip() throws ShipBuilderException {
+        return fuselage != null && weapon != null && getTotalCost() <= Constants.MAX_COST;
     }
 }

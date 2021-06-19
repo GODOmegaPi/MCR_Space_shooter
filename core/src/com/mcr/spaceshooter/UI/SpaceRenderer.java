@@ -21,7 +21,7 @@ public class SpaceRenderer {
     }
 
     public void renderGUI(SpriteBatch spriteBatch){
-        int shieldHP    = space.getSpaceship().getShield().getHp();
+        int shieldHP    = space.getSpaceship().getShieldHP();
         int spaceshipHP = space.getSpaceship().getFuselage().getHp();
         int score       = space.getScore();
 

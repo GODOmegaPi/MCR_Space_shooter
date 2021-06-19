@@ -6,4 +6,7 @@ public class Fuselage extends DefensiveEquipment {
     public Fuselage(String name, Texture texture, int price, int hp) {
         super(name, texture, price, hp);
     }
+    public Fuselage(Fuselage fuselage){
+        super(fuselage);
+    }
 }

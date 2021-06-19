@@ -3,19 +3,34 @@ package com.mcr.spaceshooter;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
+import com.mcr.spaceshooter.UI.Screen.GarageScreen;
 
 public class ScreenManager {
 
     private static ScreenManager instance;
     private Game game;
     private Screen currentScreen;
+    private GarageScreen garageScreen;
 
     private ScreenManager(){
+        garageScreen = new GarageScreen();
 
     }
+    public Screen getGarageScreen(){
+        return garageScreen;
+    }
+
 
     public void setScreen(Screen screen){
+        //Screen old = screen;
         currentScreen = screen;
+        /*
+        if(old != null){
+            old.pause();
+        }
+        
+         */
+
         game.setScreen(screen);
         screen.show();
     }

@@ -6,5 +6,8 @@ public class Shield extends DefensiveEquipment {
     public Shield(String name, Texture texture, int price, int hp) {
         super(name, texture, price, hp);
     }
+    public Shield(Shield shield){
+        super(shield);
+    }
 
 }

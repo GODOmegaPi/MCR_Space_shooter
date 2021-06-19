@@ -12,6 +12,14 @@ abstract public class Equipment {
         this.texture = texture;
         this.price = price;
     }
+    
+    public Equipment(Equipment equipement){
+        name = equipement.name;
+        texture = equipement.texture;
+        price = equipement.price;
+    }
+
+
 
     public int getPrice() {
         return price;

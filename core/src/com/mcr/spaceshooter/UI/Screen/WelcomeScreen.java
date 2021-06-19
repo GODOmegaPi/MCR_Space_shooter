@@ -23,8 +23,6 @@ public class WelcomeScreen implements Screen {
         Table table = new Table();
         table.setFillParent(true);
         stage.addActor(table);
-        Gdx.input.setInputProcessor(stage);
-
 
         Label titleLabel = new Label("Welcome", Asset.getInstance().getSkin());
         titleLabel.setFontScale(2);
@@ -33,7 +31,7 @@ public class WelcomeScreen implements Screen {
         mainMenuButton.addListener(new ClickListener(){
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                Screen screen = new GarageScreen();
+                Screen screen = ScreenManager.getInstance().getGarageScreen();
                 ScreenManager.getInstance().setScreen(screen);
             }
         });
@@ -57,7 +55,7 @@ public class WelcomeScreen implements Screen {
 
     @Override
     public void show() {
-
+        Gdx.input.setInputProcessor(stage);
     }
 
     @Override
@@ -87,6 +85,7 @@ public class WelcomeScreen implements Screen {
 
     @Override
     public void hide() {
+        Gdx.input.setInputProcessor(null);
 
     }
 

@@ -1,5 +1,6 @@
 package com.mcr.spaceshooter.UI.Screen;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.mcr.spaceshooter.Utils.Asset;
@@ -16,7 +17,6 @@ public class GameScreen implements Screen {
     public GameScreen(Spaceship spaceship) {
         space = new Space(spaceship);
         spriteBatch = new SpriteBatch();
-
         renderer = new SpaceRenderer(space);
     }
 
@@ -57,6 +57,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void hide() {
+        Gdx.input.setInputProcessor(null);
 
     }
 

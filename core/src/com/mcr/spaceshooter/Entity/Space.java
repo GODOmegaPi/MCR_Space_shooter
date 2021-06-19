@@ -25,6 +25,12 @@ public class Space {
         lastDifficultyIncrease = System.currentTimeMillis();
     }
 
+    // TODO remove
+/*    public void setSpaceship(Spaceship spaceship)
+    {
+        this.spaceship = spaceship;
+    }*/
+
     public Spaceship getSpaceship() {
         return spaceship;
     }
@@ -73,7 +79,7 @@ public class Space {
     }
 
     public boolean isGameOver() {
-        return spaceship.getFuselage().getHp() <= 0 && spaceship.getShield().getHp() <= 0;
+        return spaceship.getFuselage().getHp() <= 0 && spaceship.getShieldHP() <=0;
 
     }
 

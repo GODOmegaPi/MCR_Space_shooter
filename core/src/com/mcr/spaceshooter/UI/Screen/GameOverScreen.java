@@ -13,6 +13,8 @@ import com.badlogic.gdx.utils.viewport.ScreenViewport;
 import com.mcr.spaceshooter.Utils.Asset;
 import com.mcr.spaceshooter.ScreenManager;
 
+import java.util.LinkedList;
+
 public class GameOverScreen implements Screen {
     private Stage stage;
     private int score;
@@ -41,7 +43,8 @@ public class GameOverScreen implements Screen {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 Asset.getInstance().getGameoverMusic().stop();
-                Screen screen = new GarageScreen();
+                // Screen screen = new GarageScreen();
+                Screen screen = ScreenManager.getInstance().getGarageScreen();
                 ScreenManager.getInstance().setScreen(screen);
             }
         });
@@ -65,7 +68,8 @@ public class GameOverScreen implements Screen {
     }
 
     @Override
-    public void show() {
+    public void show(){
+        Gdx.input.setInputProcessor(stage);
 
     }
 
@@ -96,6 +100,8 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void hide() {
+
+        Gdx.input.setInputProcessor(null);
 
     }
 

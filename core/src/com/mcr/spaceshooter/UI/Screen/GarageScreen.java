@@ -186,7 +186,6 @@ public class GarageScreen implements Screen {
 
     @Override
     public void pause() {
-
     }
 
     @Override
@@ -196,6 +195,7 @@ public class GarageScreen implements Screen {
 
     @Override
     public void hide() {
+        Gdx.input.setInputProcessor(null);
 
     }
 

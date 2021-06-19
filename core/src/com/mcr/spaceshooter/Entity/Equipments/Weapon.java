@@ -24,6 +24,12 @@ public class Weapon extends OffensiveEquipment {
         lastTimeShot = 0;
         this.shootSpeed = shootSpeed;
     }
+    public Weapon(Weapon weapon){
+        super(weapon);
+        bullets = new LinkedList<>();
+        lastTimeShot = weapon.lastTimeShot;
+        shootSpeed = weapon.shootSpeed;
+    }
 
     public void shoot(float x, float y) {
         if(canShoot()) {

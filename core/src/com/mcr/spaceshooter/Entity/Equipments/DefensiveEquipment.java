@@ -10,7 +10,10 @@ public abstract class DefensiveEquipment extends Equipment {
         super(name, texture, price);
         this.hp = hp;
     }
-
+    public DefensiveEquipment(DefensiveEquipment defensiveEquipment){
+        super(defensiveEquipment);
+        hp = defensiveEquipment.hp;
+    }
 
     public int getHp(){
         return hp;

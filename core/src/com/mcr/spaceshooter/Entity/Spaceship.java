@@ -23,9 +23,12 @@ public class Spaceship {
     private static final int SPEED  = 5;
 
     public Spaceship(PlayableShipBuilder playableShipBuilder) {
-        fuselage = playableShipBuilder.getFuselage();
-        weapon = playableShipBuilder.getWeapon();
-        shield = playableShipBuilder.getShield();
+        fuselage = new Fuselage(playableShipBuilder.getFuselage());
+        weapon = new Weapon(playableShipBuilder.getWeapon());
+        if(playableShipBuilder.getShield() != null){
+            shield = new Shield(playableShipBuilder.getShield());
+        }
+
         bounds = new Rectangle(Gdx.graphics.getWidth() / 2, 50, SIZE, SIZE);
         unlimitedPower = false;
         speed = SPEED;
@@ -49,7 +52,8 @@ public class Spaceship {
     }
 
     public void hit(int damage){
-        int shieldHP = shield.getHp();
+        int shieldHP = getShieldHP();
+
         shieldHP -= damage;
 
         if(shieldHP <= 0){
@@ -57,7 +61,10 @@ public class Spaceship {
             shieldHP = 0;
         }
 
-        shield.setHp(shieldHP);
+        if(shield != null){
+            shield.setHp(shieldHP);
+
+        }
     }
 
     public void render(SpriteBatch spriteBatch) {
@@ -65,7 +72,8 @@ public class Spaceship {
 
         spriteBatch.begin();
         spriteBatch.draw(fuselage.getTexture(), getX(), getY(), bounds.getWidth(), bounds.getHeight());
-        if(shield.getHp() > 0) {
+
+        if(shield != null && shield.getHp() > 0) {
             spriteBatch.draw(shield.getTexture(), getX() - 10, getY() - 10, bounds.getWidth() + 20, bounds.getHeight() + 20);
         }
         spriteBatch.end();
@@ -79,8 +87,11 @@ public class Spaceship {
         return bounds.getY();
     }
 
-    public Shield getShield() {
-        return shield;
+    public int getShieldHP() {
+        if(shield != null){
+            return shield.getHp();
+        }
+        return 0;
     }
 
     public void update() {
