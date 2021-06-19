@@ -5,7 +5,7 @@ import com.mcr.spaceshooter.Entity.Equipments.Shield;
 import com.mcr.spaceshooter.Entity.Equipments.Weapon;
 import com.mcr.spaceshooter.Entity.Spaceship;
 
-// TODO : interface utile  ?
+// TODO : interface utile  ? C'est pas sensé être une classe abstraite plutôt qu'une interface ?
 public interface ShipBuilder {
     public void reset();
     public ShipBuilder setFuselage(Fuselage fuselage)throws ShipBuilderException;

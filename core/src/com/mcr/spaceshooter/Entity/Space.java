@@ -25,12 +25,6 @@ public class Space {
         lastDifficultyIncrease = System.currentTimeMillis();
     }
 
-    // TODO remove
-/*    public void setSpaceship(Spaceship spaceship)
-    {
-        this.spaceship = spaceship;
-    }*/
-
     public Spaceship getSpaceship() {
         return spaceship;
     }

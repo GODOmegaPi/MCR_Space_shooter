@@ -51,6 +51,7 @@ public class PlayableShipBuilder implements ShipBuilder {
         return this;
     }
 
+    // TODO: c'est pas mieux d'appeler les méthodes "clear" directement au niveau des "set" ? Pour moi ça fait aussi partis des rôles du builder
     @Override
     public ShipBuilder clearFuselage() throws ShipBuilderException {
         if (fuselage != null) { // TODO controler que c'est pas vide ?
@@ -66,6 +67,7 @@ public class PlayableShipBuilder implements ShipBuilder {
         return this;
     }
 
+    // TODO: c'est pas mieux d'appeler les méthodes "clear" directement au niveau des "set" ? Pour moi ça fait aussi partis des rôles du builder
     @Override
     public ShipBuilder clearShield() throws ShipBuilderException {
         if (shield != null) {
@@ -75,6 +77,7 @@ public class PlayableShipBuilder implements ShipBuilder {
         return this;
     }
 
+    // TODO: c'est pas mieux d'appeler les méthodes "clear" directement au niveau des "set" ? Pour moi ça fait aussi partis des rôles du builder
     @Override
     public ShipBuilder clearWeapon() throws ShipBuilderException {
         if(weapon != null) {
@@ -86,15 +89,8 @@ public class PlayableShipBuilder implements ShipBuilder {
 
     @Override
     public Spaceship build() {
-        /*
-        if(shield == null) {
-            //TODO: Merci guillaume tu nous rajoutes de bugs à 2h du mat fdp
-            shield = new Shield("none", null,0, 0);
-        }
-        
-         */
         if(!isValidShip()) {
-            throw new ShipBuilderException("Construction invalide !");
+            throw new ShipBuilderException("Construction invalide !\n" + whyShipInvalid());
         }
         Spaceship ship = new Spaceship(this);
         return ship;
@@ -119,5 +115,21 @@ public class PlayableShipBuilder implements ShipBuilder {
 
     private boolean isValidShip() throws ShipBuilderException {
         return fuselage != null && weapon != null && getTotalCost() <= Constants.MAX_COST;
+    }
+
+    private String whyShipInvalid() {
+        String reason = "";
+
+        if(fuselage == null) {
+            reason += "- Fuselage nécessaire !\n";
+        }
+        if (weapon == null) {
+            reason += "- Arme nécessaire !\n";
+        }
+        if (getTotalCost() > Constants.MAX_COST) {
+            reason += "- Coût total du vaisseau supérieur à " + Constants.MAX_COST + " !\n";
+        }
+
+        return reason;
     }
 }

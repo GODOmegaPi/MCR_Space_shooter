@@ -11,7 +11,6 @@ import com.mcr.spaceshooter.UI.SpaceRenderer;
 
 /**
  * TODO GENERAUX
- * - Messages d'erreurs plus précis (construction invalide de ....)
  * - Temps d'affichage des toasts
  */
 public class GameScreen implements Screen {
