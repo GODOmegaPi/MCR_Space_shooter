@@ -9,6 +9,11 @@ import com.mcr.spaceshooter.Entity.Spaceship;
 import com.mcr.spaceshooter.ScreenManager;
 import com.mcr.spaceshooter.UI.SpaceRenderer;
 
+/**
+ * TODO GENERAUX
+ * - Messages d'erreurs plus précis (construction invalide de ....)
+ * - Temps d'affichage des toasts
+ */
 public class GameScreen implements Screen {
     private SpriteBatch spriteBatch;
     private Space space;
