@@ -3,6 +3,7 @@ package com.mcr.spaceshooter.Utils;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
@@ -75,7 +76,7 @@ public class Asset {
     }
 
     private void loadSkins() {
-        skin = new Skin(Gdx.files.internal("skin/craftacular-ui.json"));
+        skin = new Skin(getFile(Constants.SKIN_PATH));
     }
 
     private void unloadTextures() {
@@ -83,14 +84,14 @@ public class Asset {
     }
 
     private void loadMusics() {
-        ambianceMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/ambiance.mp3"));
+        ambianceMusic = Gdx.audio.newMusic(getFile(Constants.AMBIANCE_MUSIC_PATH));
         ambianceMusic.setVolume(Constants.AUDIO_LEVEL);
         ambianceMusic.setLooping(true);
 
-        gameoverMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/gameover.ogg"));
+        gameoverMusic = Gdx.audio.newMusic(getFile(Constants.GAMEOVER_MUSIC_PATH));
         gameoverMusic.setVolume(Constants.AUDIO_LEVEL);
 
-        garageMusic = Gdx.audio.newMusic(Gdx.files.internal("sounds/garage.ogg"));
+        garageMusic = Gdx.audio.newMusic(getFile(Constants.GARAGE_MUSIC_PATH));
         garageMusic.setVolume(Constants.AUDIO_LEVEL);
         garageMusic.setLooping(true);
     }
@@ -102,7 +103,7 @@ public class Asset {
     }
 
     private void loadSounds() {
-        bulletSound = Gdx.audio.newSound(Gdx.files.internal("sounds/7.wav"));
+        bulletSound = Gdx.audio.newSound(getFile(Constants.BULLET_SOUND_PATH));
     }
 
     private void unloadSounds() {
@@ -110,39 +111,39 @@ public class Asset {
     }
 
     private void loadTextures() {
-        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("skin/Amble-Regular.ttf"));
+        FreeTypeFontGenerator generator = new FreeTypeFontGenerator(getFile(Constants.FONT_PATH));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
         parameter.size = 12;
         font = generator.generateFont(parameter);
         generator.dispose();
 
-        backgroundTexture = new Texture(Gdx.files.internal("bg.jpg"));
-        leftArrowTexture = new Texture(Gdx.files.internal("leftArrow.png"));
-        leftArrowPressedTexture = new Texture(Gdx.files.internal("leftArrow_pressed.png"));
+        backgroundTexture = new Texture(getFile(Constants.BACKGROUND_TEXTURE_PATH));
+        leftArrowTexture = new Texture(getFile(Constants.LEFT_ARROW_TEXTURE_PATH));
+        leftArrowPressedTexture = new Texture(getFile(Constants.LEFT_ARROW_PRESSED_TEXTURE_PATH));
 
         asteroidsTexture = new LinkedList<>();
         for (int i = MIN_ASTEROIDS_TEXTURES; i <= MAX_ASTEROIDS_TEXTURES; ++i) {
-            asteroidsTexture.add(new Texture(Gdx.files.internal("asteroids/asteroid (" + i + ").png")));
+            asteroidsTexture.add(new Texture(getFile(Constants.ASTEROIDS_TEXTURE_PATH, i)));
         }
 
         fuselagesTexture = new LinkedList<>();
         for (int i = MIN_FUSELAGES_TEXTURES; i <= MAX_FUSELAGES_TEXTURES; ++i) {
-            fuselagesTexture.add(new Texture(Gdx.files.internal("ships/fuselages/ship (" + i + ").png")));
+            fuselagesTexture.add(new Texture(getFile(Constants.FUSELAGES_TEXTURE_PATH, i)));
         }
 
         shieldsTexture = new LinkedList<>();
         for (int i = MIN_SHIELDS_TEXTURES; i <= MAX_SHIELDS_TEXTURES; ++i) {
-            shieldsTexture.add(new Texture(Gdx.files.internal("ships/shields/shield (" + i + ").png")));
+            shieldsTexture.add(new Texture(getFile(Constants.SHIELDS_TEXTURE_PATH, i)));
         }
 
         weaponsTexture = new LinkedList<>();
         for (int i = MIN_WEAPONS_TEXTURES; i <= MAX_WEAPONS_TEXTURES; ++i) {
-            weaponsTexture.add(new Texture(Gdx.files.internal("ships/weapons/weapon (" + i + ").png")));
+            weaponsTexture.add(new Texture(getFile(Constants.WEAPONS_TEXTURE_PATH, i)));
         }
 
         bulletsTexture = new LinkedList<>();
         for (int i = MIN_BULLETS_TEXTURES; i <= MAX_BULLETS_TEXTURES; ++i) {
-            bulletsTexture.add(new Texture(Gdx.files.internal("ships/bullets/bullet (" + i + ").png")));
+            bulletsTexture.add(new Texture(getFile(Constants.BULLETS_TEXTURE_PATH, i)));
         }
     }
 
@@ -157,6 +158,14 @@ public class Asset {
         shieldsTexture.forEach(Texture::dispose);
         weaponsTexture.forEach(Texture::dispose);
         bulletsTexture.forEach(Texture::dispose);
+    }
+
+    public static FileHandle getFile(String path) {
+        return Gdx.files.internal(path);
+    }
+
+    public static FileHandle getFile(String path, int value) {
+        return Gdx.files.internal(String.format(path, value));
     }
 
     public Skin getSkin() {

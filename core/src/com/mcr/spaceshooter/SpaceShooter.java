@@ -12,6 +12,7 @@ public class SpaceShooter extends Game {
 
 	@Override
 	public void create () {
+		// TODO remove before production
 		Gdx.app.setLogLevel(Application.LOG_DEBUG);
 
 		Screen screen = new WelcomeScreen();

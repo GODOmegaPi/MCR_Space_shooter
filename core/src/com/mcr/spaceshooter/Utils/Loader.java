@@ -16,6 +16,16 @@ public class Loader {
     private List<Equipment> weaponList;
     private List<Equipment> shieldList;
 
+    private final String FUSELAGES_DEF = "fuselages";
+    private final String WEAPONS_DEF = "weapons";
+    private final String SHIELDS_DEF = "shields";
+
+    private final String EQUIPMENT_NAME_DEF = "name";
+    private final String EQUIPMENT_TEXTURE_ID_DEF = "textureId";
+    private final String EQUIPMENT_PRICE_DEF = "price";
+    private final String EQUIPMENT_HP_DEF = "hp";
+    private final String EQUIPMENT_SHOT_SPEED_DEF = "shotSpeed";
+
     private Loader() {
         fuselageList = new ArrayList<>();
         weaponList = new ArrayList<>();
@@ -25,32 +35,32 @@ public class Loader {
 
     private void init() {
         JsonReader json = new JsonReader();
-        JsonValue equipments = json.parse(Gdx.files.internal("equipments.json"));
+        JsonValue equipments = json.parse(Asset.getFile(Constants.EQUIPMENTS_DEFINITION_PATH));
 
-        for (JsonValue fuselage : equipments.get("fuselages")) {
+        for (JsonValue fuselage : equipments.get(FUSELAGES_DEF)) {
             fuselageList.add(new Fuselage(
-                    fuselage.getString("name"),
-                    Asset.getInstance().getFuselagesTexture(fuselage.getInt("textureId")),
-                    fuselage.getInt("price"),
-                    fuselage.getInt("hp")
+                    fuselage.getString(EQUIPMENT_NAME_DEF),
+                    Asset.getInstance().getFuselagesTexture(fuselage.getInt(EQUIPMENT_TEXTURE_ID_DEF)),
+                    fuselage.getInt(EQUIPMENT_PRICE_DEF),
+                    fuselage.getInt(EQUIPMENT_HP_DEF)
             ));
         }
 
-        for (JsonValue fuselage : equipments.get("weapons")) {
+        for (JsonValue weapon : equipments.get(WEAPONS_DEF)) {
             weaponList.add(new Weapon(
-                    fuselage.getString("name"),
-                    Asset.getInstance().getWeaponsTexture(fuselage.getInt("textureId")),
-                    fuselage.getInt("price"),
-                    fuselage.getInt("shotSpeed")
+                    weapon.getString(EQUIPMENT_NAME_DEF),
+                    Asset.getInstance().getWeaponsTexture(weapon.getInt(EQUIPMENT_TEXTURE_ID_DEF)),
+                    weapon.getInt(EQUIPMENT_PRICE_DEF),
+                    weapon.getInt(EQUIPMENT_SHOT_SPEED_DEF)
             ));
         }
 
-        for (JsonValue fuselage : equipments.get("shields")) {
+        for (JsonValue shield : equipments.get(SHIELDS_DEF)) {
             shieldList.add(new Shield(
-                    fuselage.getString("name"),
-                    Asset.getInstance().getShieldsTexture(fuselage.getInt("textureId")),
-                    fuselage.getInt("price"),
-                    fuselage.getInt("hp")
+                    shield.getString(EQUIPMENT_NAME_DEF),
+                    Asset.getInstance().getShieldsTexture(shield.getInt(EQUIPMENT_TEXTURE_ID_DEF)),
+                    shield.getInt(EQUIPMENT_PRICE_DEF),
+                    shield.getInt(EQUIPMENT_HP_DEF)
             ));
         }
     }
