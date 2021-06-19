@@ -55,8 +55,6 @@ public class GarageScreen implements Screen {
         List<Equipment> weaponsList = Loader.getInstance().getWeaponList();
         List<Equipment> shieldsList = Loader.getInstance().getShieldList();
 
-        Asset.getInstance().getGarageMusic().play();
-
         // Toasts pour les messages d'erreur
         //FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("skin/Amble-Regular.ttf"));
         //FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -158,6 +156,10 @@ public class GarageScreen implements Screen {
 
     @Override
     public void render(float delta) {
+        if(!Asset.getInstance().getGarageMusic().isPlaying()) {
+            Asset.getInstance().getGarageMusic().play();
+        }
+
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         spriteBatch.begin();
