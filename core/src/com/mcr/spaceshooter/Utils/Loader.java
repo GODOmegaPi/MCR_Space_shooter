@@ -1,5 +1,4 @@
 package com.mcr.spaceshooter.Utils;
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.mcr.spaceshooter.Entity.Equipments.Equipment;
@@ -10,6 +9,9 @@ import com.mcr.spaceshooter.Entity.Equipments.Weapon;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Class used to load the equipments definition
+ */
 public class Loader {
     private static Loader instance;
     private List<Equipment> fuselageList;
@@ -26,6 +28,9 @@ public class Loader {
     private final String EQUIPMENT_HP_DEF = "hp";
     private final String EQUIPMENT_SHOT_SPEED_DEF = "shotSpeed";
 
+    /**
+     * Private constructor loading equipments
+     */
     private Loader() {
         fuselageList = new ArrayList<>();
         weaponList = new ArrayList<>();
@@ -33,6 +38,9 @@ public class Loader {
         init();
     }
 
+    /**
+     * Load the equipments definition
+     */
     private void init() {
         JsonReader json = new JsonReader();
         JsonValue equipments = json.parse(Asset.getFile(Constants.EQUIPMENTS_DEFINITION_PATH));
@@ -65,6 +73,10 @@ public class Loader {
         }
     }
 
+    /**
+     * Get the singleton instance of the class
+     * @return the current instance
+     */
     public static Loader getInstance() {
         if (instance == null) {
             instance = new Loader();
@@ -72,14 +84,26 @@ public class Loader {
         return instance;
     }
 
+    /**
+     * Get the loaded fuselages objects
+     * @return the loaded fuselages objects
+     */
     public List<Equipment> getFuselageList() {
         return fuselageList;
     }
 
+    /**
+     * Get the loaded weapons objects
+     * @return the loaded weapons objects
+     */
     public List<Equipment> getWeaponList() {
         return weaponList;
     }
 
+    /**
+     * Get the loaded shields objects
+     * @return the loaded shields objects
+     */
     public List<Equipment> getShieldList() {
         return shieldList;
     }

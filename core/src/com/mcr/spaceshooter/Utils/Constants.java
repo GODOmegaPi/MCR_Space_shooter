@@ -1,5 +1,8 @@
 package com.mcr.spaceshooter.Utils;
 
+/**
+ * Class used to store global variables
+ */
 public class Constants {
     public static int MAX_COST = 120;
     public static float AUDIO_LEVEL = 0.25f;

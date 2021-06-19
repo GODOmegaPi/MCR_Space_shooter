@@ -55,6 +55,7 @@ public class GarageScreen implements Screen {
         List<Equipment> weaponsList = Loader.getInstance().getWeaponList();
         List<Equipment> shieldsList = Loader.getInstance().getShieldList();
 
+        // TODO clean this
         // Toasts pour les messages d'erreur
         //FreeTypeFontGenerator generator = new FreeTypeFontGenerator(Gdx.files.internal("skin/Amble-Regular.ttf"));
         //FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -110,11 +111,12 @@ public class GarageScreen implements Screen {
         table.add(firstColTable).expand();
         table.add(secondColTable).expand();
 
-        firstColTable.add(new DefensiveEquipmentSelector(fuselagesList, Asset.getInstance().getSkin(), c -> builder.setFuselage((Fuselage) c), () -> builder.clearFuselage(), this)).height(250).width(300).pad(10).colspan(3).center();
+        // TODO make it cleaner. Maybe add some return line for each parameters for visibility purpose
+        firstColTable.add(new DefensiveEquipmentSelector(fuselagesList, Asset.getInstance().getSkin(), c -> builder.setFuselage((Fuselage) c), builder::clearFuselage, this)).height(250).width(300).pad(10).colspan(3).center();
         firstColTable.row();
-        firstColTable.add(new OffensiveEquipmentSelector(weaponsList, Asset.getInstance().getSkin(), c -> builder.setWeapon((Weapon) c), () -> builder.clearWeapon(), this)).height(250).width(300).colspan(3).pad(10).center();
+        firstColTable.add(new OffensiveEquipmentSelector(weaponsList, Asset.getInstance().getSkin(), c -> builder.setWeapon((Weapon) c), builder::clearWeapon, this)).height(250).width(300).colspan(3).pad(10).center();
         firstColTable.row();
-        firstColTable.add(new DefensiveEquipmentSelector(shieldsList, Asset.getInstance().getSkin(), c -> builder.setShield((Shield) c), () -> builder.clearShield(), this)).height(250).width(300).colspan(3).pad(10).center();
+        firstColTable.add(new DefensiveEquipmentSelector(shieldsList, Asset.getInstance().getSkin(), c -> builder.setShield((Shield) c), builder::clearShield, this)).height(250).width(300).colspan(3).pad(10).center();
 
         secondColTable.add(costLbl).colspan(2);
         secondColTable.row();
@@ -147,6 +149,7 @@ public class GarageScreen implements Screen {
         toasts.add(errorToastFactory.create(text, Toast.Length.LONG));
     }
 
+    // TODO do we need this functions ? if not delete it
     /**
      * Displays short toast
      */
@@ -198,7 +201,6 @@ public class GarageScreen implements Screen {
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);
-
     }
 
     @Override

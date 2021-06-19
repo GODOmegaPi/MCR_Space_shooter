@@ -12,6 +12,9 @@ import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import java.util.LinkedList;
 import java.util.List;
 
+/**
+ * Class used to load assets into memory and to give an interface to access them
+ */
 public class Asset {
 
     private static Asset asset = null;
@@ -50,10 +53,17 @@ public class Asset {
     public final int MAX_WEAPONS_TEXTURES = 3;
     private List<Texture> weaponsTexture;
 
+    /**
+     * Private constructor loading assets
+     */
     private Asset() {
         load();
     }
 
+    /**
+     * Get the singleton instance of the class
+     * @return the current instance
+     */
     public static Asset getInstance() {
         if(asset == null) {
             asset = new Asset();
@@ -61,6 +71,9 @@ public class Asset {
         return asset;
     }
 
+    /**
+     * Load each assets by category
+     */
     private void load() {
         loadTextures();
         loadSounds();
@@ -68,6 +81,9 @@ public class Asset {
         loadSkins();
     }
 
+    /**
+     * Unload each assets by category
+     */
     public void unload() {
         unloadTextures();
         unloadSounds();
@@ -75,14 +91,23 @@ public class Asset {
         unloadSkins();
     }
 
+    /**
+     * Load the skin used to format objects like labels, buttons, ...
+     */
     private void loadSkins() {
         skin = new Skin(getFile(Constants.SKIN_PATH));
     }
 
-    private void unloadTextures() {
+    /**
+     * Unload the skin used to format objects like labels, buttons, ...
+     */
+    private void unloadSkins() {
         skin.dispose();
     }
 
+    /**
+     * Load the musics
+     */
     private void loadMusics() {
         ambianceMusic = Gdx.audio.newMusic(getFile(Constants.AMBIANCE_MUSIC_PATH));
         ambianceMusic.setVolume(Constants.AUDIO_LEVEL);
@@ -96,20 +121,32 @@ public class Asset {
         garageMusic.setLooping(true);
     }
 
+    /**
+     * Unload the musics
+     */
     private void unloadMusics() {
         ambianceMusic.dispose();
         gameoverMusic.dispose();
         garageMusic.dispose();
     }
 
+    /**
+     * Load the sounds
+     */
     private void loadSounds() {
         bulletSound = Gdx.audio.newSound(getFile(Constants.BULLET_SOUND_PATH));
     }
 
+    /**
+     * Unload the sounds
+     */
     private void unloadSounds() {
         bulletSound.dispose();
     }
 
+    /**
+     * Load the textures
+     */
     private void loadTextures() {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(getFile(Constants.FONT_PATH));
         FreeTypeFontGenerator.FreeTypeFontParameter parameter = new FreeTypeFontGenerator.FreeTypeFontParameter();
@@ -147,7 +184,10 @@ public class Asset {
         }
     }
 
-    private void unloadSkins() {
+    /**
+     * Unload the textures
+     */
+    private void unloadTextures() {
         font.dispose();
         backgroundTexture.dispose();
         leftArrowTexture.dispose();
@@ -160,75 +200,159 @@ public class Asset {
         bulletsTexture.forEach(Texture::dispose);
     }
 
+    /**
+     * Get the file with given path
+     * @param path the path to the file from assets folder
+     * @return the loaded file
+     */
     public static FileHandle getFile(String path) {
         return Gdx.files.internal(path);
     }
 
+    /**
+     * Get the file with given path
+     * @param path the path to the file from assets folder
+     * @param value a value needed to be replaced in the given path
+     * @return the loaded file
+     */
     public static FileHandle getFile(String path, int value) {
         return Gdx.files.internal(String.format(path, value));
     }
 
+    /**
+     * Get the skin
+     * @return the skin
+     */
     public Skin getSkin() {
         return skin;
     }
 
+    /**
+     * Get the ambiance music
+     * @return the ambiance music
+     */
     public Music getAmbianceMusic() {
         return ambianceMusic;
     }
 
+    /**
+     * Get the gameover music
+     * @return the gameover music
+     */
     public Music getGameoverMusic() {
         return gameoverMusic;
     }
 
+    /**
+     * Get the garage music
+     * @return the garage music
+     */
     public Music getGarageMusic() {
         return garageMusic;
     }
 
+    /**
+     * Get the bullet sound
+     * @return the bullet sound
+     */
     public Sound getBulletSound() {
         return bulletSound;
     }
 
+    /**
+     * Get the font
+     * @return the font
+     */
     public BitmapFont getFont() {
         return font;
     }
 
+    /**
+     * Get the background texture
+     * @return the background texture
+     */
     public Texture getBackgroundTexture() {
         return backgroundTexture;
     }
 
+    /**
+     * Get the left arrow texture
+     * @return the left texture arrow
+     */
     public  Texture getLeftArrowTexture() {
         return leftArrowTexture;
     }
 
+    /**
+     * Get the left arrow pressed texture
+     * @return the left arrow pressed texture
+     */
     public  Texture getLeftArrowPressedTexture() {
         return leftArrowPressedTexture;
     }
 
+    /**
+     * Get an asteroid texture at given index
+     * @param i the index of the texture
+     * @return the asteroid at the given index
+     * @throws IllegalArgumentException if the index is out of the list
+     */
     public Texture getAsteroidsTexture(int i) {
         inRange(MIN_ASTEROIDS_TEXTURES, MAX_ASTEROIDS_TEXTURES, i);
         return asteroidsTexture.get(i - 1);
     }
 
+    /**
+     * Get a fuselage texture at given index
+     * @param i the index of the texture
+     * @return the fuselage at the given index
+     * @throws IllegalArgumentException if the index is out of the list
+     */
     public Texture getFuselagesTexture(int i) {
         inRange(MIN_FUSELAGES_TEXTURES, MAX_FUSELAGES_TEXTURES, i);
         return fuselagesTexture.get(i - 1);
     }
 
+    /**
+     * Get a shield texture at given index
+     * @param i the index of the texture
+     * @return the shield at the given index
+     * @throws IllegalArgumentException if the index is out of the list
+     */
     public Texture getShieldsTexture(int i) {
         inRange(MIN_SHIELDS_TEXTURES, MAX_SHIELDS_TEXTURES, i);
         return shieldsTexture.get(i - 1);
     }
 
+    /**
+     * Get a weapon texture at given index
+     * @param i the index of the texture
+     * @return the weapon at the given index
+     * @throws IllegalArgumentException if the index is out of the list
+     */
     public Texture getWeaponsTexture(int i) {
         inRange(MIN_WEAPONS_TEXTURES, MAX_WEAPONS_TEXTURES, i);
         return weaponsTexture.get(i - 1);
     }
 
+    /**
+     * Get a bullet texture at given index
+     * @param i the index of the texture
+     * @return the bullet at the given index
+     * @throws IllegalArgumentException if the index is out of the list
+     */
     public Texture getBulletsTexture(int i) {
         inRange(MIN_BULLETS_TEXTURES, MAX_BULLETS_TEXTURES, i);
         return bulletsTexture.get(i - 1);
     }
 
+    /**
+     * Check if a given value is in range
+     * @param lowerBound the lower bound of the range
+     * @param upperBound the upper bound of the range
+     * @param value the value to check
+     * @throws IllegalArgumentException if the index is out of the list
+     */
     private void inRange(int lowerBound, int upperBound, int value) {
         if(value < lowerBound || value > upperBound) {
             throw new IllegalArgumentException(
