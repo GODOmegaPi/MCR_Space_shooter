@@ -54,7 +54,7 @@ public class GarageScreen implements Screen {
 
         // Toasts pour les messages d'erreur
         errorToastFactory = new Toast.ToastFactory.Builder()
-                .font(Asset.getInstance().getFont()) // TODO: ?
+                .font(Asset.getInstance().getFont())
                 .backgroundColor(new Color(0.98f, 0.98f, 0.98f, 1f)) // default : new Color(0.5f, 0.5f, 0.5f, 1f)
                 .fadingDuration(1.2f)
                 .fontColor(new Color(0.86f, 0, 0, 1f)).build();
