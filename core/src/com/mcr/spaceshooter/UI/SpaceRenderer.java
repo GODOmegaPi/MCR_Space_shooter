@@ -2,6 +2,7 @@ package com.mcr.spaceshooter.UI;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
+import com.mcr.spaceshooter.Entity.Spaceship;
 import com.mcr.spaceshooter.Utils.Asset;
 import com.mcr.spaceshooter.Entity.Space;
 
@@ -19,10 +20,14 @@ public class SpaceRenderer {
     /**
      * Constructeur de copie
      *
-     * @param space l'entité Space représentant le jeu
+     * @param spaceship l'entité spaceship représentant le spaceShip
      */
-    public SpaceRenderer(Space space) {
-        this.space = space;
+    public SpaceRenderer(Spaceship spaceship) {
+        space = new Space(spaceship);
+    }
+
+    public Space getSpace() {
+        return space;
     }
 
     /**

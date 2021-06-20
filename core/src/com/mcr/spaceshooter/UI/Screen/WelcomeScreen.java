@@ -20,7 +20,7 @@ import com.mcr.spaceshooter.ScreenManager;
  */
 public class WelcomeScreen implements Screen {
 
-    private Stage stage;
+    private final Stage stage;
 
     /**
      * Constructeur qui crée l'écran d'accueil

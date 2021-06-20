@@ -61,7 +61,7 @@ public class DefensiveEquipmentSelector extends EquipementSelector {
      * Met à jour les informations affichées dans les labels.
      */
     @Override
-    void updateLabels() {
+    protected void updateLabels() {
         nameLbl.setText(equipments.get(currentElementIdx).getName());
         priceLbl.setText(String.valueOf(equipments.get(currentElementIdx).getPrice()));
         hpLbl.setText(String.valueOf(((DefensiveEquipment) equipments.get(currentElementIdx)).getHp()));

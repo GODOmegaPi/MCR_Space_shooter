@@ -43,7 +43,7 @@ public class OffensiveEquipmentSelector extends EquipementSelector {
      *
      */
     @Override
-    void addSpecs() {
+    protected void addSpecs() {
         table.add(nameLbl).width(240).colspan(3);
         table.row();
 
@@ -60,7 +60,7 @@ public class OffensiveEquipmentSelector extends EquipementSelector {
      * Mets à jour les textes de labels.
      */
     @Override
-    void updateLabels() {
+    protected void updateLabels() {
         Gdx.app.debug(this.getClass().getName(), "LABEL");
         nameLbl.setText(equipments.get(currentElementIdx).getName());
         priceLbl.setText(String.valueOf(equipments.get(currentElementIdx).getPrice()));

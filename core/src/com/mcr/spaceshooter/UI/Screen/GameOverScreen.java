@@ -22,7 +22,7 @@ import java.util.LinkedList;
  */
 public class GameOverScreen implements Screen {
     private Stage stage;
-    private int score;
+    private final int score;
 
     /**
      * Constructeur

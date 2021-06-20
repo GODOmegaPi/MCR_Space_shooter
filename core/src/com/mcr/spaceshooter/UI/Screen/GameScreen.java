@@ -15,18 +15,16 @@ import com.mcr.spaceshooter.UI.SpaceRenderer;
  * @authors Ilias, Guillaume, Ludovic, Vitor, Eric
  */
 public class GameScreen implements Screen {
-    private SpriteBatch spriteBatch;
-    private Space space;
-    private SpaceRenderer renderer;
+    private final SpriteBatch spriteBatch;
+    private final SpaceRenderer renderer;
 
     /**
      * Constructeur. On utilisera le vaisseau passé en paramètre dans le jeu
      * @param spaceship vaisseau à utiliser pour jouer
      */
     public GameScreen(Spaceship spaceship) {
-        space = new Space(spaceship);
         spriteBatch = new SpriteBatch();
-        renderer = new SpaceRenderer(space);
+        renderer = new SpaceRenderer(spaceship);
     }
 
     /**
@@ -42,9 +40,9 @@ public class GameScreen implements Screen {
      */
     private void update() {
         renderer.update();
-        if (space.isGameOver()) {
+        if (renderer.getSpace().isGameOver()) {
             Asset.getInstance().getAmbianceMusic().stop();
-            ScreenManager.getInstance().setScreen(new GameOverScreen(space.getScore()));
+            ScreenManager.getInstance().setScreen(new GameOverScreen(renderer.getSpace().getScore()));
         }
     }
 
