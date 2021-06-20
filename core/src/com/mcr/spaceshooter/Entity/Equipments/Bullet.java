@@ -27,6 +27,9 @@ public class Bullet {
     // Hauteur de la hitbox.
     public static int HEIGHT = 19;
 
+    // Vitesse de déplacement de la balle.
+    public static int BULLET_SPEED = 15;
+
     /**
      * Constructeur d'une balle.
      * @param x position initiale, sur l'axe des absicsse.
@@ -44,7 +47,7 @@ public class Bullet {
 
     /**
      * Affiche la sprite de la balle.
-     * @param spriteBatch
+     * @param spriteBatch spri
      */
     public void render(SpriteBatch spriteBatch) {
         spriteBatch.begin();
@@ -55,6 +58,11 @@ public class Bullet {
         spriteBatch.end();
     }
 
+    /**
+     * @param rect qui potentiellement en collision avec notre balle.
+     * @return Vrai si la hitbox de notre bullet touche un autre recrangle et rend inactive notre bullet.
+     * Sinon faux.
+     */
     public boolean isColliding(Rectangle rect) {
         if(Intersector.overlaps(bounds, rect)) {
             alive = false;
@@ -63,14 +71,27 @@ public class Bullet {
         return false;
     }
 
+    /**
+     * @return vrai si hors de l'espace de jeu.
+     * Faux sinon.
+     */
     boolean isOutOfBound(){
         return outOfBound;
     }
 
+    /**
+     * @return Vrai si la bullet est active.
+     * Faux dans le cas contraire.
+     * Une bullet active peut détruire des astéroides et est affichée.
+     */
     boolean isAlive(){
         return alive;
     }
 
+    /**
+     * Met à jour les positions de notre bullet.
+     * Cette dernière doit rester dans les dimensions de la fenêtre de jeu.
+     */
     public void update() {
         if(bounds.getY() + bounds.getHeight() > Gdx.graphics.getHeight()) {
             outOfBound = true;

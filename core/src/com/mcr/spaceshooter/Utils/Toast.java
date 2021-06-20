@@ -26,9 +26,10 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Align;
 
 /**
- * Android-like toast implementation for LibGDX projects
+ * Implémentation de toasts (Android-like) pour des projets LibGDX
+ * Le code provient de :
  *
- * @author Tomas Chalupnik (tchalupnik.cz)
+ * @author Tomas Chalupnik (tchalupnik.cz - https://github.com/wentsa/Toast-LibGDX)
  */
 public class Toast {
     public enum Length {
@@ -58,15 +59,15 @@ public class Toast {
     private int fontWidth;
 
     Toast(
-        String text,
-        Length length,
-        BitmapFont font,
-        Color backgroundColor,
-        float fadingDuration,
-        float maxRelativeWidth,
-        Color fontColor,
-        float positionY,
-        Integer customMargin
+            String text,
+            Length length,
+            BitmapFont font,
+            Color backgroundColor,
+            float fadingDuration,
+            float maxRelativeWidth,
+            Color fontColor,
+            float positionY,
+            Integer customMargin
     ) {
         this.msg = text;
         this.font = font;
@@ -108,6 +109,7 @@ public class Toast {
     /**
      * Displays toast<br/>
      * Must be called at the end of {@link Game#render()}<br/>
+     *
      * @param delta {@link Graphics#getDeltaTime()}
      * @return activeness of the toast (true while being displayed, false otherwise)
      */
@@ -161,21 +163,22 @@ public class Toast {
 
         /**
          * Creates new toast
-         * @param text message
+         *
+         * @param text   message
          * @param length toast duration
          * @return newly created toast
          */
         public Toast create(String text, Length length) {
             return new Toast(
-                text,
-                length,
-                font,
-                backgroundColor,
-                fadingDuration,
-                maxRelativeWidth,
-                fontColor,
-                positionY,
-                customMargin);
+                    text,
+                    length,
+                    font,
+                    backgroundColor,
+                    fadingDuration,
+                    maxRelativeWidth,
+                    fontColor,
+                    positionY,
+                    customMargin);
         }
 
         /**
@@ -188,6 +191,7 @@ public class Toast {
 
             /**
              * Specify font for toasts
+             *
              * @param font font
              * @return this
              */
@@ -201,6 +205,7 @@ public class Toast {
              * Specify background color for toasts.<br/>
              * Note: Alpha channel is not supported (yet).<br/>
              * Default: rgb(55,55,55)
+             *
              * @param color background color
              * @return this
              */
@@ -213,6 +218,7 @@ public class Toast {
             /**
              * Specify font color for toasts.<br/>
              * Default: white
+             *
              * @param color font color
              * @return this
              */
@@ -225,6 +231,7 @@ public class Toast {
             /**
              * Specify vertical position for toasts<br/>
              * Default: bottom part
+             *
              * @param positionY vertical position of bottom left corner
              * @return this
              */
@@ -237,6 +244,7 @@ public class Toast {
             /**
              * Specify fading duration for toasts<br/>
              * Default: 0.5s
+             *
              * @param fadingDuration duration in seconds which it takes to disappear
              * @return this
              */
@@ -252,6 +260,7 @@ public class Toast {
             /**
              * Specify max text width for toasts<br/>
              * Default: 0.65
+             *
              * @param maxTextRelativeWidth max text width relative to screen (Eg. 0.5 = max text width is equal to 50% of screen width)
              * @return this
              */
@@ -264,6 +273,7 @@ public class Toast {
             /**
              * Specify text margin for toasts<br/>
              * Default: line height
+             *
              * @param margin margin in px
              * @return this
              */
@@ -275,6 +285,7 @@ public class Toast {
 
             /**
              * Builds factory
+             *
              * @return new factory
              */
             public ToastFactory build() {

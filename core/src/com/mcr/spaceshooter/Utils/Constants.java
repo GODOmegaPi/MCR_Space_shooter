@@ -1,12 +1,16 @@
 package com.mcr.spaceshooter.Utils;
 
 /**
- * Class used to store global variables
+ * Classe utilisée pour stocker les valeurs générales
+ * @authors Ilias, Guillaume, Ludovic, Vitor, Eric
  */
 public class Constants {
+    // Nombre de crédits disponibles pour équiper le vaisseau.
     public static int MAX_COST = 120;
+
     public static float AUDIO_LEVEL = 0.25f;
 
+    // Chemin d'accès relatif aux resources se trouvant dans le dossier core/assets/
     public static final String SKIN_PATH = "skin/craftacular-ui.json";
     public static final String FONT_PATH = "skin/Amble-Regular.ttf";
 

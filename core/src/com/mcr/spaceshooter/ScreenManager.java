@@ -6,7 +6,9 @@ import com.badlogic.gdx.Screen;
 import com.mcr.spaceshooter.UI.Screen.GarageScreen;
 
 /**
- * Class used to change the current displayed screen
+ * Classe utilisée pour charger et afficher les différents écrans utilisés pour le jeu
+ *
+ * @authors Ilias, Guillaume, Ludovic, Vitor, Eric
  */
 public class ScreenManager {
 
@@ -16,51 +18,55 @@ public class ScreenManager {
     private GarageScreen garageScreen;
 
     /**
-     * Private constructor initialise a screen we want to reuse as is
+     * Constructeur privé initialisant l'écran de construction de vaisseau qui seras réutilisé
      */
-    private ScreenManager(){
+    private ScreenManager() {
         garageScreen = new GarageScreen();
     }
 
     /**
-     * Get the garage screen
-     * @return the garage screen
+     * Récupère l'écran de construction de vaisseau
+     *
+     * @return l'écran de construction de vaisseau
      */
-    public Screen getGarageScreen(){
+    public Screen getGarageScreen() {
         return garageScreen;
     }
 
     /**
-     * Set current displayed screen
-     * @param screen the screen to display
+     * Définit quel écran doit être affiché
+     *
+     * @param screen l'écran à afficher
      */
-    public void setScreen(Screen screen){
+    public void setScreen(Screen screen) {
         currentScreen = screen;
         game.setScreen(screen);
         screen.show();
     }
 
     /**
-     * Set the current game
-     * @param game the game to set
+     * Définit quelle partie doit être utilisée
+     *
+     * @param game la partie à utiliser
      */
-    public void setGame(Game game){
+    public void setGame(Game game) {
         this.game = game;
     }
 
     /**
-     * Render current screen (also serve as a form of update)
+     * Affiche et met à jour l'écran courant
      */
-    public void render () {
+    public void render() {
         currentScreen.render(Gdx.graphics.getDeltaTime());
     }
 
     /**
-     * Get the singleton instance of the class
-     * @return the current instance
+     * Récupère l'instance de la classe courante
+     *
+     * @return l'instance de la classe courante
      */
-    public static ScreenManager getInstance(){
-        if(instance == null){
+    public static ScreenManager getInstance() {
+        if (instance == null) {
             instance = new ScreenManager();
         }
         return instance;

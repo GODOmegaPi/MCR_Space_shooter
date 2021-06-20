@@ -1,4 +1,5 @@
 package com.mcr.spaceshooter.Utils;
+
 import com.badlogic.gdx.utils.JsonReader;
 import com.badlogic.gdx.utils.JsonValue;
 import com.mcr.spaceshooter.Entity.Equipments.Equipment;
@@ -10,10 +11,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class used to load the equipments definition
+ * Classe singleton utilisée pour charger la définition des équipements
+ *
+ * @authors Ilias, Guillaume, Ludovic, Vitor, Eric
  */
 public class Loader {
     private static Loader instance;
+
     private List<Equipment> fuselageList;
     private List<Equipment> weaponList;
     private List<Equipment> shieldList;
@@ -29,7 +33,7 @@ public class Loader {
     private final String EQUIPMENT_SHOT_SPEED_DEF = "shotSpeed";
 
     /**
-     * Private constructor loading equipments
+     * Constructeur privé de chargement d'équipements
      */
     private Loader() {
         fuselageList = new ArrayList<>();
@@ -39,7 +43,7 @@ public class Loader {
     }
 
     /**
-     * Load the equipments definition
+     * Charge les équipements en lisant un fichier JSON
      */
     private void init() {
         JsonReader json = new JsonReader();
@@ -74,8 +78,9 @@ public class Loader {
     }
 
     /**
-     * Get the singleton instance of the class
-     * @return the current instance
+     * Récupère l'instance de la classe courante
+     *
+     * @return l'instance de la classe courante
      */
     public static Loader getInstance() {
         if (instance == null) {
@@ -85,24 +90,27 @@ public class Loader {
     }
 
     /**
-     * Get the loaded fuselages objects
-     * @return the loaded fuselages objects
+     * Récupère les fuselages chargés
+     *
+     * @return les fuselages chargés
      */
     public List<Equipment> getFuselageList() {
         return fuselageList;
     }
 
     /**
-     * Get the loaded weapons objects
-     * @return the loaded weapons objects
+     * Récupère les armes chargées
+     *
+     * @return les armes chargées
      */
     public List<Equipment> getWeaponList() {
         return weaponList;
     }
 
     /**
-     * Get the loaded shields objects
-     * @return the loaded shields objects
+     * Récupère les boucliers chargés
+     *
+     * @return les boucliers chargés
      */
     public List<Equipment> getShieldList() {
         return shieldList;

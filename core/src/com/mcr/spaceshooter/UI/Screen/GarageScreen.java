@@ -39,13 +39,13 @@ import java.util.List;
  *
  * @authors Ilias, Guillaume, Ludovic, Vitor, Eric
  */
-public class GarageScreen implements Screen {
+public class
+GarageScreen implements Screen {
+    private final ShipBuilder builder;
     private final Stage stage;
     private final SpriteBatch spriteBatch;
-    private final ShipBuilder builder;
     private final List<Toast> toasts;
     private final Toast.ToastFactory errorToastFactory;
-
     private final Label costValueLbl;
 
     /**
@@ -53,15 +53,20 @@ public class GarageScreen implements Screen {
      */
     public GarageScreen() {
         builder = new PlayableShipBuilder();
+
+        // Contient une hiérarchie d'actors, gère le viewport et distribue les évènements de saisie (input events)
         stage = new Stage(new ScreenViewport());
+        // Définit l'InputProcessor qui va recevoir tous les input events. Sera appelé avant ApplicationListener.render() à chaque frame
         Gdx.input.setInputProcessor(stage);
+
+        // SpriteBatch pour l'affichage de l'image de fond d'écran
         spriteBatch = new SpriteBatch();
 
         List<Equipment> fuselagesList = Loader.getInstance().getFuselageList();
         List<Equipment> weaponsList = Loader.getInstance().getWeaponList();
         List<Equipment> shieldsList = Loader.getInstance().getShieldList();
 
-        // Toasts pour les messages d'erreur
+        // Initialisation du Toast Factory pour les messages d'erreur
         errorToastFactory = new Toast.ToastFactory.Builder()
                 .font(Asset.getInstance().getFont())
                 .backgroundColor(new Color(0.98f, 0.98f, 0.98f, 1f)) // default : new Color(0.5f, 0.5f, 0.5f, 1f)
@@ -80,21 +85,28 @@ public class GarageScreen implements Screen {
         Label titleLabel = new Label("Garage", Asset.getInstance().getSkin());
         titleLabel.setFontScale(1);
 
+        // Bouton "Jouer" et click listener
         TextButton playButton = new TextButton("Jouer", Asset.getInstance().getSkin());
         playButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
                 try {
+                    // Construit le vaisseau via le builder en effectuant les vérifications de bonne conception
                     Spaceship ship = builder.build();
+
                     Asset.getInstance().getGarageMusic().stop();
+
+                    // Création du nouvel écran de jeu et basculement sur celui-ci
                     Screen screen = new GameScreen(ship);
                     ScreenManager.getInstance().setScreen(screen);
                 } catch (ShipBuilderException sbe) {
+                    // Affichage d'un message d'erreur si le builder n'a pas pu construire le vaisseau
                     displayToast(sbe.getMessage());
                 }
             }
         });
 
+        // Bouton "Quitter" et click listener
         TextButton quitButton = new TextButton("Quitter", Asset.getInstance().getSkin());
         quitButton.addListener(new ClickListener() {
             @Override
@@ -103,7 +115,7 @@ public class GarageScreen implements Screen {
             }
         });
 
-        // Labels pour le coût du vaisseau
+        // Labels pour le coût total de toutes les pièces du vaisseau
         Label costLbl = new Label("Cout total du vaisseau :", Asset.getInstance().getSkin());
         costValueLbl = new Label("0", Asset.getInstance().getSkin());
         Label maxCostLbl = new Label("/" + Constants.MAX_COST, Asset.getInstance().getSkin());
@@ -113,6 +125,7 @@ public class GarageScreen implements Screen {
         table.add(firstColTable).expand();
         table.add(secondColTable).expand();
 
+        // Ajout des sélecteurs d'équipement
         firstColTable.add(new DefensiveEquipmentSelector(
                 fuselagesList,
                 Asset.getInstance().getSkin(),
@@ -148,14 +161,6 @@ public class GarageScreen implements Screen {
     }
 
     /**
-     *
-     */
-    @Override
-    public void show() {
-        Gdx.input.setInputProcessor(stage);
-    }
-
-    /**
      * Met à jour le coût du vaisseau en fonction des choix de pièces
      */
     public void updateCost() {
@@ -175,7 +180,16 @@ public class GarageScreen implements Screen {
     }
 
     /**
-     * @param delta
+     * Affiche le stage
+     */
+    @Override
+    public void show() {
+        Gdx.input.setInputProcessor(stage);
+    }
+
+    /**
+     * Gère l'affichage des éléments dans le Screen
+     * @param delta temps écoulé depuis le dernier appel à render
      */
     @Override
     public void render(float delta) {
@@ -185,44 +199,65 @@ public class GarageScreen implements Screen {
 
         Gdx.gl.glClearColor(0f, 0f, 0f, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+
+        // Affichage du fond d'écran
         spriteBatch.begin();
         spriteBatch.draw(Asset.getInstance().getBackgroundTexture(), 0, 0);
         spriteBatch.end();
-        // tell our stage to do actions and draw itself
+
+        // Le stage effectue les actions et se dessine
         stage.act(Math.min(Gdx.graphics.getDeltaTime(), 1 / 30f));
         stage.draw();
 
-        // Affiche les toasts
+        // Affiche les toasts en cas d'erreur
         Iterator<Toast> it = toasts.iterator();
         while (it.hasNext()) {
             Toast t = it.next();
             if (!t.render(Gdx.graphics.getDeltaTime())) {
-                it.remove(); // toast finished -> remove
+                it.remove(); // Toast fini
             } else {
-                break; // first toast still active, break the loop
+                break; // Premier toast encore actif
             }
         }
     }
 
+    /**
+     * Méthode appeler lors d'un resize
+     * @param width nouvelle largeur
+     * @param height nouvelle hauteur
+     */
     @Override
     public void resize(int width, int height) {
         stage.getViewport().update(width, height, true);
     }
 
+    /**
+     * Méthode appeler lorsque la screen n'a pas le focus
+     */
     @Override
     public void pause() {
     }
 
+    /**
+     * Méthode appeler lors du focus de la screen
+     */
     @Override
     public void resume() {
 
     }
 
+    /**
+     * Méhtode appeler lorsque la screen est cachée. On set le input processor à null afin qu'il ne soit pas possible de
+     * cliquer les boutons du garage lorsqu'on est dans l'écran de jeu.
+     */
     @Override
     public void hide() {
         Gdx.input.setInputProcessor(null);
     }
 
+    /**
+     * Méhtode appeler lorsque screen doit libérer ses resources. On y libère le stage.
+     */
     @Override
     public void dispose() {
         stage.dispose();

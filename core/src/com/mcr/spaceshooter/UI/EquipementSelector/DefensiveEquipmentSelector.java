@@ -9,7 +9,6 @@ import com.mcr.spaceshooter.UI.Screen.GarageScreen;
 import java.util.List;
 import java.util.function.Consumer;
 
-
 /**
  *  Cette classe implémente le sélecteur d'équipement défensif.
  * @authors Ilias, Guillaume, Ludovic, Vitor, Eric

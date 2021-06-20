@@ -63,7 +63,7 @@ public class Asset {
 
     /**
      * Récupère le singleton de la classe
-     * @return the current instance
+     * @return récupère l'instance de la classe
      */
     public static Asset getInstance() {
         if(asset == null) {
@@ -73,7 +73,7 @@ public class Asset {
     }
 
     /**
-     * Load each assets by category
+     * Charge chaque asset par catégorie
      */
     private void load() {
         loadTextures();
@@ -83,7 +83,7 @@ public class Asset {
     }
 
     /**
-     * Unload each assets by category
+     * Libère chaque asset par catégorie
      */
     public void unload() {
         unloadTextures();
@@ -93,21 +93,21 @@ public class Asset {
     }
 
     /**
-     * Load the skin used to format objects like labels, buttons, ...
+     * Charge le skin pour les objets du style labels, boutons, ...
      */
     private void loadSkins() {
         skin = new Skin(getFile(Constants.SKIN_PATH));
     }
 
     /**
-     * Unload the skin used to format objects like labels, buttons, ...
+     * Libère le skin
      */
     private void unloadSkins() {
         skin.dispose();
     }
 
     /**
-     * Load the musics
+     * Charge les musiques
      */
     private void loadMusics() {
         ambianceMusic = Gdx.audio.newMusic(getFile(Constants.AMBIANCE_MUSIC_PATH));
@@ -123,7 +123,7 @@ public class Asset {
     }
 
     /**
-     * Unload the musics
+     * Libère les musiques
      */
     private void unloadMusics() {
         ambianceMusic.dispose();
@@ -132,21 +132,21 @@ public class Asset {
     }
 
     /**
-     * Load the sounds
+     * Charge les sons
      */
     private void loadSounds() {
         bulletSound = Gdx.audio.newSound(getFile(Constants.BULLET_SOUND_PATH));
     }
 
     /**
-     * Unload the sounds
+     * Libère les sons
      */
     private void unloadSounds() {
         bulletSound.dispose();
     }
 
     /**
-     * Load the textures
+     * Charge les textures
      */
     private void loadTextures() {
         FreeTypeFontGenerator generator = new FreeTypeFontGenerator(getFile(Constants.FONT_PATH));
@@ -186,7 +186,7 @@ public class Asset {
     }
 
     /**
-     * Unload the textures
+     * Libère les textures
      */
     private void unloadTextures() {
         font.dispose();
@@ -202,101 +202,101 @@ public class Asset {
     }
 
     /**
-     * Get the file with given path
-     * @param path the path to the file from assets folder
-     * @return the loaded file
+     * Charge le fichier spécifié par path
+     * @param path le chemin du fichier à charger (depuis le dossier core/assets/)
+     * @return le fichier chargé
      */
     public static FileHandle getFile(String path) {
         return Gdx.files.internal(path);
     }
 
     /**
-     * Get the file with given path
-     * @param path the path to the file from assets folder
-     * @param value a value needed to be replaced in the given path
-     * @return the loaded file
+     * Charge le fichier spécifié par path
+     * @param path le chemin du fichier à charger (depuis le dossier core/assets/)
+     * @param value la valeur à remplacer dans la variable path pour charger le fichier voulus
+     * @return le fichier chargé
      */
     public static FileHandle getFile(String path, int value) {
         return Gdx.files.internal(String.format(path, value));
     }
 
     /**
-     * Get the skin
-     * @return the skin
+     * Récupère le skin
+     * @return le skin
      */
     public Skin getSkin() {
         return skin;
     }
 
     /**
-     * Get the ambiance music
-     * @return the ambiance music
+     * Récupère la musique d'ambiance
+     * @return la musique d'ambiance
      */
     public Music getAmbianceMusic() {
         return ambianceMusic;
     }
 
     /**
-     * Get the gameover music
-     * @return the gameover music
+     * Récupère la musique du gameover
+     * @return la musique du gameover
      */
     public Music getGameoverMusic() {
         return gameoverMusic;
     }
 
     /**
-     * Get the garage music
-     * @return the garage music
+     * Récupère la musique du garage
+     * @return la musique du garage
      */
     public Music getGarageMusic() {
         return garageMusic;
     }
 
     /**
-     * Get the bullet sound
-     * @return the bullet sound
+     * Récupère le son que fait une balle
+     * @return le son que fait une balle
      */
     public Sound getBulletSound() {
         return bulletSound;
     }
 
     /**
-     * Get the font
-     * @return the font
+     * Récupère la police d'écriture
+     * @return la police d'écriture
      */
     public BitmapFont getFont() {
         return font;
     }
 
     /**
-     * Get the background texture
-     * @return the background texture
+     * Récupère l'image de l'arrière plan
+     * @return l'image de l'arrière plan
      */
     public Texture getBackgroundTexture() {
         return backgroundTexture;
     }
 
     /**
-     * Get the left arrow texture
-     * @return the left texture arrow
+     * Récupère l'image de la flèche pointant la gauche
+     * @return l'image de la flèche pointant la gauche
      */
     public  Texture getLeftArrowTexture() {
         return leftArrowTexture;
     }
 
     /**
-     * Get the left arrow pressed texture
-     * @return the left arrow pressed texture
+     * Récupère l'image de la flèche, lorsqu'appuyée, pointant la gauche
+     * @return l'image de la flèche, lorsqu'appuyée, pointant la gauche
      */
     public  Texture getLeftArrowPressedTexture() {
         return leftArrowPressedTexture;
     }
 
     /**
-     * Get an asteroid texture at given index
-     * @param i the index of the texture
-     * @return the asteroid at the given index
-     * @throws IllegalArgumentException if the index is out of the list
+     * Récupère l'image d'un asteroide avec un index donné
+     * @param i l'index de l'image
+     * @return l'image de l'asteroide sélectionné
+     * @throws IllegalArgumentException si l'index n'est pas dans la liste
      */
     public Texture getAsteroidsTexture(int i) {
         inRange(MIN_ASTEROIDS_TEXTURES, MAX_ASTEROIDS_TEXTURES, i);
@@ -304,10 +304,10 @@ public class Asset {
     }
 
     /**
-     * Get a fuselage texture at given index
-     * @param i the index of the texture
-     * @return the fuselage at the given index
-     * @throws IllegalArgumentException if the index is out of the list
+     * Récupère l'image d'un fuselage avec un index donné
+     * @param i l'index de l'image
+     * @return l'image du fuselage sélectionné
+     * @throws IllegalArgumentException si l'index n'est pas dans la liste
      */
     public Texture getFuselagesTexture(int i) {
         inRange(MIN_FUSELAGES_TEXTURES, MAX_FUSELAGES_TEXTURES, i);
@@ -315,10 +315,10 @@ public class Asset {
     }
 
     /**
-     * Get a shield texture at given index
-     * @param i the index of the texture
-     * @return the shield at the given index
-     * @throws IllegalArgumentException if the index is out of the list
+     * Récupère l'image d'un bouclier avec un index donné
+     * @param i l'index de l'image
+     * @return l'image du bouclier sélectionné
+     * @throws IllegalArgumentException si l'index n'est pas dans la liste
      */
     public Texture getShieldsTexture(int i) {
         inRange(MIN_SHIELDS_TEXTURES, MAX_SHIELDS_TEXTURES, i);
@@ -326,10 +326,10 @@ public class Asset {
     }
 
     /**
-     * Get a weapon texture at given index
-     * @param i the index of the texture
-     * @return the weapon at the given index
-     * @throws IllegalArgumentException if the index is out of the list
+     * Récupère l'image d'une arme avec un index donné
+     * @param i l'index de l'image
+     * @return l'image de l'arme sélectionné
+     * @throws IllegalArgumentException si l'index n'est pas dans la liste
      */
     public Texture getWeaponsTexture(int i) {
         inRange(MIN_WEAPONS_TEXTURES, MAX_WEAPONS_TEXTURES, i);
@@ -337,10 +337,10 @@ public class Asset {
     }
 
     /**
-     * Get a bullet texture at given index
-     * @param i the index of the texture
-     * @return the bullet at the given index
-     * @throws IllegalArgumentException if the index is out of the list
+     * Récupère l'image d'une balle avec un index donné
+     * @param i l'index de l'image
+     * @return l'image de la balle sélectionné
+     * @throws IllegalArgumentException si l'index n'est pas dans la liste
      */
     public Texture getBulletsTexture(int i) {
         inRange(MIN_BULLETS_TEXTURES, MAX_BULLETS_TEXTURES, i);
@@ -348,11 +348,11 @@ public class Asset {
     }
 
     /**
-     * Check if a given value is in range
-     * @param lowerBound the lower bound of the range
-     * @param upperBound the upper bound of the range
-     * @param value the value to check
-     * @throws IllegalArgumentException if the index is out of the list
+     * Vérifie si une valeur est dans un interval donné
+     * @param lowerBound la borne inférieur comprise
+     * @param upperBound la borne supérieur comprise
+     * @param value la valeur à vérifier
+     * @throws IllegalArgumentException si la valeur n'est pas dans l'interval
      */
     private void inRange(int lowerBound, int upperBound, int value) {
         if(value < lowerBound || value > upperBound) {

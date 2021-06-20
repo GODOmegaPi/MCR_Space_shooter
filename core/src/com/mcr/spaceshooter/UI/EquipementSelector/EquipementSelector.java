@@ -21,14 +21,26 @@ import com.mcr.spaceshooter.Utils.Asset;
 import java.util.List;
 import java.util.function.Consumer;
 
+/**
+ * Classe absraite de sélection d'équipement. Elle est utilisé par Offensive-/defensive-EquipementSelector.
+ * Affiche l'apparence du matériel avec 2 boutons pour choisi l'équipement suivant/précédent ainsi qu'un bouton pour
+ * sélectionner l'équipement
+ * @authors Ilias, Guillaume, Ludovic, Vitor, Eric
+ */
 abstract public class EquipementSelector extends Group {
     protected Table table;
+    // Liste d'équipements sélectionnable
     protected List<Equipment> equipments;
+    // Index de l'équipement actuellement affiché
     protected int currentElementIdx;
     protected Skin skin;
+    // Image affichant l'apparence de l'équipement
     private Image imgEquipement;
+
+    // Les 2 boutons de par et d'autre de l'image. Permet d'afficher le prochain/précédent équipement
     private ImageButton leftArrowBtn;
     private ImageButton rightArrowBtn;
+
     private TextButton equipBtn;
     private Boolean isEquiped = false;
     private static final String EQUIPER_TEXT = "Equiper";
@@ -38,7 +50,14 @@ abstract public class EquipementSelector extends Group {
     Runnable buildCleaner;
     GarageScreen garageScreen;
 
-
+    /**
+     * Constructeur du sélectionneur d'équipement
+     * @param equipments liste d'équipement à afficher
+     * @param skin apparence que doivent prendre les widgets de LibGdx
+     * @param buildSetter "fonction" à appeler lors du clic sélection
+     * @param buildCleaner "fonction" à appeler lors du clic de désélection
+     * @param garageScreen référence ders le garage
+     */
     public EquipementSelector(List<Equipment> equipments, Skin skin, Consumer<Equipment> buildSetter, Runnable buildCleaner, GarageScreen garageScreen) {
         // On le set l'index de l'élément courant à une valeur impossible car au commencement
         // Aucun élément n'est sélectionné
@@ -54,9 +73,17 @@ abstract public class EquipementSelector extends Group {
         this.garageScreen = garageScreen;
     }
 
+    /**
+     * Change l'image à afficher de l'équipement
+     * @param equipement equipement à afficher dans l'image
+     */
     private void changeEquipment(Equipment equipement) {
         imgEquipement.setDrawable(new SpriteDrawable(new Sprite(equipement.getTexture())));
     }
+
+    /**
+     * Méthode appelé lorsque le bouton équiper est cliqué
+     */
     private void equipe(){
         buildSetter.accept(equipments.get(currentElementIdx));
         isEquiped = true;
@@ -65,6 +92,10 @@ abstract public class EquipementSelector extends Group {
         rightArrowBtn.setDisabled(true);
         garageScreen.updateCost();
     }
+
+    /**
+     * Méthode appelé lorsque le bouton équiper est cliqué
+     */
     private void desequipe(){
         buildCleaner.run();
         isEquiped = false;
@@ -73,6 +104,10 @@ abstract public class EquipementSelector extends Group {
         rightArrowBtn.setDisabled(false);
         garageScreen.updateCost();
     }
+
+    /**
+     * Crée et place les différents widget à afficher dans le sélecteur.
+     */
     protected void init() {
         equipBtn = new TextButton(EQUIPER_TEXT, skin);
         equipBtn.addListener(new ClickListener() {
@@ -136,7 +171,15 @@ abstract public class EquipementSelector extends Group {
         table.add(equipBtn).width(250).height(40).colspan(3).center();
         table.row();
     }
+
+    /**
+     * Méthode permettant d'ajouter les labels affiahnt les spécifité d'un équipement (HP, cadence et.c) à la table
+     */
     abstract void addSpecs();
+
+    /**
+     * Met à jour les labels de propritété (hp, cadence etc.) de l'équipement afficher
+     * */
     abstract void updateLabels();
 
 }

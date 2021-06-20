@@ -7,68 +7,77 @@ import com.mcr.spaceshooter.Entity.Spaceship;
 
 /**
  * Interface représentant un builder d'un vaisseau
+ *
  * @authors Ilias, Guillaume, Ludovic, Vitor, Eric
  */
 public interface ShipBuilder {
     /**
-     * Réinitialise les paramètres d'un vaiseeau
+     * Réinitialise les paramètres du shipBuilder (vaisseau en construction)
      */
-    void reset();
+    ShipBuilder reset();
 
     /**
+     * Définit le  fuselage
      *
      * @param fuselage
-     * @return un shipBuilder avec
-     * @throws ShipBuilderException
+     * @return Un ShipBuilder avec un fuselage
      */
-    ShipBuilder setFuselage(Fuselage fuselage)throws ShipBuilderException;
+    ShipBuilder setFuselage(Fuselage fuselage);
 
     /**
+     * Définit le bouclier
      *
      * @param shield
-     * @return
-     * @throws ShipBuilderException
+     * @return Un ShipBuilder avec un bouclier
+     * @throws ShipBuilderException si les conditions d'ajout du bouclier ne sont pas respectées
      */
     ShipBuilder setShield(Shield shield) throws ShipBuilderException;
 
     /**
+     * Définit l'arme
      *
      * @param weapon
-     * @return
-     * @throws ShipBuilderException
+     * @return Un ShipBuilder avec une arme
+     * @throws ShipBuilderException si les conditions d'ajout de l'arme ne sont pas respectées
      */
     ShipBuilder setWeapon(Weapon weapon) throws ShipBuilderException;
 
     /**
+     * Retire le fuselage
      *
-     * @return
-     * @throws ShipBuilderException
+     * @return Un ShipBuilder sans fuselage
+     * @throws ShipBuilderException si les conditions de suppression du fuselage ne sont pas respectées
      */
-    ShipBuilder clearFuselage()throws ShipBuilderException;
+    ShipBuilder clearFuselage() throws ShipBuilderException;
 
     /**
+     * Retire le bouclier
      *
-     * @return
-     * @throws ShipBuilderException
+     * @return Un ShipBuilder sans bouclier
+     * @throws ShipBuilderException si les conditions de suppression du bouclier ne sont pas respectées
      */
-    ShipBuilder clearShield() throws ShipBuilderException;
+    ShipBuilder clearShield();
 
     /**
+     * Retire l'arme
      *
-     * @return
-     * @throws ShipBuilderException
+     * @return Un ShipBuilder sans arme
+     * @throws ShipBuilderException si les conditions de suppression d'une arme ne sont pas respectées
      */
-    ShipBuilder clearWeapon() throws ShipBuilderException;
+    ShipBuilder clearWeapon();
 
     /**
+     * Construit le vaisseau
      *
-     * @return
+     * @return Un vaisseau construit avec les paramètres configurés
+     * @throws ShipBuilderException si le vaisseau n'est pas valide
      */
     Spaceship build();
 
     /**
+     * Calcule du coût total des équipements du vaisseau en construction
      *
-     * @return
+     * @return Le coût total des équipements du shipBuilder
      */
     int getTotalCost();
 }

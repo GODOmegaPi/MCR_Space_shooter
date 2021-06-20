@@ -7,9 +7,11 @@ import com.mcr.spaceshooter.SpaceShooter;
 public class DesktopLauncher {
 	public static void main (String[] arg) {
 		LwjglApplicationConfiguration config = new LwjglApplicationConfiguration();
-		config.height= 1000;
+		// Dimensions de la fenêtre
+		config.height = 1000;
 		config.width = 800;
 		config.fullscreen = false;
+		// On interdit le redimensionnement de la fenêtre.
 		config.resizable = false;
 		new LwjglApplication(new SpaceShooter(), config);
 	}
