@@ -11,7 +11,7 @@
 git clone git@github.com:GODOmegaPi/MCR_Space_shooter.git
 ```
 2) Ouvrir IntelliJ.
-3) Aller dans `Projects > Open > Open file of project` et sélectionner `MCR_Space_shooter`.
+3) Aller dans `Projects > Open > Open file or project` et sélectionner `MCR_Space_shooter`.
 Un message vas apparaître vous demandant si vous souhaitez faire confiance au projet Gradle sur le point d'être ouvert. Cliquez sur le bouton `Trust Project`.
 4) Une fois le projet complètement chargé, ouvrez la liste des actions Gradle qui se trouve normalement en haut à droite d'IntelliJ.
 5) Pour lancer le projet, sélectionnez l'option `MCR_Space_shooter > desktop > other > run` dans la fenêtre qui s'est ouverte au poit précédent.
