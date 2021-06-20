@@ -38,11 +38,11 @@ SPACEBAR -> Laisser appuyé pour tirer
 
 (Code de triche)
 P I O U -> Appuyer les quatres touches en même temps pour tirer ... 4 balles à la fois !!!
-#### Le jeu
-##### Menu de bienvenue
+
+#### BIENVENUE
 Lorsque le jeu est lancé, vous verez un écran de bienvenue. Sélectionnez `Aller au garage` pour créer votre vaisseau ou `Quitter` pour quitter le jeu.
 
-##### Menu du garage
+#### GARAGE
 Dans le garage, vous pouvez choisir votre fuselage, votre arme et votre bouclier en utilisant les flèches rouges et en cliquant sur `Equiper` lorsque votre choix est fait. Vous pouvez à tout moment cliquez sur `Desequiper` pour désequiper votre choix.
 
 Vous avez un total de crédits affichés à droite que vous ne pouvez pas dépasser pour construire votre vaisseau.
@@ -61,12 +61,12 @@ Pour ce qui est du bouclier : plus il donne des PV supplémentaires, plus il co�
 
 Une fois votre vaisseau prêt, cliquez sur `Jouer` pour lancer le jeu ou cliquez sur `Quitter` pour quitter le jeu.
 
-##### Le jeu
+#### LE JEU
 Un objectif: **Survivre !**
 
 Pour ce faire, tirez sur les astéroides tout en vous déplaçant sans vous faire toucher.
 
 Votre score est indiqué en haut à gauche et vos PV ainsi que les PV de votre bouclier sont indiqués en haut à gauche.
 
-##### GAMEOVER
+#### GAMEOVER
 Une fois tous vos PV à zéro, vous vous retrouverez à l'écran de Gameover. Vous pourrez voir votre score et décidez de retourner au garage et de rejouer une partie en cliquant sur `Retour au menu` ou quitter le jeu en cliquant sur `Quitter`.
