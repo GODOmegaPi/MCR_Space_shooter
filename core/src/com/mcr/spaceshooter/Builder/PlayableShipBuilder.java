@@ -1,6 +1,5 @@
 package com.mcr.spaceshooter.Builder;
 
-import com.badlogic.gdx.graphics.Texture;
 import com.mcr.spaceshooter.Entity.Spaceship;
 import com.mcr.spaceshooter.Entity.Equipments.Fuselage;
 import com.mcr.spaceshooter.Entity.Equipments.Shield;
@@ -14,8 +13,10 @@ public class PlayableShipBuilder implements ShipBuilder {
     private Weapon weapon;
     private Shield shield;
 
+
+
     public PlayableShipBuilder() {
-    } // TODO : Avoir un name comme param ?
+    }
 
     @Override
     public void reset() {
@@ -51,10 +52,9 @@ public class PlayableShipBuilder implements ShipBuilder {
         return this;
     }
 
-    // TODO: c'est pas mieux d'appeler les méthodes "clear" directement au niveau des "set" ? Pour moi ça fait aussi partis des rôles du builder
     @Override
     public ShipBuilder clearFuselage() throws ShipBuilderException {
-        if (fuselage != null) { // TODO controler que c'est pas vide ?
+        if (fuselage != null) {
             if(shield != null || weapon != null) {
                 StringBuilder msg = new StringBuilder("Vous devez déséquiper: \n");
                 if(shield != null) msg.append("- le bouclier \n");
@@ -67,7 +67,6 @@ public class PlayableShipBuilder implements ShipBuilder {
         return this;
     }
 
-    // TODO: c'est pas mieux d'appeler les méthodes "clear" directement au niveau des "set" ? Pour moi ça fait aussi partis des rôles du builder
     @Override
     public ShipBuilder clearShield() throws ShipBuilderException {
         if (shield != null) {
@@ -77,7 +76,6 @@ public class PlayableShipBuilder implements ShipBuilder {
         return this;
     }
 
-    // TODO: c'est pas mieux d'appeler les méthodes "clear" directement au niveau des "set" ? Pour moi ça fait aussi partis des rôles du builder
     @Override
     public ShipBuilder clearWeapon() throws ShipBuilderException {
         if(weapon != null) {

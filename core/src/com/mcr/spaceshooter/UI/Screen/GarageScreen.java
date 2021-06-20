@@ -28,12 +28,17 @@ import com.mcr.spaceshooter.UI.EquipementSelector.DefensiveEquipmentSelector;
 import com.mcr.spaceshooter.UI.EquipementSelector.OffensiveEquipmentSelector;
 import com.mcr.spaceshooter.Utils.Constants;
 import com.mcr.spaceshooter.Utils.Loader;
-import com.mcr.spaceshooter.Utils.Toast;    // https://github.com/wentsa/Toast-LibGDX
+import com.mcr.spaceshooter.Utils.Toast; // https://github.com/wentsa/Toast-LibGDX
 
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
+/**
+ * Implémentation de l'écran garage, de sélection et construction de vaisseau
+ *
+ * @authors Ilias, Guillaume, Ludovic, Vitor, Eric
+ */
 public class GarageScreen implements Screen {
     private final Stage stage;
     private final SpriteBatch spriteBatch;
@@ -43,11 +48,15 @@ public class GarageScreen implements Screen {
 
     private final Label costValueLbl;
 
+    /**
+     * Constructeur
+     */
     public GarageScreen() {
         builder = new PlayableShipBuilder();
         stage = new Stage(new ScreenViewport());
         Gdx.input.setInputProcessor(stage);
         spriteBatch = new SpriteBatch();
+
         List<Equipment> fuselagesList = Loader.getInstance().getFuselageList();
         List<Equipment> weaponsList = Loader.getInstance().getWeaponList();
         List<Equipment> shieldsList = Loader.getInstance().getShieldList();
@@ -60,9 +69,9 @@ public class GarageScreen implements Screen {
                 .fontColor(new Color(0.86f, 0, 0, 1f)).build();
         toasts = new ArrayList<>();
 
+        // Grilles pour l'alignement des éléments de l'interface
         Table table = new Table();
         Table firstColTable = new Table();
-
         Table secondColTable = new Table();
 
         table.setFillParent(true);
@@ -70,6 +79,7 @@ public class GarageScreen implements Screen {
 
         Label titleLabel = new Label("Garage", Asset.getInstance().getSkin());
         titleLabel.setFontScale(1);
+
         TextButton playButton = new TextButton("Jouer", Asset.getInstance().getSkin());
         playButton.addListener(new ClickListener() {
             @Override
@@ -93,6 +103,7 @@ public class GarageScreen implements Screen {
             }
         });
 
+        // Labels pour le coût du vaisseau
         Label costLbl = new Label("Cout total du vaisseau :", Asset.getInstance().getSkin());
         costValueLbl = new Label("0", Asset.getInstance().getSkin());
         Label maxCostLbl = new Label("/" + Constants.MAX_COST, Asset.getInstance().getSkin());
@@ -136,11 +147,17 @@ public class GarageScreen implements Screen {
         secondColTable.add(quitButton).width(300).colspan(2);
     }
 
+    /**
+     *
+     */
     @Override
     public void show() {
         Gdx.input.setInputProcessor(stage);
     }
 
+    /**
+     * Met à jour le coût du vaisseau en fonction des choix de pièces
+     */
     public void updateCost() {
         if (builder.getTotalCost() > Constants.MAX_COST) {
             costValueLbl.setColor(Color.RED);
@@ -151,12 +168,15 @@ public class GarageScreen implements Screen {
     }
 
     /**
-     * Displays short toast
+     * Affiche un toast court
      */
     public void displayToast(String text) {
         toasts.add(errorToastFactory.create(text, Toast.Length.SHORT));
     }
 
+    /**
+     * @param delta
+     */
     @Override
     public void render(float delta) {
         if (!Asset.getInstance().getGarageMusic().isPlaying()) {

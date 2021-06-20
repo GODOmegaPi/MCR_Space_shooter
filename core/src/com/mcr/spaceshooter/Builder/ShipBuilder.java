@@ -5,15 +5,70 @@ import com.mcr.spaceshooter.Entity.Equipments.Shield;
 import com.mcr.spaceshooter.Entity.Equipments.Weapon;
 import com.mcr.spaceshooter.Entity.Spaceship;
 
-// TODO : interface utile  ? C'est pas sensé être une classe abstraite plutôt qu'une interface ?
+/**
+ * Interface représentant un builder d'un vaisseau
+ * @authors Ilias, Guillaume, Ludovic, Vitor, Eric
+ */
 public interface ShipBuilder {
-    public void reset();
-    public ShipBuilder setFuselage(Fuselage fuselage)throws ShipBuilderException;
-    public ShipBuilder setShield(Shield shield) throws ShipBuilderException;
-    public ShipBuilder setWeapon(Weapon weapon) throws ShipBuilderException;
-    public ShipBuilder clearFuselage()throws ShipBuilderException;
-    public ShipBuilder clearShield() throws ShipBuilderException;
-    public ShipBuilder clearWeapon() throws ShipBuilderException;
-    public Spaceship build();
-    public int getTotalCost();
+    /**
+     * Réinitialise les paramètres d'un vaiseeau
+     */
+    void reset();
+
+    /**
+     *
+     * @param fuselage
+     * @return un shipBuilder avec
+     * @throws ShipBuilderException
+     */
+    ShipBuilder setFuselage(Fuselage fuselage)throws ShipBuilderException;
+
+    /**
+     *
+     * @param shield
+     * @return
+     * @throws ShipBuilderException
+     */
+    ShipBuilder setShield(Shield shield) throws ShipBuilderException;
+
+    /**
+     *
+     * @param weapon
+     * @return
+     * @throws ShipBuilderException
+     */
+    ShipBuilder setWeapon(Weapon weapon) throws ShipBuilderException;
+
+    /**
+     *
+     * @return
+     * @throws ShipBuilderException
+     */
+    ShipBuilder clearFuselage()throws ShipBuilderException;
+
+    /**
+     *
+     * @return
+     * @throws ShipBuilderException
+     */
+    ShipBuilder clearShield() throws ShipBuilderException;
+
+    /**
+     *
+     * @return
+     * @throws ShipBuilderException
+     */
+    ShipBuilder clearWeapon() throws ShipBuilderException;
+
+    /**
+     *
+     * @return
+     */
+    Spaceship build();
+
+    /**
+     *
+     * @return
+     */
+    int getTotalCost();
 }

@@ -13,7 +13,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
- * Class used to load assets into memory and to give an interface to access them
+ * Classe utilisée pour charger les assets dans la mémoire et offrir un moyen de les récupérer
+ * @authors Ilias, Guillaume, Ludovic, Vitor, Eric
  */
 public class Asset {
 
@@ -54,14 +55,14 @@ public class Asset {
     private List<Texture> weaponsTexture;
 
     /**
-     * Private constructor loading assets
+     * Constructeur privé qui charge tous les assets
      */
     private Asset() {
         load();
     }
 
     /**
-     * Get the singleton instance of the class
+     * Récupère le singleton de la classe
      * @return the current instance
      */
     public static Asset getInstance() {
