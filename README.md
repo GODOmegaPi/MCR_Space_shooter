@@ -69,4 +69,4 @@ Pour ce faire, tirez sur les astéroides tout en vous déplaçant sans vous fair
 Votre score est indiqué en haut à gauche et vos PV ainsi que les PV de votre bouclier sont indiqués en haut à gauche.
 
 #### GAMEOVER
-Une fois tous vos PV à zéro, vous vous retrouverez à l'écran de Gameover. Vous pourrez voir votre score et décidez de retourner au garage et de rejouer une partie en cliquant sur `Retour au menu` ou quitter le jeu en cliquant sur `Quitter`.
+Une fois tous vos PV à zéro, vous vous retrouverez à l'écran de Gameover. Vous pourrez voir votre score et décidez de retourner au garage et de rejouer une partie en cliquant sur `Retour au garage` ou quitter le jeu en cliquant sur `Quitter`.
