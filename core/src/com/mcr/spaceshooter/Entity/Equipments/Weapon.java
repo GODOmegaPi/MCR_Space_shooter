@@ -72,7 +72,7 @@ public class Weapon extends OffensiveEquipment {
      */
     public void shootMore(float x, float y, int number) {
         for(int i = 1; i <= number; ++i){
-            shoot(x + (Spaceship.SIZE / number) * i, y);
+            bullets.add(new Bullet(x + (Spaceship.SIZE / number) * i, y, Bullet.BULLET_SPEED));
         }
 
     }

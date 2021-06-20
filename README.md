@@ -15,7 +15,7 @@ git clone git@github.com:GODOmegaPi/MCR_Space_shooter.git
 Un message vas apparaître vous demandant si vous souhaitez faire confiance au projet Gradle sur le point d'être ouvert. Cliquez sur le bouton `Trust Project`.
 4) Une fois le projet complètement chargé, ouvrez la liste des actions Gradle qui se trouve normalement en haut à droite d'IntelliJ.
 5) Pour lancer le projet, sélectionnez l'option `MCR_Space_shooter > desktop > other > run` dans la fenêtre qui s'est ouverte au poit précédent.
-6) Le projet vas se compiler et s'executer
+6) Le projet va se compiler et s'exécuter
 
 ## Comment jouer
 ### Installation
@@ -37,21 +37,21 @@ D -> Aller à droite
 SPACEBAR -> Laisser appuyé pour tirer
 
 (Code de triche)
-P I O U -> Appuyer les quatres touches en même temps pour tirer ... 4 balles à la fois !!!
+P I O U -> Appuyer les quatre touches en même temps pour tirer ... 4 balles à la fois !!!
 
 #### BIENVENUE
-Lorsque le jeu est lancé, vous verez un écran de bienvenue. Sélectionnez `Aller au garage` pour créer votre vaisseau ou `Quitter` pour quitter le jeu.
+Lorsque le jeu est lancé, vous verrez un écran de bienvenue. Sélectionnez `Aller au garage` pour créer votre vaisseau ou `Quitter` pour quitter le jeu.
 
 #### GARAGE
-Dans le garage, vous pouvez choisir votre fuselage, votre arme et votre bouclier en utilisant les flèches rouges et en cliquant sur `Equiper` lorsque votre choix est fait. Vous pouvez à tout moment cliquez sur `Desequiper` pour désequiper votre choix.
+Dans le garage, vous pouvez choisir votre fuselage, votre arme et votre bouclier en utilisant les flèches rouges et en cliquant sur `Equiper` lorsque votre choix est fait. Vous pouvez à tout moment cliquer sur `Desequiper` pour déséquiper votre choix.
 
 Vous avez un total de crédits affichés à droite que vous ne pouvez pas dépasser pour construire votre vaisseau.
 
 Vous devez en premier temps sélectionner un fuselage avant d'ajouter une arme ou un bouclier.
 
-Un vaisseau est valide s'il possède au moins un fuselage et une arme et qu'il n'exècede pas le nombre de crédits maximum.
+Un vaisseau est valide s'il possède au moins un fuselage et une arme et qu'il n'excède pas le nombre de crédits maximum.
 
-En cas d'assemblage impossible de votre vaisseau, une message d'erreur vous indiquant quel est/sont le(s) problème(s) s'affichera.
+En cas d'assemblage impossible de votre vaisseau, un message d'erreur vous indiquant quel est/sont le(s) problème(s) s'affichera.
 
 Pour ce qui est du fuselage : plus il donne de PV, plus il coûte cher.
 
@@ -64,7 +64,7 @@ Une fois votre vaisseau prêt, cliquez sur `Jouer` pour lancer le jeu ou cliquez
 #### LE JEU
 Un objectif: **Survivre !**
 
-Pour ce faire, tirez sur les astéroides tout en vous déplaçant sans vous faire toucher.
+Pour ce faire, tirez sur les astéroïdes tout en vous déplaçant sans vous faire toucher.
 
 Votre score est indiqué en haut à gauche et vos PV ainsi que les PV de votre bouclier sont indiqués en haut à gauche.
 
