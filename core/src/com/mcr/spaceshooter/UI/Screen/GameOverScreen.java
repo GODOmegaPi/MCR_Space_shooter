@@ -52,7 +52,7 @@ public class GameOverScreen implements Screen {
         scoreLabel.setFontScale(1);
 
         // Bouton de retour au garage et click listener
-        TextButton mainMenuButton = new TextButton("Retour au menu", Asset.getInstance().getSkin());
+        TextButton mainMenuButton = new TextButton("Retour au garage", Asset.getInstance().getSkin());
         mainMenuButton.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
