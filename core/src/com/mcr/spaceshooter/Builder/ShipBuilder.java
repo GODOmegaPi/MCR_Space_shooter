@@ -80,4 +80,17 @@ public interface ShipBuilder {
      * @return Le coût total des équipements du shipBuilder
      */
     int getTotalCost();
+
+    /**
+     * Retourne le fuselage qui sera utilisé à la prochaine construction de vaisseau
+     */
+    Fuselage getFuselage();
+    /**
+     * Retourne l'arme qui sera utilisé à la prochaine construction de vaisseau
+     */
+    Weapon getWeapon();
+    /**
+     * Retourne le boulcier qui sera utilisé à la prochaine construction de vaisseau
+     */
+    Shield getShield();
 }

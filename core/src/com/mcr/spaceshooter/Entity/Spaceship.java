@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Intersector;
 import com.badlogic.gdx.math.Rectangle;
 import com.mcr.spaceshooter.Builder.PlayableShipBuilder;
+import com.mcr.spaceshooter.Builder.ShipBuilder;
 import com.mcr.spaceshooter.Entity.Equipments.Shield;
 import com.mcr.spaceshooter.Entity.Equipments.Weapon;
 import com.mcr.spaceshooter.Entity.Equipments.Fuselage;
@@ -42,7 +43,7 @@ public class Spaceship {
      * Constructeur du vaisseau. Il prend en paramètre le builder qui lui fournira les différents éléments du vaisseau
      * @param playableShipBuilder builder de vaisseau
      */
-    public Spaceship(PlayableShipBuilder playableShipBuilder) {
+    public Spaceship(ShipBuilder playableShipBuilder) {
         fuselage = new Fuselage(playableShipBuilder.getFuselage());
         weapon = new Weapon(playableShipBuilder.getWeapon());
 
