@@ -1,0 +1,290 @@
+<?xml version="1.0" encoding="iso-8859-15" standalone="no"?>
+<classDiagram>
+  <diagramElements defaultViewEntities="ALL" defaultViewEnum="true" defaultViewMethods="TYPE_AND_NAME" defaultVisibleTypes="true" informations="" name="">
+    <association aggregation="NONE" direction="SECOND_TO_FIRST" id="41088" name="utilise">
+      <role componentId="41026" name="" visibility="PRIVATE">
+        <multiplicity>
+          <min>1</min>
+          <max>1</max>
+        </multiplicity>
+      </role>
+      <role componentId="41087" name="" visibility="PRIVATE">
+        <multiplicity>
+          <min>1</min>
+          <max>1</max>
+        </multiplicity>
+      </role>
+    </association>
+    <association aggregation="NONE" direction="FIRST_TO_SECOND" id="41535" name="Construit">
+      <role componentId="41026" name="" visibility="PRIVATE">
+        <multiplicity>
+          <min>1</min>
+          <max>1</max>
+        </multiplicity>
+      </role>
+      <role componentId="41533" name="" visibility="PRIVATE">
+        <multiplicity>
+          <min>0</min>
+          <max>3</max>
+        </multiplicity>
+      </role>
+    </association>
+    <entity entityType="CLASS" id="41534" isAbstract="false" name="Defensive" visibility="PUBLIC"/>
+    <entity entityType="CLASS" id="41533" isAbstract="false" name="Equipement" visibility="PUBLIC"/>
+    <entity entityType="CLASS" id="41532" isAbstract="false" name="Fuselage" visibility="PUBLIC"/>
+    <entity entityType="CLASS" id="41531" isAbstract="false" name="Shield" visibility="PUBLIC"/>
+    <entity entityType="CLASS" id="41530" isAbstract="false" name="Weapon" visibility="PUBLIC"/>
+    <dependency id="41115" label="use">
+      <source>41026</source>
+      <target>41027</target>
+    </dependency>
+    <inheritance id="41101">
+      <child>41024</child>
+      <parent>41026</parent>
+    </inheritance>
+    <entity entityType="CLASS" id="41087" isAbstract="false" name="GarageScreen" visibility="PUBLIC"/>
+    <entity entityType="CLASS" id="41027" isAbstract="false" name="ShipBuilderException" visibility="PUBLIC">
+      <method is-constructor="true" isAbstract="false" isStatic="false" name="ShipBuilderException" returnType="" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="Message" type="String"/>
+      </method>
+    </entity>
+    <entity entityType="INTERFACE" id="41026" isAbstract="true" name="ShipBuilder" visibility="PUBLIC">
+      <method isAbstract="true" isStatic="false" name="setFuselage" returnType="void" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="fuselage" type="Fuselage"/>
+      </method>
+      <method isAbstract="true" isStatic="false" name="setShield" returnType="void" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="shield" type="Shield"/>
+      </method>
+      <method isAbstract="true" isStatic="false" name="setWeapon" returnType="void" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="weapon" type="Weapon"/>
+      </method>
+      <method isAbstract="true" isStatic="false" name="clearFuselage" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="true" isStatic="false" name="clearShield" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="true" isStatic="false" name="clearWeapon" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="true" isStatic="false" name="getTotalCost" returnType="int" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="true" isStatic="false" name="build" returnType="Spaceship" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="true" isStatic="false" name="reset" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="true" isStatic="false" name="getFuselage" returnType="Fuselage" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="true" isStatic="false" name="getWeapon" returnType="Weapon" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="true" isStatic="false" name="getShield" returnType="getShield" view="DEFAULT" visibility="PUBLIC"/>
+    </entity>
+    <entity entityType="CLASS" id="41025" isAbstract="false" name="Class" visibility="PUBLIC"/>
+    <entity entityType="CLASS" id="41024" isAbstract="false" name="PlayableShipBuilder" visibility="PUBLIC">
+      <method is-constructor="true" isAbstract="false" isStatic="false" name="PlayableSpaceshipBuilder" returnType="" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="setFuselage" returnType="void" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="fuselage" type="int"/>
+      </method>
+      <method isAbstract="false" isStatic="false" name="setShield" returnType="void" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="shield" type="Shield"/>
+      </method>
+      <method isAbstract="false" isStatic="false" name="setWeapon" returnType="void" view="DEFAULT" visibility="PUBLIC">
+        <variable const="false" name="weapon" type="Weapon"/>
+      </method>
+      <method isAbstract="false" isStatic="false" name="clearrFuselage" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="clearShield" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="clearWeapon" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="reset" returnType="void" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="getFuselage" returnType="Fuselage" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="getWeapon" returnType="Weapon" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="getShield" returnType="Shield" view="DEFAULT" visibility="PUBLIC"/>
+      <method isAbstract="false" isStatic="false" name="isValidShip" returnType="boolean" view="DEFAULT" visibility="PUBLIC"/>
+    </entity>
+    <entity entityType="CLASS" id="41023" isAbstract="false" name="Class" visibility="PUBLIC"/>
+  </diagramElements>
+  <umlView grid="10" name="Main view" open="true">
+    <relationView color="-12566464" relationId="41101">
+      <line>
+        <point>
+          <x>681</x>
+          <y>431</y>
+        </point>
+        <point>
+          <x>681</x>
+          <y>390</y>
+        </point>
+      </line>
+    </relationView>
+    <relationView color="-12566464" relationId="41115">
+      <line>
+        <point>
+          <x>811</x>
+          <y>171</y>
+        </point>
+        <point>
+          <x>931</x>
+          <y>171</y>
+        </point>
+      </line>
+      <labelAssociation>
+        <x>860</x>
+        <y>173</y>
+        <w>22</w>
+        <h>16</h>
+      </labelAssociation>
+    </relationView>
+    <relationView color="-12566464" relationId="41535">
+      <line>
+        <point>
+          <x>571</x>
+          <y>181</y>
+        </point>
+        <point>
+          <x>411</x>
+          <y>181</y>
+        </point>
+      </line>
+      <labelAssociation>
+        <x>461</x>
+        <y>166</y>
+        <w>59</w>
+        <h>16</h>
+      </labelAssociation>
+      <roleAssociation>
+        <x>535</x>
+        <y>185</y>
+        <w>0</w>
+        <h>16</h>
+      </roleAssociation>
+      <roleAssociation>
+        <x>415</x>
+        <y>185</y>
+        <w>0</w>
+        <h>16</h>
+      </roleAssociation>
+      <multipliciteAssociation>
+        <x>557</x>
+        <y>159</y>
+        <w>8</w>
+        <h>16</h>
+      </multipliciteAssociation>
+      <multipliciteAssociation>
+        <x>415</x>
+        <y>159</y>
+        <w>23</w>
+        <h>16</h>
+      </multipliciteAssociation>
+    </relationView>
+    <relationView color="-12566464" relationId="41088">
+      <line>
+        <point>
+          <x>811</x>
+          <y>321</y>
+        </point>
+        <point>
+          <x>941</x>
+          <y>321</y>
+        </point>
+      </line>
+      <labelAssociation>
+        <x>880</x>
+        <y>325</y>
+        <w>39</w>
+        <h>16</h>
+      </labelAssociation>
+      <roleAssociation>
+        <x>815</x>
+        <y>325</y>
+        <w>0</w>
+        <h>16</h>
+      </roleAssociation>
+      <roleAssociation>
+        <x>935</x>
+        <y>325</y>
+        <w>0</w>
+        <h>16</h>
+      </roleAssociation>
+      <multipliciteAssociation>
+        <x>815</x>
+        <y>299</y>
+        <w>8</w>
+        <h>16</h>
+      </multipliciteAssociation>
+      <multipliciteAssociation>
+        <x>927</x>
+        <y>299</y>
+        <w>8</w>
+        <h>16</h>
+      </multipliciteAssociation>
+    </relationView>
+    <componentView color="-2079" componentID="41024" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>570</x>
+        <y>430</y>
+        <w>260</w>
+        <h>235</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="41026" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>570</x>
+        <y>140</y>
+        <w>240</w>
+        <h>249</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="41027" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>930</x>
+        <y>150</y>
+        <w>290</w>
+        <h>70</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="41087" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>940</x>
+        <y>300</y>
+        <w>150</w>
+        <h>55</h>
+      </geometry>
+    </componentView>
+    <componentView color="-2079" componentID="41533" displayAttributes="true" displayDefault="true" displayMethods="true">
+      <geometry>
+        <x>260</x>
+        <y>160</y>
+        <w>150</w>
+        <h>55</h>
+      </geometry>
+    </componentView>
+    <note color="-2079" content="Hérite de IllegalStateException">
+      <noteGeometry>
+        <x>1270</x>
+        <y>130</y>
+        <w>144</w>
+        <h>45</h>
+      </noteGeometry>
+      <noteLine color="-12566464" relationId="41027">
+        <point>
+          <x>1221</x>
+          <y>201</y>
+        </point>
+        <point>
+          <x>1351</x>
+          <y>201</y>
+        </point>
+        <point>
+          <x>1351</x>
+          <y>176</y>
+        </point>
+      </noteLine>
+    </note>
+    <note color="-2079" content="Client du builder">
+      <noteGeometry>
+        <x>1130</x>
+        <y>310</y>
+        <w>118</w>
+        <h>30</h>
+      </noteGeometry>
+      <noteLine color="-12566464" relationId="41087">
+        <point>
+          <x>1131</x>
+          <y>321</y>
+        </point>
+        <point>
+          <x>1091</x>
+          <y>321</y>
+        </point>
+      </noteLine>
+    </note>
+  </umlView>
+</classDiagram>

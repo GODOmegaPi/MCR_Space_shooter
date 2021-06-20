@@ -25,6 +25,7 @@ import java.util.function.Consumer;
  * Classe absraite de sélection d'équipement. Elle est utilisé par Offensive-/defensive-EquipementSelector.
  * Affiche l'apparence du matériel avec 2 boutons pour choisi l'équipement suivant/précédent ainsi qu'un bouton pour
  * sélectionner l'équipement
+ *
  * @authors Ilias, Guillaume, Ludovic, Vitor, Eric
  */
 abstract public class EquipementSelector extends Group {
@@ -42,7 +43,7 @@ abstract public class EquipementSelector extends Group {
     private ImageButton rightArrowBtn;
 
     private TextButton equipBtn;
-    private Boolean isEquiped = false;
+    private boolean isEquiped = false;
     private static final String EQUIPER_TEXT = "Equiper";
     private static final String DESEQUIPER_TEXT = "Desequiper";
 
@@ -52,9 +53,10 @@ abstract public class EquipementSelector extends Group {
 
     /**
      * Constructeur du sélectionneur d'équipement
-     * @param equipments liste d'équipement à afficher
-     * @param skin apparence que doivent prendre les widgets de LibGdx
-     * @param buildSetter "fonction" à appeler lors du clic sélection
+     *
+     * @param equipments   liste d'équipement à afficher
+     * @param skin         apparence que doivent prendre les widgets de LibGdx
+     * @param buildSetter  "fonction" à appeler lors du clic sélection
      * @param buildCleaner "fonction" à appeler lors du clic de désélection
      * @param garageScreen référence ders le garage
      */
@@ -75,6 +77,7 @@ abstract public class EquipementSelector extends Group {
 
     /**
      * Change l'image à afficher de l'équipement
+     *
      * @param equipement equipement à afficher dans l'image
      */
     private void changeEquipment(Equipment equipement) {
@@ -84,7 +87,7 @@ abstract public class EquipementSelector extends Group {
     /**
      * Méthode appelé lorsque le bouton équiper est cliqué
      */
-    private void equipe(){
+    private void equip() {
         buildSetter.accept(equipments.get(currentElementIdx));
         isEquiped = true;
         equipBtn.setText(DESEQUIPER_TEXT);
@@ -96,7 +99,7 @@ abstract public class EquipementSelector extends Group {
     /**
      * Méthode appelé lorsque le bouton équiper est cliqué
      */
-    private void desequipe(){
+    private void desequip() {
         buildCleaner.run();
         isEquiped = false;
         equipBtn.setText(EQUIPER_TEXT);
@@ -113,13 +116,13 @@ abstract public class EquipementSelector extends Group {
         equipBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                try{
-                    if (isEquiped) {
-                        desequipe();
+                try {
+                    if(isEquiped) {
+                        desequip();
                     } else {
-                       equipe();
+                        equip();
                     }
-                }catch(ShipBuilderException sbe){
+                } catch(ShipBuilderException sbe) {
                     garageScreen.displayToast("Erreur de construction: " + sbe.getMessage());
                 }
             }
@@ -128,13 +131,13 @@ abstract public class EquipementSelector extends Group {
 
         Texture btnTex = Asset.getInstance().getLeftArrowTexture();
         Texture pressedBtnTex = Asset.getInstance().getLeftArrowPressedTexture();
-        leftArrowBtn = new ImageButton(new TextureRegionDrawable(new TextureRegion(btnTex)),new TextureRegionDrawable(new TextureRegion(pressedBtnTex)));
+        leftArrowBtn = new ImageButton(new TextureRegionDrawable(new TextureRegion(btnTex)), new TextureRegionDrawable(new TextureRegion(pressedBtnTex)));
         leftArrowBtn.addListener(new ClickListener() {
             @Override
             public void clicked(InputEvent event, float x, float y) {
-                if (leftArrowBtn.isDisabled())
+                if(leftArrowBtn.isDisabled())
                     return;
-                if (--currentElementIdx < 0) {
+                if(--currentElementIdx < 0) {
                     // On sette l'itérateur comment étant le dernières élements.
                     currentElementIdx = equipments.size() - 1;
                 }
@@ -142,14 +145,14 @@ abstract public class EquipementSelector extends Group {
                 updateLabels();
             }
         });
-        rightArrowBtn =  new ImageButton(new TextureRegionDrawable(new TextureRegion(btnTex)),new TextureRegionDrawable(new TextureRegion(pressedBtnTex)));
+        rightArrowBtn = new ImageButton(new TextureRegionDrawable(new TextureRegion(btnTex)), new TextureRegionDrawable(new TextureRegion(pressedBtnTex)));
         rightArrowBtn.addListener(new ClickListener() {
             @Override
 
             public void clicked(InputEvent event, float x, float y) {
-                if (rightArrowBtn.isDisabled())
+                if(rightArrowBtn.isDisabled())
                     return;
-                if (++currentElementIdx >= equipments.size()) {
+                if(++currentElementIdx >= equipments.size()) {
                     currentElementIdx = 0;
                 }
                 changeEquipment(equipments.get(currentElementIdx));
@@ -179,7 +182,7 @@ abstract public class EquipementSelector extends Group {
 
     /**
      * Met à jour les labels de propritété (hp, cadence etc.) de l'équipement afficher
-     * */
+     */
     abstract void updateLabels();
 
 }

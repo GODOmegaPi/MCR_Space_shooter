@@ -19,7 +19,7 @@ import com.mcr.spaceshooter.Entity.Equipments.Fuselage;
  * Le vaisseau possède également une arme qui tire des bullets.
  *
  * @authors Ilias, Guillaume, Ludovic, Vitor, Eric
- * */
+ */
 public class Spaceship {
     // Hitbox et position du vaisseau.
     private Rectangle bounds;
@@ -37,19 +37,20 @@ public class Spaceship {
     // Dimension de la hitbox du vaisseau. On considère sa hitbox comme un carré de côté SIZE.
     public static final int SIZE = 50;
     // Vitesse de déplacement du vaisseau.
-    private static final int SPEED  = 5;
+    private static final int SPEED = 5;
 
     /**
      * Constructeur du vaisseau. Il prend en paramètre le builder qui lui fournira les différents éléments du vaisseau
-     * @param playableShipBuilder builder de vaisseau
+     *
+     * @param shipBuilder builder de vaisseau
      */
-    public Spaceship(ShipBuilder playableShipBuilder) {
-        fuselage = new Fuselage(playableShipBuilder.getFuselage());
-        weapon = new Weapon(playableShipBuilder.getWeapon());
+    public Spaceship(ShipBuilder shipBuilder) {
+        fuselage = new Fuselage(shipBuilder.getFuselage());
+        weapon = new Weapon(shipBuilder.getWeapon());
 
         // Le vaisseau peut ne pas avoir de bouclier.
-        if(playableShipBuilder.getShield() != null){
-            shield = new Shield(playableShipBuilder.getShield());
+        if(shipBuilder.getShield() != null) {
+            shield = new Shield(shipBuilder.getShield());
         }
 
         bounds = new Rectangle(Gdx.graphics.getWidth() / 2, 50, SIZE, SIZE);
@@ -60,12 +61,13 @@ public class Spaceship {
     /**
      * Cette méthode permet de vérifier si un élement (asteroid) rentre en collision avec notre vaisseau ou si une des balles
      * touche un asteroid.
+     *
      * @param rect hitbox de l'élément qu'on essaie de vérifier.
      * @return vrai s'il y a collision.
      */
     public boolean isColliding(Rectangle rect) {
         boolean hitBySpaceship = false;
-        if(Intersector.overlaps(bounds, rect)){
+        if(Intersector.overlaps(bounds, rect)) {
             hit(Asteroid.DAMAGE);
             hitBySpaceship = true;
         }
@@ -79,7 +81,7 @@ public class Spaceship {
         if(!unlimitedPower) {
             weapon.shoot(getX(), getY());
         } else {
-        // cheatcode
+            // cheatcode
             weapon.shootMore(getX(), getY(), 4);
         }
     }
@@ -87,20 +89,21 @@ public class Spaceship {
     /**
      * Méthode appeler lorsqu'un vaisseau s'est fait touché et doit donc prendre des dégats
      * Soit sur son shield ou directement sur son fuselage (sa vie )
+     *
      * @param damage Dommage pris
      */
-    public void hit(int damage){
+    public void hit(int damage) {
         int shieldHP = getShieldHP();
 
         shieldHP -= damage;
 
         // S'il n'y a plus ou pas de shield on retire les dommages directement sur le vaisseau.
-        if(shieldHP <= 0){
+        if(shieldHP <= 0) {
             fuselage.setHp(fuselage.getHp() + shieldHP);
             shieldHP = 0;
         }
 
-        if(shield != null){
+        if(shield != null) {
             shield.setHp(shieldHP);
 
         }
@@ -108,6 +111,7 @@ public class Spaceship {
 
     /**
      * Affiche le vaisseau via le spritebatch
+     *
      * @param spriteBatch qui sera utilisé pour dessiner le vaisseau
      */
     public void render(SpriteBatch spriteBatch) {
@@ -124,6 +128,7 @@ public class Spaceship {
 
     /**
      * Retourne la position X du vaisseau(de la hitbox du vaisseau)
+     *
      * @return
      */
     public float getX() {
@@ -132,6 +137,7 @@ public class Spaceship {
 
     /**
      * Retour la position Y du vaisseau (de la hitbox du vaisseau)
+     *
      * @return
      */
     public float getY() {
@@ -140,10 +146,11 @@ public class Spaceship {
 
     /**
      * Retourne le nombre de point de vie de notre shield(s'il y en a un)
+     *
      * @return
      */
     public int getShieldHP() {
-        if(shield != null){
+        if(shield != null) {
             return shield.getHp();
         }
         return 0;
@@ -151,39 +158,38 @@ public class Spaceship {
 
     /**
      * Méthode permettant de mettre à jour le vaiseau en fonction des inteactions du joueur (des touches appuyées)
-     *
      */
     public void update() {
         // Gestion des déplacement
-        if(Gdx.input.isKeyPressed(Keys.A)){
+        if(Gdx.input.isKeyPressed(Keys.A)) {
             bounds.setX(getX() - speed);
         }
-        if(Gdx.input.isKeyPressed(Keys.D)){
+        if(Gdx.input.isKeyPressed(Keys.D)) {
             bounds.setX(getX() + speed);
         }
-        if(Gdx.input.isKeyPressed(Keys.W)){
+        if(Gdx.input.isKeyPressed(Keys.W)) {
             bounds.setY(getY() + speed);
         }
-        if(Gdx.input.isKeyPressed(Keys.S)){
+        if(Gdx.input.isKeyPressed(Keys.S)) {
             bounds.setY(getY() - speed);
         }
         // Gestion du tir
-        if(Gdx.input.isKeyPressed(Keys.SPACE)){
+        if(Gdx.input.isKeyPressed(Keys.SPACE)) {
             shoot();
         }
 
         cheatCode();
 
         // Gestion du déplacement "torique" (eg: quand on sort à droite de l'écran on réapparait à gauche).
-        if(bounds.getX() > Gdx.graphics.getWidth()){
+        if(bounds.getX() > Gdx.graphics.getWidth()) {
             bounds.setX(-bounds.width);
-        }else if(bounds.getX() < -bounds.getWidth()){
+        } else if(bounds.getX() < -bounds.getWidth()) {
             bounds.setX(Gdx.graphics.getWidth());
         }
 
-        if(bounds.getY() > Gdx.graphics.getHeight()){
+        if(bounds.getY() > Gdx.graphics.getHeight()) {
             bounds.setY(-bounds.height);
-        }else if(bounds.getY() < -bounds.getHeight()){
+        } else if(bounds.getY() < -bounds.getHeight()) {
             bounds.setY(Gdx.graphics.getHeight());
         }
 
@@ -194,11 +200,11 @@ public class Spaceship {
      * Gestion de l'utilisation du cheatcode.
      */
     private void cheatCode() {
-        if (
-                Gdx.input.isKeyPressed(Keys.P)
-                        && Gdx.input.isKeyPressed(Keys.I)
-                        && Gdx.input.isKeyPressed(Keys.O)
-                        && Gdx.input.isKeyPressed(Keys.U)
+        if(
+            Gdx.input.isKeyPressed(Keys.P)
+                && Gdx.input.isKeyPressed(Keys.I)
+                && Gdx.input.isKeyPressed(Keys.O)
+                && Gdx.input.isKeyPressed(Keys.U)
         ) {
             unlimitedPower = true;
         }
@@ -206,6 +212,7 @@ public class Spaceship {
 
     /**
      * Retourne le fuselage.
+     *
      * @return le fuselage actuellement équipé
      */
     public Fuselage getFuselage() {
@@ -214,10 +221,19 @@ public class Spaceship {
 
     /**
      * Retourne l'arme
+     *
      * @return l'arme actuellement équipé
      */
     public Weapon getWeapon() {
         return weapon;
     }
 
+    /**
+     * Retourne le bouclier
+     *
+     * @return le bouclier actuellement équipé
+     */
+    public Shield getShield() {
+        return shield;
+    }
 }
