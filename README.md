@@ -25,7 +25,7 @@ Un message vas apparaître vous demandant si vous souhaitez faire confiance au p
 java -jar desktop-1.0.jar
 ```
 ### Comment jouer ?
-#### Les touches
+#### TOUCHES
 W -> Avancer
 
 A -> Aller à gauche
